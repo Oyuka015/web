@@ -26,10 +26,27 @@ class LpFood extends HTMLElement {
             <img src="${imgSrc}" alt="${name}">
             <h3>${name}</h3>
             <p>${price}</p>
-            <button>+</button>
+            <button class="nemeh">+</button>
+            <button class="hasah">-</button>
             <div class="rating">⭐</div>
         </article>
         `;
+
+        this.querySelector(`.nemeh`).addEventListener('click', () => {
+            this.dispatchEvent(
+              new CustomEvent("add-count", {
+                detail: { name, price },
+                bubbles: true,
+              })
+            );
+        });
+        this.querySelector(`.hasah`).addEventListener('click', () => {
+            this.dispatchEvent(new CustomEvent('remove-count', {
+                detail: {name, price},
+                bubbles: true,
+            
+            }));
+        });
     }
     disconnectedCallback() {
     }
