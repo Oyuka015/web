@@ -1,7 +1,11 @@
-:root{
+/* :root{
     --primary-color:;
     
     --text-color:;
 
 
-}   
+}    */
+body{
+    display: flex;
+
+}
