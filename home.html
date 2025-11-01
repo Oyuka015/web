@@ -4,58 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LondonPOP</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/coolicons.css" />
+ 
+
     <script type="module" src="components/lp-header.js"></script>
     <script type="module" src="components/lp-food.js"></script>
     <script type="module" src="components/lp-cart.js"></script>
+    <!-- oyu -->
+    <script type="module" src="components/lp-nav.js"></script>
+    <script type="module" src="components/lp-home-header.js"></script>
+    <script type="module" src="components/lp-bg-btn.js"></script>
     <style>
-        :root{
-            --color-orange: hsl(25, 100%, 50%);
-            --color-orange-lighter: hsl(25, 100%, 60%);
-            --color-orange-lightest: hsl(25, 100%, 75%);
-            --color-orange-darker: hsl(25, 100%, 40%);
-            --color-orange-darkest: hsl(25, 100%, 35%);
-
-            --color-dark-0:#000;
-            --color-dark-1:hsl(0, 0%, 10%);
-            --color-dark-2:hsl(0, 0%, 20%);
-            --color-dark-3:hsl(0, 0%, 30%);
-            --color-dark-0:hsl(0, 0%, 10%);
-            --color-dark-0:#000;
-            --color-dark-0:#000;
-            --color-dark-0:#000;
-
-            --bg-color-accent:var(--color-orange);
-            --text-color-default:var(--color-dark-2);
-            --text-color-accent:var(--color-orange-darker);
-            --text-color-muted:var(--color-dark-3);
-
-        }
-        .food{
-            border: 1px solid black;
-            padding: 10px;
-            border-radius: 10px;
-            h3{color:var(--text-color-accent)}
-            img{
-                width: 100px;
-                height: 100px;
-            }
-
-        }
+        
+        
     </style>
 </head>
 <body> 
-    <header style="color:red;">this is header 
+    <!-- home-header-component -->
+    <lp-home-header></lp-home-header> 
+
+    <!-- category-component -->    
+
+
+    <!-- main heseg dotroo scrolldono  -->
+    <main>
+        <lp-bg-btn name="Төлбөр төлөх"></lp-bg-btn>
+        <lp-bg-btn name="Баталгаажуулах"></lp-bg-btn>
+    </main>
+
+
+    <!-- navigation-component: app menu -->
+    <lp-nav></lp-nav>
+
+    
+
+
+    <!-- <header style="color:red;">this is header 
         <header-comp></header-comp>
         <lp-food name="new food" price="200000" img="assets/img/food.jpg"></lp-food>
         <lp-food></lp-food>
         <lp-food></lp-food>
-    </header>
-
-    <main>
-        <lp-cart></lp-cart>
-
-    </main>
-    <footer></footer>
+    </header> -->
 </body>
 </html>

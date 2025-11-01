@@ -7,8 +7,7 @@ class LpHeader extends HTMLElement {
     connectedCallback() {
         //implementation
         this.innerHTML = `
-            <h1>aaa</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur qui similique veniam.</p>
+             
         `;
     }
     
