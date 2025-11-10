@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LondonPOP</title>
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/coolicons.css" />
- 
 
     <script type="module" src="components/lp-header.js"></script>
     <script type="module" src="components/lp-food.js"></script>
@@ -15,36 +14,67 @@
     <script type="module" src="components/lp-nav.js"></script>
     <script type="module" src="components/lp-home-header.js"></script>
     <script type="module" src="components/lp-bg-btn.js"></script>
-    <style>
-        
-        
-    </style>
-</head>
-<body> 
+    <style></style>
+  </head>
+  <body>
     <!-- home-header-component -->
-    <lp-home-header></lp-home-header> 
+    <lp-home-header></lp-home-header>
 
-    <!-- category-component -->    
-
+    <!-- category-component -->
 
     <!-- main heseg dotroo scrolldono  -->
-    <main>
+    <!-- <main>
         <lp-bg-btn name="Төлбөр төлөх"></lp-bg-btn>
         <lp-bg-btn name="Баталгаажуулах"></lp-bg-btn>
-    </main>
+    </main> -->
 
+    <!-- <lp-header></lp-header> -->
 
+  <div class="container">
+    <lp-food 
+      image="https://media.istockphoto.com/id/1409424028/photo/isolated-portion-of-grilled-beef-t-bone-steak.jpg?s=1024x1024&w=is&k=20&c=TWALJWSbFuDxxIBnNHnd__szEAujF8HhfaSWM6NRA94="
+      title="T-Bone steak"
+      price="35000"
+      rating="4.6"
+      ingredients="Үхрийн t-bone мах, Мөөг, Ногоон сонгино, сонгино, Грилл соус, лууван, чинжүү, +нууц амтлагч"
+      >
+    </lp-food>
+    <lp-food 
+      image="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400"
+      title="Margherita Pizza"
+      price="29000"
+      Ingredients="Улаан лооль, Моццарелла бяслаг, Базилик"
+      size="2 хүн"
+      rating="4.8">
+    </lp-food>
+    <lp-food
+      image="https://www.travelbuddies.info/wp-content/uploads/2020/02/tsuivan.jpg"
+      title="Цуйван"
+      price="18000"
+      rating="4.8"
+      ingredients="Үхрийн мах, Хайрсан гурил, Мөөг, Ногоон сонгино, сонгино, Грилл соус, лууван, чинжүү, +нууц амтлагч"
+      size="1 хүн"
+      calories="620 Ккал">
+    </lp-food>
+
+    <lp-food 
+      image="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400"
+      title="Pepperoni Pizza"
+      price="29000"
+      rating="4.9">
+    </lp-food>
+
+    <lp-food 
+      image="https://www.travelbuddies.info/wp-content/uploads/2020/02/tsuivan.jpg"
+      title="BBQ Chicken Pizza"
+      price="15000"
+      rating="4.7"
+      >
+    </lp-food>
+
+    
     <!-- navigation-component: app menu -->
     <lp-nav></lp-nav>
 
-    
-
-
-    <!-- <header style="color:red;">this is header 
-        <header-comp></header-comp>
-        <lp-food name="new food" price="200000" img="assets/img/food.jpg"></lp-food>
-        <lp-food></lp-food>
-        <lp-food></lp-food>
-    </header> -->
-</body>
+  </body>
 </html>
