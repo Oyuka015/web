@@ -13,12 +13,13 @@ class LpCart extends HTMLElement {
     });
     document.addEventListener("remove-count", () => {
       let count = parseInt(this.getAttribute("count")) || 0;
-        if (count > 0) {
-            count -= 1;
-        }
+      if (count > 0) {
+        count -= 1;
+      }
       this.setAttribute("count", count);
       this.render();
     });
+   
   }
 
   render() {
@@ -26,7 +27,6 @@ class LpCart extends HTMLElement {
     this.innerHTML = `
          <h2>Сагс :${count}</h2>
         `;
-    
   }
 
   disconnectedCallback() {}
