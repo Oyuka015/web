@@ -11,13 +11,13 @@ class LpNav extends HTMLElement {
     render(){
         this.innerHTML = `
           <nav>
-            <a href="#" class="active">
+            <a href="home.html" class="active">
                 <i class="ci-House_01"></i>
             </a>
             <a href="#">
                 <i class="ci-Heart_01"></i> 
             </a>
-            <a href="#">
+            <a href="cart.html">
                 <i class="ci-Shopping_Bag_02"></i>
             </a>
             <a href="#">
