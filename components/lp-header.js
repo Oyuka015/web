@@ -5,8 +5,7 @@ class LpHeader extends HTMLElement {
   }
 
   connectedCallback() {
-    this.shadowRoot.innerHTML = `
-          <style>
+    const css = `<style>
             :host {
               position: fixed;
               top: 0;
@@ -78,7 +77,9 @@ class LpHeader extends HTMLElement {
               color: var(--text-color-accent);
               letter-spacing: -1px;
             }
-          </style>
+          </style>`;
+    this.shadowRoot.innerHTML = `
+          ${css}
 
           <div class="header-content">
             <div class="left">
