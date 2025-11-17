@@ -62,6 +62,11 @@ a {
   color: var(--text-color-accent);
 }
 
+/* scroll bar hide */
+::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge */
+}
+
 /* footer app menu */
 lp-nav nav {
   position: fixed;
