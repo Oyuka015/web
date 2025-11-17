@@ -27,6 +27,7 @@ class LpSearch extends HTMLElement {
                     border: none; 
                     width: 13%; 
                     font-size: 1.2rem;
+                    background-color:var(--color-white);
                 }
             </style>
             <form action="search">
