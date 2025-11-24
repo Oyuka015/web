@@ -1,3 +1,13 @@
+import cartStore from "./cart-store.js";
+
+const slugify = (value = "") =>
+  value
+    .toString()
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/gi, "-")
+    .replace(/^-+|-+$/g, "");
+
 class LpFood extends HTMLElement {
   constructor() {
     super();
@@ -32,13 +42,20 @@ class LpFood extends HTMLElement {
     const ingredients = this.getAttribute("ingredients") || "мэдээлэл байхгүй.";
     const size = this.getAttribute("size") || "Хэмжээ: тодорхойгүй";
     const calories = this.getAttribute("calories") || "Калори: тодорхойгүй";
+    const numericPrice = Number(price) || 0;
+    const providedId =
+      this.getAttribute("food-id") ||
+      this.getAttribute("data-id") ||
+      this.getAttribute("id");
+    const itemId = (providedId || `${slugify(title)}-${numericPrice}`).toLowerCase();
     const css = /*css*/ `<style>
     :host {
       display: block;
       border-radius: 20px;
+      margin-bottom: 20px;
       overflow: hidden;
       background: white;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
       transition: all 0.3s ease-in;
       cursor: pointer;
     }
@@ -52,7 +69,7 @@ class LpFood extends HTMLElement {
       display: flex;
       flex-direction: row;
       align-items: stretch;
-      gap: 16px;
+      gap: 12px;
       height: 100%;
       width: 100%;
       transition: width 1s;
@@ -114,7 +131,7 @@ class LpFood extends HTMLElement {
     }
 
     .ingredients {
-      font-size: 13px;
+      font-size: var(--font-size-subtitle);
       color: var(--text-color-muted);
       margin-bottom: 6px;
       cursor: pointer;
@@ -128,7 +145,7 @@ class LpFood extends HTMLElement {
       display: flex;
       gap: 6px;
       color: var(--text-color-muted);
-      font-size: 12px;
+      font-size: var(--font-size-default);
     }
 
     .price {
@@ -205,9 +222,10 @@ class LpFood extends HTMLElement {
             <div class="size">${size}</div>
             <div class="calories">${calories}</div>
           </div>
-          <div class="price">${price}₮</div>
+          
           <div class="actions" aria-label="Actions">
-            <button class="favorite" aria-label="Таалагдлаа">♡</button>
+            <!-- <button class="favorite" aria-label="Таалагдлаа">♡</button>  -->
+            <div class="price">${price}₮</div>
             <button class="add-btn">+</button>
           </div>
         </div>
@@ -215,14 +233,30 @@ class LpFood extends HTMLElement {
     `;
 
     this.shadowRoot.querySelector(".add-btn").addEventListener("click", () => {
-      alert(`"${title}" сагсанд нэмэгдлээ!`);
+      cartStore.addItem({
+        id: itemId,
+        title,
+        price: numericPrice,
+        image,
+        quantity: 1,
+      });
+
+      this.dispatchEvent(
+        new CustomEvent("cart:item-added", {
+          bubbles: true,
+          composed: true,
+          detail: { id: itemId, title },
+        })
+      );
     });
 
     const favBtn = this.shadowRoot.querySelector(".favorite");
-    favBtn.addEventListener("click", () => {
-      favBtn.classList.toggle("active");
-      favBtn.textContent = favBtn.classList.contains("active") ? "♥" : "♡";
-    });
+    if (favBtn) {
+      favBtn.addEventListener("click", () => {
+        favBtn.classList.toggle("active");
+        favBtn.textContent = favBtn.classList.contains("active") ? "♥" : "♡";
+      });
+    }
 
     const ing = this.shadowRoot.getElementById("ingredients");
     let expanded = false;

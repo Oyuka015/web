@@ -69,6 +69,7 @@ class LpHeader extends HTMLElement {
                 <i class="ci-Chevron_Left_MD"></i>
               </a>
             </div>
+            
             <div class="right">
               <a class="back-btn">
                 <i class="ci-Bell"></i>

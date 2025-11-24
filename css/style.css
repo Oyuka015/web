@@ -35,6 +35,8 @@
   --font-size-big: 30px;
   --font-size-medium: 20px;
   --font-size-small: 15px;
+
+  --font-family-nunito: 'Nunito', sans-serif;
 }
 body {
   margin: 0;
