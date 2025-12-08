@@ -1,196 +1,89 @@
-const STORAGE_KEY = "lp-cart-items";
-
-const listeners = new Set();
-let memoryItems = [];
-
-const safeJsonParse = (value, fallback) => {
-  try {
-    return value ? JSON.parse(value) : fallback;
-  } catch (error) {
-    console.warn("[cart-store] Failed to parse cart items:", error);
-    return fallback;
-  }
-};
-
-const canUseLocalStorage = () => {
-  try {
-    const testKey = "__lp-cart-test__";
-    window.localStorage.setItem(testKey, "ok");
-    window.localStorage.removeItem(testKey);
-    return true;
-  } catch {
-    return false;
-  }
-};
-
-const storageAvailable = typeof window !== "undefined" && canUseLocalStorage();
-
-const readItems = () => {
-  if (!storageAvailable) {
-    return memoryItems;
+class CartStore {
+  constructor() {
+    this.items = this.loadFromStorage();
+    this.listeners = [];
   }
 
-  const stored = window.localStorage.getItem(STORAGE_KEY);
-  const items = safeJsonParse(stored, []);
-
-  if (!Array.isArray(items)) {
-    return [];
-  }
-
-  return items;
-};
-
-const writeItems = (items) => {
-  if (!Array.isArray(items)) {
-    return;
-  }
-
-  memoryItems = items;
-
-  if (storageAvailable) {
+  loadFromStorage() {
     try {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-    } catch (error) {
-      console.warn("[cart-store] Failed to persist cart items:", error);
+      const stored = localStorage.getItem("lp-cart");
+      return stored ? JSON.parse(stored) : [];
+    } catch (e) {
+      return [];
     }
   }
 
-  notify(items);
-};
-
-const cloneItems = (items) => {
-  const safeItems = Array.isArray(items) ? items : [];
-  if (typeof structuredClone === "function") {
-    return structuredClone(safeItems);
-  }
-
-  return JSON.parse(JSON.stringify(safeItems));
-};
-
-const notify = (items) => {
-  listeners.forEach((listener) => {
+  saveToStorage() {
     try {
-      listener(items);
-    } catch (error) {
-      console.error("[cart-store] Listener failed:", error);
+      localStorage.setItem("lp-cart", JSON.stringify(this.items));
+    } catch (e) {
+      console.error("Failed to save cart to storage", e);
     }
-  });
-
-  if (typeof window !== "undefined") {
-    window.dispatchEvent(
-      new CustomEvent("cart:change", {
-        detail: { items: cloneItems(items) },
-      })
-    );
   }
-};
-
-const normalizeItem = (item) => {
-  if (!item || !item.id) {
-    throw new Error("Cart item must have an id");
-  }
-
-  return {
-    id: item.id,
-    title: item.title || "Тодорхойгүй хоол",
-    price: Number(item.price) || 0,
-    image: item.image || "",
-    quantity: Number(item.quantity) > 0 ? Number(item.quantity) : 1,
-  };
-};
-
-const cartStore = {
-  getItems() {
-    return readItems();
-  },
 
   subscribe(callback) {
-    if (typeof callback !== "function") {
-      return () => {};
-    }
-
-    listeners.add(callback);
-    callback(readItems());
-
+    this.listeners.push(callback);
     return () => {
-      listeners.delete(callback);
+      this.listeners = this.listeners.filter((l) => l !== callback);
     };
-  },
+  }
 
-  addItem(rawItem) {
-    const item = normalizeItem(rawItem);
-    const items = readItems();
-    const existingIndex = items.findIndex((i) => i.id === item.id);
+  notify() {
+    this.listeners.forEach((callback) => callback(this.items));
+  }
 
-    if (existingIndex > -1) {
-      items[existingIndex].quantity += item.quantity;
+  addItem(item) {
+    const existingIndex = this.items.findIndex((i) => i.id === item.id);
+    if (existingIndex >= 0) {
+      this.items[existingIndex].quantity += 1;
     } else {
-      items.push(item);
+      this.items.push({ ...item, quantity: 1 });
     }
-
-    writeItems(items);
-  },
-
-  updateQuantity(id, delta) {
-    if (!id || !delta) {
-      return;
-    }
-
-    const items = readItems();
-    const index = items.findIndex((item) => item.id === id);
-
-    if (index === -1) {
-      return;
-    }
-
-    const nextQuantity = items[index].quantity + delta;
-
-    if (nextQuantity <= 0) {
-      items.splice(index, 1);
-    } else {
-      items[index].quantity = nextQuantity;
-    }
-
-    writeItems(items);
-  },
-
-  setQuantity(id, quantity) {
-    if (!id) return;
-
-    const items = readItems();
-    const index = items.findIndex((item) => item.id === id);
-
-    if (index === -1) return;
-
-    const safeQuantity = Number(quantity);
-
-    if (!Number.isFinite(safeQuantity) || safeQuantity <= 0) {
-      items.splice(index, 1);
-    } else {
-      items[index].quantity = Math.floor(safeQuantity);
-    }
-
-    writeItems(items);
-  },
+    this.saveToStorage();
+    this.notify();
+  }
 
   removeItem(id) {
-    if (!id) return;
+    this.items = this.items.filter((item) => item.id !== id);
+    this.saveToStorage();
+    this.notify();
+  }
 
-    const items = readItems().filter((item) => item.id !== id);
-    writeItems(items);
-  },
-
-  clear() {
-    writeItems([]);
-  },
+  updateQuantity(id, quantity) {
+    const item = this.items.find((i) => i.id === id);
+    if (item) {
+      if (quantity <= 0) {
+        this.removeItem(id);
+      } else {
+        item.quantity = quantity;
+        this.saveToStorage();
+        this.notify();
+      }
+    }
+  }
 
   getTotal() {
-    return readItems().reduce(
+    return this.items.reduce(
       (sum, item) => sum + item.price * item.quantity,
       0
     );
-  },
-};
+  }
 
+  getItemCount() {
+    return this.items.reduce((sum, item) => sum + item.quantity, 0);
+  }
+
+  clear() {
+    this.items = [];
+    this.saveToStorage();
+    this.notify();
+  }
+
+  getItems() {
+    return [...this.items];
+  }
+}
+
+const cartStore = new CartStore();
 export default cartStore;
 

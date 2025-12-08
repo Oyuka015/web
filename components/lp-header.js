@@ -78,9 +78,13 @@ class LpHeader extends HTMLElement {
           </div>
         `;
 
-    this.shadowRoot.querySelector(".back-btn").addEventListener("click", () => {
-      history.back();
-    });
+    const backBtn = this.shadowRoot.querySelector(".left .back-btn");
+    if (backBtn) {
+      backBtn.addEventListener("click", () => {
+        // Use hash navigation for SPA behavior
+        window.location.hash = "#/";
+      });
+    }
   }
 }
 customElements.define("lp-header", LpHeader);
