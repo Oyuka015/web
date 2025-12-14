@@ -307,8 +307,10 @@ class LpCart extends HTMLElement {
         <div class="summary-row">
           <span class="summary-label">Нийт дүн:</span>
           <span class="summary-total">${total.toLocaleString()}₮</span>
-        </div>
-        <button class="checkout-btn">Төлбөр төлөх</button>
+        </div> 
+        <a href="#/payment">
+          <button class="checkout-btn">Төлбөр төлөх</button>
+        </a>
       </div>
     `;
 
@@ -339,7 +341,7 @@ class LpCart extends HTMLElement {
     if (checkoutBtn) {
       checkoutBtn.addEventListener("click", () => {
         if (items.length > 0) {
-          alert(`Төлбөр төлөх: ${total.toLocaleString()}₮\n\nБаталгаажуулах уу?`);
+          // alert(`Төлбөр төлөх: ${total.toLocaleString()}₮\n\nБаталгаажуулах уу?`);
           // You can add actual checkout logic here
         }
       });

@@ -11,7 +11,11 @@
     <script type="module" src="components/lp-food.js"></script>
     <script type="module" src="page/lp-cart.js"></script>
     <script type="module" src="page/lp-home.js"></script>
-    <!-- oyu -->
+    <script type="module" src="page/lp-save.js"></script>
+    <script type="module" src="page/lp-acc.js"></script>
+    <script type="module" src="page/lp-payment.js"></script>
+    
+
     <script type="module" src="components/lp-nav.js"></script>
     <script type="module" src="components/lp-home-header.js"></script>
     <script type="module" src="components/lp-bg-btn.js"></script>
@@ -24,10 +28,13 @@
 
     <lp-router>
       <lp-route path="/" component="lp-home"></lp-route>
+      <lp-route path="/save" component="lp-save"></lp-route>
       <lp-route path="/cart" component="lp-cart"></lp-route>
+      <lp-route path="/acc" component="lp-acc"></lp-route>
+      <lp-route path="/payment" component="lp-payment"></lp-route>
     </lp-router>
 
-    
+
     <lp-nav></lp-nav>
   </body>
 </html>

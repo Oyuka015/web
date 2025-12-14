@@ -25,7 +25,7 @@ class LpHome extends HTMLElement {
       </div>
 
       <!-- category-component -->
-      <section style="margin-bottom: 20px">
+      <section style="margin-bottom: 20px; position: sticky; top: 0; background: white; z-index: 10; padding-top: 10px; padding-bottom: 10px; border-bottom: 1px solid var(--color-white-1);">
         <h3>Ангилал</h3>
         <div style="display: flex; gap: 20px; overflow: scroll">
           <lp-category class="selectedCat" name="Хоол"></lp-category>
