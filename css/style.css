@@ -11,7 +11,7 @@
   --color-dark-3: hsl(0, 0%, 30%);
   --color-dark-4: hsl(0, 0%, 40%);
   --color-dark-5: hsl(0, 0%, 50%);
-  --color-white-0: hsla(0, 0%, 100%, 0.16); /*tungalag*/
+  --color-white-transparent: hsla(0, 0%, 100%, 0.873); /*tungalag*/
 
   --color-white-0: hsl(0, 0%, 100%);
   --color-white-1: hsl(0, 0%, 90%);
@@ -35,6 +35,8 @@
   --font-size-big: 30px;
   --font-size-medium: 20px;
   --font-size-small: 15px;
+
+  --font-family-nunito: 'Nunito', sans-serif;
 }
 body {
   margin: 0;

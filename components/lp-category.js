@@ -5,6 +5,7 @@ class LpCategory extends HTMLElement {
 
     connectedCallback() {
         this.render();
+        
     }
     render(){
         const name = this.getAttribute('name') || 'null'; 
@@ -16,12 +17,14 @@ class LpCategory extends HTMLElement {
                     padding: 8px 30px; 
                     border-radius: 10px; 
                     color: var(--color-white-0);
+                    font-family: var(--font-family-nunito);
                 }
                 .defCat{
                     font-size: 20px; 
                     background: var(--color-white-1); 
                     padding: 8px 30px; 
                     border-radius: 10px; 
+                    font-family: var(--font-family-nunito);
                     color: var(--text-color-default);
                 }
             </style>

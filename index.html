@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LondonPOP</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/coolicons.css" />
+
+    <script type="module" src="components/lp-header.js"></script>
+    <script type="module" src="components/lp-food.js"></script>
+    <script type="module" src="page/lp-cart.js"></script>
+    <script type="module" src="page/lp-home.js"></script>
+    <!-- oyu -->
+    <script type="module" src="components/lp-nav.js"></script>
+    <script type="module" src="components/lp-home-header.js"></script>
+    <script type="module" src="components/lp-bg-btn.js"></script>
+    <script type="module" src="components/lp-search.js"></script>
+    <script type="module" src="components/lp-category.js"></script>
+    <script type="module" src="components/lp-router.js"></script>
+    <script type="module" src="components/lp-route.js"></script>
+  </head>
+  <body>
+
+    <lp-router>
+      <lp-route path="/" component="lp-home"></lp-route>
+      <lp-route path="/cart" component="lp-cart"></lp-route>
+    </lp-router>
+
+    
+    <lp-nav></lp-nav>
+  </body>
+</html>

@@ -14,7 +14,7 @@ class LpHeader extends HTMLElement {
               left: 0;
               right: 0;
               height: 70px;
-              background: var(--color-white-0);
+              background: var(--color-white-transparent);
               box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
               display: flex;
               align-items: center;
@@ -69,6 +69,7 @@ class LpHeader extends HTMLElement {
                 <i class="ci-Chevron_Left_MD"></i>
               </a>
             </div>
+            
             <div class="right">
               <a class="back-btn">
                 <i class="ci-Bell"></i>
@@ -77,9 +78,13 @@ class LpHeader extends HTMLElement {
           </div>
         `;
 
-    this.shadowRoot.querySelector(".back-btn").addEventListener("click", () => {
-      history.back();
-    });
+    const backBtn = this.shadowRoot.querySelector(".left .back-btn");
+    if (backBtn) {
+      backBtn.addEventListener("click", () => {
+        // Use hash navigation for SPA behavior
+        window.location.hash = "#/";
+      });
+    }
   }
 }
 customElements.define("lp-header", LpHeader);
