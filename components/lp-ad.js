@@ -19,7 +19,7 @@ class LpAd extends HTMLElement {
   }
 
   render() {
-    this.innerHTML = /*html */`
+    this.innerHTML = /*html*/`
       <style>
         .lp-ad-wrapper {
           width: 100%;
@@ -29,7 +29,6 @@ class LpAd extends HTMLElement {
           padding: 0 12px;
           box-sizing: border-box;
         }
-
         .lp-ad {
           position: relative;
           width: 100%;
@@ -38,7 +37,6 @@ class LpAd extends HTMLElement {
           overflow: hidden;
           background: #f3f3f3;
         }
-
         .lp-ad img {
           position: absolute;
           inset: 0;
@@ -48,18 +46,15 @@ class LpAd extends HTMLElement {
           opacity: 0;
           transition: opacity .8s ease;
         }
-
         .lp-ad img.active {
           opacity: 1;
         }
-
         @media (max-width: 640px) {
           .lp-ad {
-            height: 160px;
+            height: 200px;
           }
         }
       </style>
-
       <div class="lp-ad-wrapper">
         <div class="lp-ad">
           <img src="/assets/img/advert.png" class="active">
@@ -67,7 +62,6 @@ class LpAd extends HTMLElement {
         </div>
       </div>
     `;
-
     this.slides = this.querySelectorAll(".lp-ad img");
   }
 

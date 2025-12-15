@@ -45,12 +45,5 @@ class LpCategory extends HTMLElement {
             <div>${name}</div>
         `;
   }
-
-  disconnectedCallback() {}
-
-  attributeChangedCallback(name, oldVal, newVal) {}
-
-  adoptedCallback() {}
 }
-
 window.customElements.define("lp-category", LpCategory);

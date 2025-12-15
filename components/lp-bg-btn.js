@@ -11,17 +11,6 @@ class LpBgBtn extends HTMLElement {
         `;
     }
 
-    disconnectedCallback() {
-        
-    }
-
-    attributeChangedCallback(name, oldVal, newVal) {
-        
-    }
-
-    adoptedCallback() {
-        
-    }
 
 }
 

@@ -63,7 +63,7 @@ class LpFood extends HTMLElement {
       font-display: block;
     }
 
-    i {
+    i{
       font-family: 'coolicons' !important;
       speak: never;
       font-style: normal;
@@ -71,7 +71,6 @@ class LpFood extends HTMLElement {
       font-variant: normal;
       text-transform: none;
       line-height: 1;
-
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
@@ -79,7 +78,6 @@ class LpFood extends HTMLElement {
     .ci-Heart_01:before {
       content: "\\e9ea";
     }
-
     :host {
       display: block;
       border-radius: 20px;
@@ -91,12 +89,10 @@ class LpFood extends HTMLElement {
       cursor: pointer;
       max-width: 1000px;
     }
-
     :host(:hover) {
       transform: translateY(-8px);
       box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
     }
-
     .card {
       display: flex;
       flex-direction: row;
@@ -120,11 +116,9 @@ class LpFood extends HTMLElement {
       object-position: center;
       border-radius: 20px 0 0 20px; 
     }
-
     :host(:hover) .image-container {
       transform: scale(1.05); 
     }
-
     .rating {
       position: absolute; /* absolute but when scroll up or down, it has to be follow the card size */
       top: 10px;
@@ -140,15 +134,12 @@ class LpFood extends HTMLElement {
       gap: 4px;
       z-index: 10;
     }
-
-   
     .content {
       padding: 18px 20px;
       flex: 1;
       display: flex;
       flex-direction: column;
     }
-
     .title {
       font-size: 1.5em; 
       font-weight: 800;
@@ -163,7 +154,6 @@ class LpFood extends HTMLElement {
       margin-bottom: 12px;
       cursor: pointer;
     }
-
     .details {
       display: flex;
       gap: 15px;
@@ -172,32 +162,27 @@ class LpFood extends HTMLElement {
       margin-bottom: 15px;
       font-weight: 500;
     }
-
     .actions {
       margin-top: auto; 
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    
     .price {
       font-size: 1.8em; 
       font-weight: 900;
       color: var(--text-color-dark, #333);
     }
-    
     .price-unit {
         font-size: 0.7em;
         font-weight: 600;
         margin-left: 2px;
     }
-
     .action-buttons {
         display: flex;
         gap: 10px;
         align-items: center;
     }
-
     .favorite {
       background: var(--color-white-2, #f5f5f5);
       border: none;
@@ -213,11 +198,9 @@ class LpFood extends HTMLElement {
       transition: all 0.3s ease;
       flex-shrink: 0;
     }
-
     .favorite.active {
       color: var(--color-orange-lighter, hsl(25, 100%, 60%));
     }
-    
     .add-btn {
       background: var(--bg-color-accent, #ff7043);
       color: white;
@@ -235,12 +218,9 @@ class LpFood extends HTMLElement {
       line-height: 1;
       flex-shrink: 0;
     }
-
     .add-btn.added {
       background: var(--color-orange-lighter, hsl(25, 100%, 60%));
     }
-
-    
     @media (max-width: 600px) {
         .card {
             flex-direction: column;
@@ -269,11 +249,9 @@ class LpFood extends HTMLElement {
         }
     }
 </style>`;
-
     const shortIngredients =
       ingredients.split(",").slice(0, 6).join(", ") +
       (ingredients.split(",").length > 6 ? " ..." : "");
-
     this.shadowRoot.innerHTML = /*html*/ `
     ${css}
     <div class="card" role="group" aria-label="${title} Food item">
@@ -303,7 +281,6 @@ class LpFood extends HTMLElement {
         </div>
     </div>
 `;
-
     this.shadowRoot.querySelector(".add-btn").addEventListener("click", () => {
       cartStore.addItem({
         id: itemId,
