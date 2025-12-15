@@ -40,152 +40,167 @@ class LpFood extends HTMLElement {
     const price = this.getAttribute("price") || "0.00";
     const rating = this.getAttribute("rating") || "0.0";
     const ingredients = this.getAttribute("ingredients") || "мэдээлэл байхгүй.";
-    const size = this.getAttribute("size") || "Хэмжээ: тодорхойгүй";
-    const calories = this.getAttribute("calories") || "Калори: тодорхойгүй";
+    const size = this.getAttribute("size") || "1 хүн";
+    const calories = this.getAttribute("calories") || "320ккал";
     const numericPrice = Number(price) || 0;
     const providedId =
       this.getAttribute("food-id") ||
       this.getAttribute("data-id") ||
       this.getAttribute("id");
-    const itemId = (providedId || `${slugify(title)}-${numericPrice}`).toLowerCase();
+    const itemId = (
+      providedId || `${slugify(title)}-${numericPrice}`
+    ).toLowerCase();
+
     const css = /*css*/ `<style>
+    @font-face {
+      font-family: 'coolicons';
+      src:
+        url('../fonts/coolicons.ttf') format('truetype'),
+        url('../fonts/coolicons.woff') format('woff'),
+        url('../fonts/coolicons.svg') format('svg'); 
+      font-weight: normal;
+      font-style: normal;
+      font-display: block;
+    }
+
+    i {
+      font-family: 'coolicons' !important;
+      speak: never;
+      font-style: normal;
+      font-weight: normal;
+      font-variant: normal;
+      text-transform: none;
+      line-height: 1;
+
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .ci-Heart_01:before {
+      content: "\\e9ea";
+    }
+
     :host {
       display: block;
       border-radius: 20px;
-      margin-bottom: 20px;
+      margin: 0 auto 20px auto;
       overflow: hidden;
       background: white;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
-      transition: all 0.3s ease-in;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08); 
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
       cursor: pointer;
+      max-width: 1000px;
     }
 
     :host(:hover) {
-      transform: translateY(-12px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      transform: translateY(-8px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
     }
 
     .card {
       display: flex;
       flex-direction: row;
       align-items: stretch;
-      gap: 12px;
+      gap: 0; 
       height: 100%;
       width: 100%;
-      transition: width 1s;
     }
-
     .image-container {
-      display: flex;
       position: relative;
-      justify-content: center;
-      align-items: center;
-      border-radius: 20px;
-      height: 10rem;
-      width: 120px;
-      padding: 4rem 1rem;
+      width: 180px; 
+      flex-shrink: 0; 
+      height: 5rem; 
+      min-height: 180px; 
+      transition: transform 0.4s ease;
     }
-  
-
     .image {
       width: 100%;
       height: 100%;
       object-fit: cover;
       object-position: center;
-      transition: transform 0.4s ease;
-      border-radius: 10px;
+      border-radius: 20px 0 0 20px; 
     }
 
-    :host(:hover) .image {
-      transform: scale(1.1);
+    :host(:hover) .image-container {
+      transform: scale(1.05); 
     }
 
     .rating {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      background: rgba(0, 0, 0, 0.7);
+      position: absolute; /* absolute but when scroll up or down, it has to be follow the card size */
+      top: 10px;
+      left: 10px; 
+      background: rgba(0, 0, 0, 0.6);
       color: white;
       padding: 4px 10px;
-      border-radius: 20px;
+      border-radius: 5px;
       font-size: 13px;
       font-weight: 600;
       display: flex;
       align-items: center;
       gap: 4px;
+      z-index: 10;
     }
 
+   
     .content {
-      padding: 16px 16px 16px 0;
+      padding: 18px 20px;
       flex: 1;
       display: flex;
       flex-direction: column;
     }
 
     .title {
-      font-size: var(--font-size-subtitle);
-      font-weight: 700;
-      color: var(--text-color-default);
-      margin-bottom: 8px;
-      line-height: 1.3;
+      font-size: 1.5em; 
+      font-weight: 800;
+      color: var(--text-color-default, #222);
+      margin-bottom: 4px;
+      line-height: 1.2;
     }
 
     .ingredients {
-      font-size: var(--font-size-subtitle);
-      color: var(--text-color-muted);
-      margin-bottom: 6px;
+      font-size: 0.9em;
+      color: var(--text-color-muted, #757575);
+      margin-bottom: 12px;
       cursor: pointer;
     }
 
-    .ingredients:hover {
-      text-decoration: underline;
-    }
-
-    .wow {
+    .details {
       display: flex;
-      gap: 6px;
-      color: var(--text-color-muted);
-      font-size: var(--font-size-default);
-    }
-
-    .price {
-      font-size: var(--font-size-big);
-      font-weight: 800;
-      color: var(dark);
-      margin: 10px 0 16px;
+      gap: 15px;
+      color: var(--text-color-muted, #9e9e9e);
+      font-size: 0.85em;
+      margin-bottom: 15px;
+      font-weight: 500;
     }
 
     .actions {
-      margin-top: auto;
+      margin-top: auto; 
       display: flex;
       justify-content: space-between;
-      gap: 10px;
       align-items: center;
     }
-
-    .add-btn {
-      background: var(--bg-color-accent);
-      color: white;
-      border: none;
-      padding: 14px 18px;
-      border-radius: 50%;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 15px;
+    
+    .price {
+      font-size: 1.8em; 
+      font-weight: 900;
+      color: var(--text-color-dark, #333);
+    }
+    
+    .price-unit {
+        font-size: 0.7em;
+        font-weight: 600;
+        margin-left: 2px;
     }
 
-    .add-btn:hover {
-      background: var(--color-orange-darker);
-      transform: translateY(-2px);
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+        align-items: center;
     }
 
     .favorite {
-      background: none;
-      border: 2px solid var(--color-white-2);
+      background: var(--color-white-2, #f5f5f5);
+      border: none;
       width: 44px;
       height: 44px;
       border-radius: 50%;
@@ -194,43 +209,100 @@ class LpFood extends HTMLElement {
       align-items: center;
       justify-content: center;
       font-size: 20px;
-      transition: all 0.5s ease;
+      color: var(--text-color-muted, #a0a0a0);
+      transition: all 0.3s ease;
+      flex-shrink: 0;
     }
 
-    .favorite:hover,
     .favorite.active {
-      background: var(--color-orange-lighter);
-      border-color: var(--bg-color-accent);
-      color: var(--bg-color-accent);
-}
+      color: var(--color-orange-lighter, hsl(25, 100%, 60%));
+    }
+    
+    .add-btn {
+      background: var(--bg-color-accent, #ff7043);
+      color: white;
+      border: none;
+      width: 44px; 
+      height: 44px;
+      border-radius: 50%;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px; 
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .add-btn.added {
+      background: var(--color-orange-lighter, hsl(25, 100%, 60%));
+    }
+
+    
+    @media (max-width: 600px) {
+        .card {
+            flex-direction: column;
+        }
+        .image-container {
+            width: 100%;
+            height: 180px;
+            min-height: unset;
+        }
+        .image {
+            border-radius: 20px 20px 0 0;
+        }
+        .content {
+            padding: 15px; 
+        }
+        .rating {
+            top: 10px;
+            right: 10px;
+            left: unset; 
+        }
+        .price {
+            font-size: 1.5em;
+        }
+        .action-buttons {
+            gap: 8px;
+        }
+    }
 </style>`;
+
     const shortIngredients =
       ingredients.split(",").slice(0, 6).join(", ") +
       (ingredients.split(",").length > 6 ? " ..." : "");
 
     this.shadowRoot.innerHTML = /*html*/ `
-       ${css}
-      <div class="card" role="group" aria-label="Food item">
+    ${css}
+    <div class="card" role="group" aria-label="${title} Food item">
         <div class="image-container" aria-label="Food image">
-          <img class="image" src="${image}" alt="${title}">
-          <div class="rating">⭐ ${rating}</div>
+            <img class="image" src="${image}" alt="${title}">
+            <div class="rating">⭐ ${rating}</div>
         </div>
         <div class="content">
-          <div class="title">${title}</div>
-          <div class="ingredients" id="ingredients">${shortIngredients}</div>
-          <div class="wow">
-            <div class="size">${size}</div>
-            <div class="calories">${calories}</div>
-          </div>
-          
-          <div class="actions" aria-label="Actions">
-            <!-- <button class="favorite" aria-label="Таалагдлаа">♡</button>  -->
-            <div class="price">${price}₮</div>
-            <button class="add-btn">+</button>
-          </div>
+            <div class="title">${title}</div>
+            <div class="ingredients" id="ingredients" title="${ingredients}">
+                ${shortIngredients}
+            </div>
+            <div class="details">
+                <div class="size">${size}</div>
+                <div class="calories">${calories}</div>
+            </div>
+            
+            <div class="actions" aria-label="Actions">
+                <div class="price">${price}<span class="price-unit">₮</span></div>
+                <div class="action-buttons">
+                    <button class="favorite" aria-label="Add to favorites">
+                        ♡ 
+                    </button>
+                    <button class="add-btn" aria-label="Add to cart">+</button>
+                </div>
+            </div>
         </div>
-      </div>
-    `;
+    </div>
+`;
 
     this.shadowRoot.querySelector(".add-btn").addEventListener("click", () => {
       cartStore.addItem({
@@ -248,6 +320,8 @@ class LpFood extends HTMLElement {
           detail: { id: itemId, title },
         })
       );
+
+      this.shadowRoot.querySelector(".add-btn").classList.add("added");
     });
 
     const favBtn = this.shadowRoot.querySelector(".favorite");

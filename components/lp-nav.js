@@ -83,7 +83,7 @@ class LpNav extends HTMLElement {
     constructor() {
         super();
         this.onHashChange = this.onHashChange.bind(this);
-        this.unsubscribe = null; // cartStore subscribe хадгалах
+        this.unsubscribe = null;
     }
 
     connectedCallback() {
@@ -92,7 +92,6 @@ class LpNav extends HTMLElement {
         this.updateActiveLink();
         this.attachLinkHandlers();
 
-        // cartStore subscribe хийх
         this.unsubscribe = cartStore.subscribe(() => this.updateCartCount());
 
         window.addEventListener("hashchange", this.onHashChange);
@@ -129,7 +128,7 @@ class LpNav extends HTMLElement {
         `;
 
         this.cacheLinks();
-        this.updateCartCount(); // анхны тоог харуулах
+        this.updateCartCount();
     }
 
     cacheLinks() {

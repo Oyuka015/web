@@ -8,7 +8,7 @@ class LpHome extends HTMLElement {
   }
 
   render() {
-    this.innerHTML = `
+    this.innerHTML = /*html*/ `
       <!-- home-header-component -->
       <lp-home-header></lp-home-header>
 
@@ -16,18 +16,13 @@ class LpHome extends HTMLElement {
       <lp-search></lp-search>
 
       <!-- ad turshilt-->
-      <div style="width: 90vw; height: 250px; margin-top: 10px">
-        <img
-          style="border-radius: 10px; width: 100%; height: 100%"
-          src="/assets/img/image.png"
-          alt="food img"
-        />
-      </div>
+      <lp-ad></lp-ad>
+
 
       <!-- category-component -->
-      <section style="margin-bottom: 20px; position: sticky; top: 0; background: white; z-index: 10; padding-top: 10px; padding-bottom: 10px; border-bottom: 1px solid var(--color-white-1);">
+      <section class="cat-container">
         <h3>Ангилал</h3>
-        <div style="display: flex; gap: 20px; overflow: scroll">
+        <div class="cat">
           <lp-category class="selectedCat" name="Хоол"></lp-category>
           <lp-category class="defCat" name="Pizza"></lp-category>
           <lp-category class="defCat" name="Pizza"></lp-category>
