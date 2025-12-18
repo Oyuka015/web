@@ -1,23 +1,29 @@
 import cartStore from "../components/cart-store.js";
 
 class LpPayment extends HTMLElement {
-    constructor() {
-        super();
-        
+  constructor() {
+    super();
+  }
+
+  connectedCallback() {
+    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
+    if (!isLoggedIn) {
+      window.location.hash = "#/login";
+      return;
     }
 
-    connectedCallback() {
-        this.render();
-    }
+    this.render();
+  }
 
-    render(){
-        const items = cartStore.getItems();
-        const foodTotal = cartStore.getTotal();
-        const deliveryFee = 10000;
-        const discount = 0;
-        const grandTotal = foodTotal + deliveryFee - discount;
-        
-        this.innerHTML = `
+  render() {
+    const items = cartStore.getItems();
+    const foodTotal = cartStore.getTotal();
+    const deliveryFee = 10000;
+    const discount = 0;
+    const grandTotal = foodTotal + deliveryFee - discount;
+
+    this.innerHTML = /*html */ `
             <lp-header></lp-header> 
             
             <section class="payment-main">
@@ -91,23 +97,22 @@ class LpPayment extends HTMLElement {
                 <button class="checkout-btn">Төлөх</button>
             </section>
             
-        `;  
+        `;
 
-        document.querySelectorAll(".paying-info a").forEach(link => {
-            link.addEventListener("click", e => {
-            e.preventDefault(); // route-г өөрөө удирдана
+    document.querySelectorAll(".paying-info a").forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault(); // route-г өөрөө удирдана
 
-            document
-                .querySelectorAll(".paying-info a")
-                .forEach(a => a.classList.remove("selected"));
+        document
+          .querySelectorAll(".paying-info a")
+          .forEach((a) => a.classList.remove("selected"));
 
-            link.classList.add("selected");
+        link.classList.add("selected");
 
-            window.location.hash = link.getAttribute("href");
-            });
-        });
-    }
-
+        window.location.hash = link.getAttribute("href");
+      });
+    });
+  }
 }
 
 window.customElements.define('lp-payment', LpPayment);

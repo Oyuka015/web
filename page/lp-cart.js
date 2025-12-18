@@ -252,9 +252,6 @@ class LpCart extends HTMLElement {
       this.shadowRoot.innerHTML = /*html*/ `
         ${css}
         <lp-header></lp-header>
-        <div class="cart-header">
-          <h2 class="cart-title">Сагс</h2>
-        </div>
         <div class="empty-state">
           <i class="ci-Shopping_Bag_02"></i>
           <h3>Сагс хоосон байна</h3>
@@ -267,7 +264,7 @@ class LpCart extends HTMLElement {
 
     const itemsHtml = items
       .map(
-      (item) => /*html*/ `
+        (item) => /*html*/ `
       <div class="cart-item">
       <img src="${item.image}" alt="${item.title}" class="item-image" />
       <div class="item-content">
@@ -275,17 +272,11 @@ class LpCart extends HTMLElement {
         <div class="item-price">${item.price}₮</div>
         <div class="item-controls">
         <div class="quantity-control">
-          <button class="qty-btn" data-action="decrease" data-id="${
-          item.id
-          }">−</button>
+          <button class="qty-btn" data-action="decrease" data-id="${item.id}">−</button>
           <span class="quantity">${item.quantity}</span>
-          <button class="qty-btn" data-action="increase" data-id="${
-          item.id
-          }">+</button>
+          <button class="qty-btn" data-action="increase" data-id="${item.id}">+</button>
         </div>
-        <button class="remove-btn" data-action="remove" data-id="${
-          item.id
-        }" title="Устгах"><i class="ci-Trash_full"></i></button>
+        <button class="remove-btn" data-action="remove" data-id="${item.id}" title="Устгах"><i class="ci-Trash_full"></i></button>
         </div>
       </div>
       </div>
@@ -296,10 +287,11 @@ class LpCart extends HTMLElement {
     this.shadowRoot.innerHTML = /*html*/ `
       ${css}
       <lp-header></lp-header>
-      <div class="cart-header">
+     <!--  <div class="cart-header">
         <h2 class="cart-title">Сагс</h2>
         <span class="item-count">${itemCount} бараа</span>
-      </div>
+      </div>-->
+
       <div class="cart-items">
         ${itemsHtml}
       </div>
@@ -314,7 +306,6 @@ class LpCart extends HTMLElement {
       </div>
     `;
 
-    // Attach event listeners
     this.shadowRoot.querySelectorAll(".qty-btn").forEach((btn) => {
       btn.addEventListener("click", (e) => {
         const action = e.target.getAttribute("data-action");
@@ -339,10 +330,15 @@ class LpCart extends HTMLElement {
 
     const checkoutBtn = this.shadowRoot.querySelector(".checkout-btn");
     if (checkoutBtn) {
-      checkoutBtn.addEventListener("click", () => {
-        if (items.length > 0) {
-          // alert(`Төлбөр төлөх: ${total.toLocaleString()}₮\n\nБаталгаажуулах уу?`);
-          // You can add actual checkout logic here
+      checkoutBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+        if (isLoggedIn) {
+          window.location.hash = "#/payment";
+        } else {
+          alert("Та эхлээд нэвтрэх шаардлагатай!");
+          window.location.hash = "#/login";
         }
       });
     }

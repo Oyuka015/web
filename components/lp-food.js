@@ -36,7 +36,7 @@ class LpFood extends HTMLElement {
 
   render() {
     const image = this.getAttribute("image");
-    const title = this.getAttribute("title") || "Food Item";
+    const title = this.getAttribute("title")||"Food Item";
     const price = this.getAttribute("price") || "0.00";
     const rating = this.getAttribute("rating") || "0.0";
     const ingredients = this.getAttribute("ingredients") || "мэдээлэл байхгүй.";
@@ -48,7 +48,7 @@ class LpFood extends HTMLElement {
       this.getAttribute("data-id") ||
       this.getAttribute("id");
     const itemId = (
-      providedId || `${slugify(title)}-${numericPrice}`
+      providedId ||`${slugify(title)}-${numericPrice}`
     ).toLowerCase();
 
     const css = /*css*/ `<style>
@@ -78,7 +78,7 @@ class LpFood extends HTMLElement {
     .ci-Heart_01:before {
       content: "\\e9ea";
     }
-    :host {
+    :host{
       display: block;
       border-radius: 20px;
       margin: 0 auto 20px auto;
@@ -147,7 +147,6 @@ class LpFood extends HTMLElement {
       margin-bottom: 4px;
       line-height: 1.2;
     }
-
     .ingredients {
       font-size: 0.9em;
       color: var(--text-color-muted, #757575);
@@ -252,12 +251,12 @@ class LpFood extends HTMLElement {
     const shortIngredients =
       ingredients.split(",").slice(0, 6).join(", ") +
       (ingredients.split(",").length > 6 ? " ..." : "");
-    this.shadowRoot.innerHTML = /*html*/ `
+    this.shadowRoot.innerHTML = /*html*/`
     ${css}
     <div class="card" role="group" aria-label="${title} Food item">
         <div class="image-container" aria-label="Food image">
             <img class="image" src="${image}" alt="${title}">
-            <div class="rating">⭐ ${rating}</div>
+            <div class="rating">⭐${rating}</div>
         </div>
         <div class="content">
             <div class="title">${title}</div>
