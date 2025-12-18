@@ -22,13 +22,7 @@ class LpHome extends HTMLElement {
       <!-- category-component -->
       <section class="cat-container">
         <h3>Ангилал</h3>
-        <div class="cat">
-          <lp-category class="selectedCat" name="Хоол"></lp-category>
-          <lp-category class="defCat" name="Pizza"></lp-category>
-          <lp-category class="defCat" name="Pizza"></lp-category>
-          <lp-category class="defCat" name="Pizza"></lp-category>
-          <lp-category class="defCat" name="Pizza"></lp-category>
-        </div>
+        <div class="cat"></div>
       </section>
 
       <!-- Food items -->
@@ -74,6 +68,28 @@ class LpHome extends HTMLElement {
       >
       </lp-food>
     `;
+     async function loadCategories() {
+      const res = await fetch("http://localhost:3000/categories");
+      const categories = await res.json();
+
+      const container = document.querySelector(".cat");
+      container.innerHTML = "";
+
+      categories.forEach((cat, index) => {
+        const el = document.createElement("lp-category");
+        el.setAttribute("name", cat.name);
+
+        if (index === 0) {
+          el.classList.add("selectedCat");
+        } else {
+          el.classList.add("defCat");
+        }
+        
+        container.appendChild(el);
+      });
+    }
+
+    loadCategories();
   }
 }
 
