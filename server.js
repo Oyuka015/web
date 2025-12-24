@@ -1,11 +1,21 @@
 const express = require("express");
 const cors = require("cors");
-const pool = require("./db");
-
+const path = require("path");
+const pool = require("./db"); // DB холболт
+ 
 const app = express();
 app.use(cors());
 app.use(express.json());
-
+ 
+// Static files serve хийх
+app.use(express.static(path.join(__dirname, "public")));
+ 
+// Homepage
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+ 
+// API: Categories
 app.get("/categories", async (req, res) => {
   try {
     const result = await pool.query(
@@ -16,7 +26,8 @@ app.get("/categories", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
-app.listen(3000, () => {
-  console.log("Server running on http://localhost:3000");
+ 
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
