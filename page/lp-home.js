@@ -4,12 +4,22 @@ class LpHome extends HTMLElement {
   constructor() {
     super();
     this.unsubscribe = null;
+    
+    this.foodItems = []; // servers awsan hoolnud hadgalah
+    this.selectedCategory = "all";
+    this.searchQuery = "";
   }
 
   connectedCallback() {
     this.render();
     this.loadCategories();
     this.loadFoods();
+    
+    // delayed listener
+    setTimeout(() => {
+      // this.setupCategoryListeners();
+      this.setupSearchListener();
+    }, 0);
   }
 
   render() {
@@ -93,45 +103,18 @@ class LpHome extends HTMLElement {
     
   }
 
-
   // -------- Food section --------
-  // Category medeelel 
-  async loadCategories() {
-    try {
-      const res = await fetch("http://localhost:3000/api/categories");
-      const categories = await res.json();
-
-        const container = this.querySelector(".cat");
-        container.innerHTML = "";
-
-      categories.forEach((cat, index) => {
-        const el = document.createElement("lp-category");
-        el.setAttribute("name", cat.name);
-        el.className = index === 0 ? "defCat selectedCat" : "defCat";
-
-        // 
-        el.addEventListener("click", () => {
-          // Бүх category-уудаас selected class-ийг арилгана
-          container.querySelectorAll("lp-category").forEach((c) => {
-            c.classList.remove("selectedCat"); 
-          });
-
-          // Дарсан element-д selected class нэмнэ
-          el.classList.add("selectedCat");
-        });
-
-        
-        container.appendChild(el);
-      });
-    } catch (err) {
-      console.error("Failed to load categories:", err);
-    }
-  }
-
-  // Hoolni medeelel
   async loadFoods() {
     try {
-      const res = await fetch("http://localhost:3000/api/foods");
+      const params = new URLSearchParams();
+      if (this.selectedCategory && this.selectedCategory !== "all") {
+        params.append("category", this.selectedCategory);
+      }
+      if (this.searchQuery) {
+        params.append("search", this.searchQuery);
+      }
+
+      const res = await fetch(`http://localhost:3000/api/foods?${params.toString()}`);
       const foods = await res.json();
 
       const main = this.querySelector("main");
@@ -139,23 +122,89 @@ class LpHome extends HTMLElement {
 
       foods.forEach(food => {
         const el = document.createElement("lp-food");
-
-        el.setAttribute("image", food.image_url);
-        el.setAttribute("title", food.name);
+        el.setAttribute("image", food.image_url || food.image);
+        el.setAttribute("title", food.name || food.title);
         el.setAttribute("price", food.price);
-        el.setAttribute("ingredients", food.description); 
-
-        if (food.ingredients) {
-          el.setAttribute("rating", food.rating);
-        }
+        el.setAttribute("rating", food.rating);
+        if (food.ingredients) el.setAttribute("ingredients", food.ingredients);
 
         main.appendChild(el);
       });
-
     } catch (err) {
       console.error("Failed to load foods", err);
     }
   }
+
+  async loadCategories() {
+    try {
+      const res = await fetch("http://localhost:3000/api/categories");
+      const categories = await res.json();
+
+      const container = this.querySelector(".cat");
+      container.innerHTML = "";
+
+      // 
+      const allEl = document.createElement("lp-category");
+      allEl.setAttribute("name", "All");
+      allEl.setAttribute("data-id", "all"); // энэ нь All category-г илэрхийлнэ
+      allEl.className = "defCat selectedCat";
+      allEl.addEventListener("click", () => {
+        container.querySelectorAll("lp-category").forEach(c => c.classList.remove("selectedCat"));
+        allEl.classList.add("selectedCat");
+        this.selectedCategory = "all"; // All дээр дарахад
+        this.loadFoods();
+      });
+      container.appendChild(allEl);
+      // 
+
+      categories.forEach((cat, index) => {
+        const el = document.createElement("lp-category");
+        el.setAttribute("name", cat.name);
+        el.setAttribute("data-id", cat.id); // category id хадгалах
+        // el.className = index === 0 ? "defCat selectedCat" : "defCat";
+        el.className = "defCat";
+
+
+        // click listener 
+        el.addEventListener("click", () => {
+          container.querySelectorAll("lp-category").forEach(c => c.classList.remove("selectedCat"));
+          el.classList.add("selectedCat");
+
+          this.selectedCategory = cat.id; // эсвэл cat.slug
+          this.loadFoods();
+        });
+
+        container.appendChild(el);
+      });
+
+    } catch (err) {
+      console.error("Failed to load categories:", err);
+    }
+  }
+
+  // setupCategoryListeners() {
+  //   const container = this.querySelector(".cat");
+  //   container.querySelectorAll("lp-category").forEach(el => {
+  //     el.addEventListener("click", () => {
+  //       container.querySelectorAll("lp-category").forEach(c => c.classList.remove("selectedCat"));
+  //       el.classList.add("selectedCat");
+
+  //       this.selectedCategory = el.getAttribute("data-id") || el.getAttribute("name");
+  //       this.loadFoods();
+  //     });
+  //   });
+  // }
+
+  setupSearchListener() {
+    const searchComponent = this.querySelector('lp-search');
+    if (!searchComponent) return;
+
+    searchComponent.addEventListener('search-input', (e) => {
+      this.searchQuery = e.detail.query.trim();
+      this.loadFoods();
+    });
+  }
+
 
 }
 

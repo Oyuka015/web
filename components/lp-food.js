@@ -400,7 +400,7 @@ class LpFood extends HTMLElement {
       </style> 
 
 
-      <img src="${image}" />
+      <img src="${this.getAttribute('image')}" />
       <div class="food-info">
         <h3>${title}</h3>
         <!--<span>⭐ ${rating}</span> -->

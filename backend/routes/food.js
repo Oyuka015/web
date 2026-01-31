@@ -1,12 +1,9 @@
 import express from "express";
-import { getAllFoods, getFoodsByCategory } from "../controllers/foodController.js";
+import { getFoods} from "../controllers/foodController.js";
 
 const router = express.Router();
 
-// Бүх хоол
-router.get("/", getAllFoods);
-
-// Тухайн category-ийн хоол
-router.get("/category/:id", getFoodsByCategory);
+router.get("/", getFoods); 
+// router.get("/category/:id", getFoodsByCategory);
 
 export default router;

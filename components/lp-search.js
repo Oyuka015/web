@@ -9,7 +9,28 @@ class LpSearch extends HTMLElement {
     connectedCallback() {
         this.render();
         this.unsubscribe = langStore.subscribe(() => this.render());
+        
+        const form = this.querySelector('form');       
+        const input = this.querySelector('input');     
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault(); // page reload hiihgui
+            this.dispatchEvent(new CustomEvent('search-input', {
+                detail: { query: input.value },
+                bubbles: true,
+                composed: true
+            }));
+        });
+
+        input.addEventListener('input', (e) => {
+            this.dispatchEvent(new CustomEvent('search-input', {
+                detail: { query: e.target.value },
+                bubbles: true,
+                composed: true
+            }));
+        });
     }
+    
 
     disconnectedCallback() {
         if (this.unsubscribe) this.unsubscribe();
@@ -40,8 +61,8 @@ class LpSearch extends HTMLElement {
                     background-color:var(--color-white);
                 }
             </style>
-            <form action="search">
-                <input placeholder="${langStore.t("searchPlaceholder")}" type="search">
+            <form >
+                <input class="search-input" placeholder="${langStore.t("searchPlaceholder")}" type="search">
                 <button><i class="ci-Slider_02"></i></button>
             </form>
         `;
