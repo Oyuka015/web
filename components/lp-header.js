@@ -26,7 +26,6 @@ class LpHeader extends HTMLElement {
 
   render() {
     const t = (key) => langStore.t(key);
-    const lang = langStore.getLang();
     const css = /*css*/ `
       <link rel="stylesheet" href="../css/coolicons.css">
       <style>
@@ -65,30 +64,11 @@ class LpHeader extends HTMLElement {
               color: var(--bg-color-accent);
               transform: scale(1.1);
             }
-            .lang-switcher {
-              display: flex;
-              align-items: center;
-              gap: 6px;
-              font-size: 14px;
-              font-weight: 600;
-            }
-            .lang-switcher button {
-              background: none;
-              border: 1px solid var(--text-color-muted, #999);
-              padding: 6px 12px;
-              border-radius: 8px;
-              cursor: pointer;
-              color: var(--text-color-default);
-              transition: all 0.2s;
-            }
-            .lang-switcher button.active {
-              background: var(--bg-color-accent);
-              border-color: var(--bg-color-accent);
-              color: white;
-            }
-            .lang-switcher button:hover:not(.active) {
-              border-color: var(--bg-color-accent);
-              color: var(--bg-color-accent);
+            #page-title {
+              text-align: center;
+              margin: 1em 0;
+              margin-right: 30px;
+              width: 100%;
             }
           </style>`;
     this.shadowRoot.innerHTML = /*html*/ `
@@ -100,17 +80,8 @@ class LpHeader extends HTMLElement {
               </a>
             </div>
             <h3 id="page-title"></h3>
-            <div class="lang-switcher">
-              <button type="button" data-lang="mn" class="${lang === "mn" ? "active" : ""}">MN</button>
-              <button type="button" data-lang="en" class="${lang === "en" ? "active" : ""}">EN</button>
-            </div>
           </div>
         `;
-    this.shadowRoot.querySelectorAll(".lang-switcher button").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        langStore.setLanguage(btn.getAttribute("data-lang"));
-      });
-    });
     this.updateTitle();
   }
 

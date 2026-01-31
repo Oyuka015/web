@@ -63,8 +63,7 @@ export async function getMe(req, res) {
         const userQuery = `
             SELECT id, name, email, phone, address, 
             (SELECT COUNT(*) FROM orders WHERE user_id = $1) as order_count,
-            (SELECT COUNT(*) FROM favorites WHERE user_id = $1) as saved_count,
-            (SELECT COUNT(*) FROM vouchers WHERE user_id = $1) as voucher_count
+            (SELECT COUNT(*) FROM saved_foods WHERE user_id = $1) as saved_count
             FROM users WHERE id = $1`;
         
         const user = await pool.query(userQuery, [req.user.id]);

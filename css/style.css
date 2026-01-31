@@ -11,7 +11,8 @@
   --color-dark-3: hsl(0, 0%, 30%);
   --color-dark-4: hsl(0, 0%, 40%);
   --color-dark-5: hsl(0, 0%, 50%);
-  --color-white-transparent: hsla(0, 0%, 100%, 0.873); /*tungalag*/
+  --color-white-transparent: hsla(0, 0%, 100%, 0.873);
+  /*tungalag*/
 
   --color-white-0: hsl(0, 0%, 100%);
   --color-white-0_5: hsl(0, 0%, 95%);
@@ -29,7 +30,6 @@
 
   --shadow-color: var(--color-white-1_5);
 
-  /* turshij uzew oorchilj bolno */
   --font-size-default: 15px;
   --font-size-title: 30px;
   --font-size-subtitle: 20px;
@@ -43,21 +43,51 @@
   --font-family-inter: "Inter", sans-serif;
   --font-family-mono: "JetBrains Mono", monospace;
 }
-*{
+
+* {
   font-family: var(--font-family-nunito);
 }
+
 body {
   margin: 0;
   padding: 0.5rem 1rem;
-  /* font-family: var(--font-family-inter); */
+  background: var(--color-white-0);
+  color: var(--text-color-default);
+  transition: background 0.3s ease, color 0.3s ease;
 }
+
+body.dark {
+  --color-white-0: hsl(0, 0%, 10%);
+  --color-white-0_5: hsl(0, 0%, 13%);
+  --color-white-1: hsl(0, 0%, 16%);
+  --color-white-1_5: hsl(0, 0%, 20%);
+  --color-white-2: hsl(0, 0%, 25%);
+  --color-white-3: hsl(0, 0%, 30%);
+  --color-white-4: hsl(0, 0%, 40%);
+
+  --color-dark-0: hsl(0, 0%, 100%);
+  --color-dark-1: hsl(0, 0%, 95%);
+  --color-dark-2: hsl(0, 0%, 85%);
+  --color-dark-3: hsl(0, 0%, 70%);
+  --color-dark-4: hsl(0, 0%, 60%);
+  --color-dark-5: hsl(0, 0%, 50%);
+
+  --shadow-color: hsla(0, 0%, 0%, 0.6);
+
+  --bg-color-accent: var(--color-orange-lighter);
+  --text-color-default: var(--color-dark-1);
+  --text-color-muted: var(--color-dark-4);
+}
+
 .food {
   border: 1px solid black;
   padding: 10px;
   border-radius: 10px;
+
   h3 {
     color: var(--text-color-accent);
   }
+
   img {
     width: 100px;
     height: 100px;
@@ -69,13 +99,15 @@ a {
   color: var(--color-dark-1);
   text-decoration: none;
 }
+
 .active {
   color: var(--text-color-accent);
 }
 
 /* scroll bar hide */
 ::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Edge */
+  display: none;
+  /* Chrome, Safari, Edge */
 }
 
 /* footer app menu */
@@ -97,16 +129,16 @@ lp-nav nav {
     padding: 10px;
   }
 
-  a > i {
+  a>i {
     font-size: 25px;
   }
 
-  span{
-      padding: 3px 8px;
-      background: orange;
-      border-radius: 50%;
-      position: absolute;
-      top: 8px;
+  span {
+    padding: 3px 8px;
+    background: orange;
+    border-radius: 50%;
+    position: absolute;
+    top: 8px;
   }
 
 }
@@ -178,6 +210,7 @@ lp-bg-btn {
     border: none;
   }
 }
+
 .container {
   /* max-width: 1200px; */
   max-width: 800px;
@@ -190,20 +223,27 @@ lp-bg-btn {
 
 
 /* save */
-.save-main, .payment-main, .acc-main{
+.save-main,
+.payment-main,
+.acc-main {
   margin-top: 80px;
 }
 
 /* profile -- acc  */
-.user-info, .acc-info, .help-info, .delivery-info, .logout-info{
+.user-info,
+.acc-info,
+.help-info,
+.delivery-info,
+.logout-info {
   margin-bottom: 20px;
   border-radius: 15px;
   /* box-shadow: -2px 3px 16px var(--color-white-3); */
   box-shadow: -2px 3px 16px hsl(0deg 0% 70% / 55%);
   padding: 10px 15px;
 }
-.user-info{
-  .profile{
+
+.user-info {
+  .profile {
     display: flex;
     align-items: center;
     position: relative;
@@ -212,16 +252,16 @@ lp-bg-btn {
     padding: 15px 0 25px 0;
     border-bottom: 1px solid var(--color-dark-5);
 
-    img{
+    img {
       width: 80px;
       height: 80px;
       border-radius: 50%;
       margin-right: 10px;
     }
 
-    button{
-      position: absolute ;
-      right: 0; 
+    button {
+      position: absolute;
+      right: 0;
       padding: 10px 20px;
       border-radius: 30px;
       outline: none;
@@ -233,13 +273,13 @@ lp-bg-btn {
     }
   }
 
-  .dash{
+  .dash {
     display: flex;
-    justify-content: space-between; 
+    justify-content: space-between;
     padding: 0 15px;
     gap: 20px;
 
-    li{
+    li {
       list-style: none;
       display: flex;
       flex-direction: column;
@@ -248,12 +288,13 @@ lp-bg-btn {
       padding: 15px;
       border-radius: 15px;
       /* background-color: var(--color-white-1);  */
-      background-color: hsl(0deg 0% 95.31% / 87%);; 
+      background-color: hsl(0deg 0% 95.31% / 87%);
+      ;
       flex-grow: 1;
       font-size: 25px;
       font-family: var(--font-family-nunito);
 
-      span{
+      span {
         font-size: 13px;
         color: var(--color-dark-5);
       }
@@ -261,98 +302,103 @@ lp-bg-btn {
   }
 }
 
-.acc-info, .help-info, .delivery-info, .logout-info{
-  li{
+.acc-info,
+.help-info,
+.delivery-info,
+.logout-info {
+  li {
     list-style: none;
     padding: 10px 0;
     border-bottom: 1px solid var(--color-white-2);
 
-    a{
-      display: flex;
+    a {
       align-items: center;
       position: relative;
       gap: 10px;
 
-      div.info-icon{ 
+      div.info-icon {
         padding: 14px;
         display: flex;
         justify-content: center;
         align-items: center;
-        border-radius: 50%; 
+        border-radius: 50%;
         background-color: #f5f5ff;
       }
-      span{
+
+      span {
         position: absolute;
         right: 0;
       }
     }
   }
 
-  li:last-child{
+  li:last-child {
     border-bottom: none;
   }
 }
 
 
 /* payment section */
-.payment-main{
+.payment-main {
   padding: 0 20px;
   overflow: hidden;
 
-  .map-img{  
+  .map-img {
 
-    img{
+    img {
       width: 100%;
       height: 100%;
     }
   }
 
-  .delivery-info{
-    p{
+  .delivery-info {
+    p {
       display: flex;
       flex-direction: column;
     }
 
-    .add-info{
+    .add-info {
       line-height: 5px;
     }
-    .add-info p:last-child{
+
+    .add-info p:last-child {
       color: var(--color-white-4);
     }
   }
 
-  .paying-info{
+  .paying-info {
     display: flex;
     justify-content: space-between;
     padding: 0 5px;
 
-    li{
+    li {
       list-style: none;
       width: 100px;
       height: 100px;
       border-radius: 20px;
       box-shadow: 0 0 11px var(--color-white-3);
-      
-      a{
+
+      a {
         width: 100%;
         height: 100%;
         display: flex;
-        flex-direction: column;  
-        align-items: center;  
-        justify-content: center; 
-        text-decoration: none;  
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
 
-        img{  
+        img {
           height: auto;
           margin-bottom: 8px;
         }
-        p{ 
+
+        p {
           margin: 0;
           font-size: 14px;
           color: #333;
           text-align: center;
         }
-      } 
+      }
 
       a.selected {
         border: 2px solid var(--color-orange-lighter);
@@ -360,10 +406,10 @@ lp-bg-btn {
         border-radius: 20px;
         box-shadow: 0 -1px 20px var(--color-orange-lightest);
       }
-    } 
+    }
   }
 
-  #voucher-info{
+  #voucher-info {
     width: 100%;
     padding: 20px;
     border: 2px dashed green;
@@ -378,22 +424,22 @@ lp-bg-btn {
     background-position: right 16px center;
   }
 
-  .price-info{ 
+  .price-info {
     padding: 0 5px;
 
-    li{
+    li {
       list-style: none;
       display: flex;
       justify-content: space-between;
       line-height: 0;
     }
 
-    li:last-child{
+    li:last-child {
       border-top: 1px dashed black;
       padding-top: 10px;
     }
   }
-} 
+}
 
 
 /*  */
@@ -414,13 +460,14 @@ lp-bg-btn {
 /* MEDIA */
 /* food heseg */
 @media (max-width: 480px) {
-    main {
-      grid-template-columns: 1fr;
-    }
+  main {
+    grid-template-columns: 1fr;
+  }
 }
+
 @media (max-width: 768px) {
-    main {
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 12px;
-    }
+  main {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 12px;
+  }
 }
