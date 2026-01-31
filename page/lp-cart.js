@@ -300,9 +300,7 @@ class LpCart extends HTMLElement {
           <span class="summary-label">Нийт дүн:</span>
           <span class="summary-total">${total.toLocaleString()}₮</span>
         </div> 
-        <a href="#/payment">
-          <button class="checkout-btn">Төлбөр төлөх</button>
-        </a>
+        <button class="checkout-btn">Төлбөр төлөх</button>
       </div>
     `;
 

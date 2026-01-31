@@ -36,7 +36,7 @@ class LpCategory extends HTMLElement {
                     color: var(--text-color-default);
                 }
             </style>
-      <div>${name}</div>
+      ${name}
     `;
     
   }

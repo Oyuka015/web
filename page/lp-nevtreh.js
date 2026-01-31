@@ -13,13 +13,69 @@ class LpNevtreh extends HTMLElement {
     this.render();
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
+  async handleSubmit(e) {
+   /* e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
 
     console.log(`${this.isLoginMode ? "Login" : "Register"} Data:`, data);
-    alert(`${this.isLoginMode ? "Нэвтрэх" : "Бүртгүүлэх"} хүсэлт илгээгдлээ!`);
+    alert(`${this.isLoginMode ? "Нэвтрэх" : "Бүртгүүлэх"} хүсэлт илгээгдлээ!`); */
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+        const url = this.isLoginMode
+        ? "http://localhost:3000/api/login"
+        : "http://localhost:3000/api/register";
+
+        const body = this.isLoginMode
+        ? {
+            email: data.email,
+            password: data.password,
+            }
+        : {
+            fullname: data.username,
+            email: data.email,
+            password: data.password,
+            };
+
+        const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+        });
+
+        const result = await res.json();
+
+        if (!res.ok) {
+        alert(result.error || "Алдаа гарлаа");
+        return;
+        }
+
+        if (this.isLoginMode) {
+        /*localStorage.setItem("token", result.token);
+        alert("Амжилттай нэвтэрлээ");
+        console.log(result.user);*/
+        
+        // Амжилттай login
+        localStorage.setItem("token", result.token);
+        localStorage.setItem("isLoggedIn", "true");
+
+        // Өмнөх page руу буцаах логик
+        const redirectTo = localStorage.getItem("redirectAfterLogin") || "#/";
+        localStorage.removeItem("redirectAfterLogin");
+        window.location.hash = redirectTo;
+
+        alert("Амжилттай нэвтэрлээ");
+        console.log(result.user);
+        } else {
+        alert("Амжилттай бүртгэгдлээ. Одоо нэвтэрнэ үү");
+        this.toggleMode();
+        }
+    } catch (err) {
+        alert("Server error");
+    }
   }
 
   render() {
