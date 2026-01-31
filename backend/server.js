@@ -4,8 +4,8 @@ import path from "path";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
 
-import categoryRoutes from "./api/category-routes.js";
-import foodRoutes from "./api/food-routes.js";
+import categoryRoutes from "./routes/category.js";
+import foodRoutes from "./routes/food.js";
 import authRoutes from "./routes/auth.js";
 
 dotenv.config();
@@ -21,8 +21,7 @@ app.use(express.json());
 
 app.use(express.static(path.join(__dirname, "public")));
 
-// ROUTES
-// app.use("/api/auth", authRoutes);
+// ROUTES 
 app.use("/api/categories", categoryRoutes); 
 app.use("/api/foods", foodRoutes);  
 app.use("/api/auth", authRoutes);

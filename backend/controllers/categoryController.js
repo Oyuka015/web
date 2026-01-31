@@ -1,16 +1,11 @@
-import express from "express";
 import pool from "../config/db.js";
 
-const router = express.Router();
-
-router.get("/", async (req, res) => {
+export async function getAllCategories(req, res) {
   try {
     const { rows } = await pool.query("SELECT id, name, slug FROM categories ORDER BY id");
-    res.json(rows); 
+    res.json(rows);
   } catch (err) {
-    console.error(err.message);
+    console.error(err);
     res.status(500).json({ error: err.message });
   }
-});
-
-export default router;
+}

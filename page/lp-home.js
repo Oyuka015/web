@@ -113,8 +113,7 @@ class LpHome extends HTMLElement {
         el.addEventListener("click", () => {
           // Бүх category-уудаас selected class-ийг арилгана
           container.querySelectorAll("lp-category").forEach((c) => {
-            c.classList.remove("selectedCat");
-            console.log(cat.name, cat.id);
+            c.classList.remove("selectedCat"); 
           });
 
           // Дарсан element-д selected class нэмнэ
