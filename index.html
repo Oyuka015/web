@@ -19,25 +19,23 @@
   <script type="module" src="page/lp-payment.js"></script>
   <script type="module" src="page/lp-nevtreh.js"></script>
 
-  <script type="module" src="components/lp-nav.js"></script>
-  <script type="module" src="components/lp-home-header.js"></script>
-  <script type="module" src="components/lp-bg-btn.js"></script>
-  <script type="module" src="components/lp-search.js"></script>
-  <script type="module" src="components/lp-category.js"></script>
-  <script type="module" src="components/lp-router.js"></script>
-  <script type="module" src="components/lp-route.js"></script>
-</head>
-
-<body>
-  <lp-router>
-    <lp-route path="/" component="lp-home"></lp-route>
-    <lp-route path="/save" component="lp-save"></lp-route>
-    <lp-route path="/cart" component="lp-cart"></lp-route>
-    <lp-route path="/acc" component="lp-acc"></lp-route>
-    <lp-route path="/payment" component="lp-payment"></lp-route>
-    <lp-route path="/login" component="lp-nevtreh"></lp-route>
-  </lp-router>
-  <lp-nav></lp-nav>
-</body>
-
+    <script type="module" src="components/lp-nav.js"></script>
+    <script type="module" src="components/lp-home-header.js"></script>
+    <script type="module" src="components/lp-bg-btn.js"></script>
+    <script type="module" src="components/lp-search.js"></script>
+    <script type="module" src="components/lp-category.js"></script>
+    <script type="module" src="routers/lp-router.js"></script>
+    <script src="routers/lp-route.js"></script>
+  </head>
+  <body>
+    <lp-router>
+      <lp-route path="/" component="lp-home"></lp-route>
+      <lp-route path="/save" component="lp-save"></lp-route>
+      <lp-route path="/cart" component="lp-cart"></lp-route>
+      <lp-route path="/acc" component="lp-acc"></lp-route>
+      <lp-route path="/payment" component="lp-payment"></lp-route>
+      <lp-route path="/login" component="lp-nevtreh"></lp-route> 
+    </lp-router>
+    <lp-nav></lp-nav>
+  </body> 
 </html>

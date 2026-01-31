@@ -1,24 +1,27 @@
 import cartStore from "../components/cart-store.js";
+import langStore from "../components/lang-store.js";
 
 class LpCart extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
     this.unsubscribe = null;
+    this.langUnsubscribe = null;
   }
 
   connectedCallback() {
     this.render();
     this.unsubscribe = cartStore.subscribe(() => this.render());
+    this.langUnsubscribe = langStore.subscribe(() => this.render());
   }
 
   disconnectedCallback() {
-    if (this.unsubscribe) {
-      this.unsubscribe();
-    }
+    if (this.unsubscribe) this.unsubscribe();
+    if (this.langUnsubscribe) this.langUnsubscribe();
   }
 
   render() {
+    const t = (key) => langStore.t(key);
     const items = cartStore.getItems();
     const total = cartStore.getTotal();
     const itemCount = cartStore.getItemCount();
@@ -254,9 +257,9 @@ class LpCart extends HTMLElement {
         <lp-header></lp-header>
         <div class="empty-state">
           <i class="ci-Shopping_Bag_02"></i>
-          <h3>Сагс хоосон байна</h3>
-          <p>Хоол нэмэхийн тулд нүүр хуудас руу буцна уу</p>
-          <a href="#/">Хоол сонгох</a>
+          <h3>${t("cartEmptyTitle")}</h3>
+          <p>${t("cartEmptyDesc")}</p>
+          <a href="#/">${t("cartSelectFood")}</a>
         </div>
       `;
       return;
@@ -276,7 +279,7 @@ class LpCart extends HTMLElement {
           <span class="quantity">${item.quantity}</span>
           <button class="qty-btn" data-action="increase" data-id="${item.id}">+</button>
         </div>
-        <button class="remove-btn" data-action="remove" data-id="${item.id}" title="Устгах"><i class="ci-Trash_full"></i></button>
+        <button class="remove-btn" data-action="remove" data-id="${item.id}" title="${t("cartRemove")}"><i class="ci-Trash_full"></i></button>
         </div>
       </div>
       </div>
@@ -297,12 +300,10 @@ class LpCart extends HTMLElement {
       </div>
       <div class="cart-summary">
         <div class="summary-row">
-          <span class="summary-label">Нийт дүн:</span>
+          <span class="summary-label">${t("cartTotal")}</span>
           <span class="summary-total">${total.toLocaleString()}₮</span>
         </div> 
-        <a href="#/payment">
-          <button class="checkout-btn">Төлбөр төлөх</button>
-        </a>
+        <button class="checkout-btn">${t("cartCheckout")}</button>
       </div>
     `;
 
@@ -333,11 +334,13 @@ class LpCart extends HTMLElement {
       checkoutBtn.addEventListener("click", (e) => {
         e.preventDefault();
 
-        const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+        const isLoggedIn =
+          localStorage.getItem("isLoggedIn") === "true" ||
+          !!localStorage.getItem("token");
         if (isLoggedIn) {
           window.location.hash = "#/payment";
         } else {
-          alert("Та эхлээд нэвтрэх шаардлагатай!");
+          alert(langStore.t("cartLoginRequired"));
           window.location.hash = "#/login";
         }
       });

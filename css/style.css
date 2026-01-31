@@ -189,7 +189,7 @@ lp-bg-btn {
 }
 
 /* profile -- acc  */
-.user-info, .acc-info, .help-info, .delivery-info{
+.user-info, .acc-info, .help-info, .delivery-info, .logout-info{
   margin-bottom: 20px;
   border-radius: 15px;
   /* box-shadow: -2px 3px 16px var(--color-white-3); */
@@ -255,7 +255,7 @@ lp-bg-btn {
   }
 }
 
-.acc-info, .help-info, .delivery-info{
+.acc-info, .help-info, .delivery-info, .logout-info{
   li{
     list-style: none;
     padding: 10px 0;
