@@ -9,6 +9,7 @@ class LpHome extends HTMLElement {
   connectedCallback() {
     this.render();
     this.loadCategories();
+    this.loadFoods();
   }
 
   render() {
