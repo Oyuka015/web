@@ -6,17 +6,16 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-dotenv.config({ path: path.join(__dirname, ".env") });  // .env backend дотор байгааг уншдаг
+dotenv.config({ path: path.join(__dirname, "../.env") });
 
 const { Pool } = pg;
 
 const pool = new Pool({
-  user: process.env.DB_USER,
+  user: process.env.DB_USER || "postgres",
   host: process.env.DB_HOST,
   database: process.env.DB_NAME,
-  // password: process.env.DB_PASS,
   password: String(process.env.DB_PASS),
-  port: Number(process.env.DB_PORT), 
+  port: Number(process.env.DB_PORT),
   ssl: false,
 });
 

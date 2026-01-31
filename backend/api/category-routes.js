@@ -1,5 +1,5 @@
-import express, { json } from "express";
-import pool from "../db.js"; // backend-д байгаа болохоор ..
+import express from "express";
+import pool from "../config/db.js";
 
 const router = express.Router();
 
@@ -9,7 +9,7 @@ router.get("/", async (req, res) => {
     res.json(rows);
     console.log(json(rows));
   } catch (err) {
-    console.error(err.message); // console-д алдааг харуулах
+    console.error(err.message);
     res.status(500).json({ error: err.message });
   }
 });

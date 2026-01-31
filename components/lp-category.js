@@ -62,4 +62,3 @@ class LpCategory extends HTMLElement {
 }
 
 customElements.define("lp-category", LpCategory);
-

@@ -1,11 +1,20 @@
+import langStore from "../components/lang-store.js";
+
 class LpNevtreh extends HTMLElement {
   constructor() {
     super();
     this.isLoginMode = true;
+    this.apiUrl = "http://localhost:3000/api/auth";
+    this.langUnsubscribe = null;
   }
 
   connectedCallback() {
     this.render();
+    this.langUnsubscribe = langStore.subscribe(() => this.render());
+  }
+
+  disconnectedCallback() {
+    if (this.langUnsubscribe) this.langUnsubscribe();
   }
 
   toggleMode() {
@@ -14,237 +23,241 @@ class LpNevtreh extends HTMLElement {
   }
 
   async handleSubmit(e) {
-   /* e.preventDefault();
+    e.preventDefault();
+    const btn = e.target.querySelector("button");
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
 
-    console.log(`${this.isLoginMode ? "Login" : "Register"} Data:`, data);
-    alert(`${this.isLoginMode ? "Нэвтрэх" : "Бүртгүүлэх"} хүсэлт илгээгдлээ!`); */
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData.entries());
+    btn.disabled = true;
+    const originalText = btn.innerText;
+    btn.innerText = langStore.t("loginWait");
 
     try {
-        const url = this.isLoginMode
-        ? "http://localhost:3000/api/login"
-        : "http://localhost:3000/api/register";
+      const endpoint = this.isLoginMode ? "/login" : "/register";
 
-        const body = this.isLoginMode
-        ? {
-            email: data.email,
-            password: data.password,
-            }
-        : {
-            fullname: data.username,
-            email: data.email,
-            password: data.password,
-            };
+      const body = this.isLoginMode
+        ? { email: data.email, password: data.password }
+        : { name: data.name, email: data.email, password: data.password };
 
-        const res = await fetch(url, {
+      const res = await fetch(`${this.apiUrl}${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
-        });
+      });
 
-        const result = await res.json();
+      const result = await res.json();
 
-        if (!res.ok) {
-        alert(result.error || "Алдаа гарлаа");
-        return;
-        }
+      if (!res.ok) throw new Error(result.error || "Алдаа гарлаа");
 
-        if (this.isLoginMode) {
-        /*localStorage.setItem("token", result.token);
-        alert("Амжилттай нэвтэрлээ");
-        console.log(result.user);*/
-        
-        // Амжилттай login
+      if (this.isLoginMode) {
         localStorage.setItem("token", result.token);
+        localStorage.setItem("userName", result.user.name);
         localStorage.setItem("isLoggedIn", "true");
 
-        // Өмнөх page руу буцаах логик
         const redirectTo = localStorage.getItem("redirectAfterLogin") || "#/";
         localStorage.removeItem("redirectAfterLogin");
-        window.location.hash = redirectTo;
 
-        alert("Амжилттай нэвтэрлээ");
-        console.log(result.user);
-        } else {
-        alert("Амжилттай бүртгэгдлээ. Одоо нэвтэрнэ үү");
+        alert(langStore.t("loginWelcome") + result.user.name + "!");
+        window.location.hash = redirectTo;
+      } else {
+        alert(langStore.t("loginRegisterSuccess"));
         this.toggleMode();
-        }
+      }
     } catch (err) {
-        alert("Server error");
+      alert(err.message);
+    } finally {
+      btn.disabled = false;
+      btn.innerText = originalText;
     }
   }
 
   render() {
-    this.innerHTML = /*css */ `
-        <style>
-        .auth-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: calc(100vh - 150px); 
-            padding: 20px;
-        }
+    this.innerHTML = `
+    <style>
+      :root {
+        --primary: #ff6200;
+        --primary-dark: #e55a00;
+        --text-dark: #1f2937;
+        --text-muted: #6b7280;
+        --bg: #f8fafc;
+        --border: #e2e8f0;
+        --shadow-sm: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+        --shadow-md: 0 10px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+        --radius: 12px;
+      }
+      .auth-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: calc(100vh - 140px);
+        padding: 20px 16px;
+        background: var(--bg);
+      }
+      .auth-card {
+        width: 100%;
+        max-width: 420px;
+        padding: 2.5rem 2rem;
+        background: white;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-md);
+        transition: transform 0.2s ease, box-shadow 0.25s ease;
+      }
+      .auth-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 35px -10px rgba(0,0,0,0.12);
+      }
+      .auth-header {
+        text-align: center;
+        margin-bottom: 2.25rem;
+      }
+      .auth-header h2 {
+        color: var(--text-dark);
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin: 0;
+        letter-spacing: -0.4px;
+      }
+      .form-group {
+        margin-bottom: 1.4rem;
+      }
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: var(--text-dark);
+        font-size: 0.95rem;
+        font-weight: 600;
+      }
+      .form-group input {
+        width: 100%;
+        padding: 0.9rem 1rem;
+        font-size: 1rem;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-sizing: border-box;
+        transition: all 0.2s ease;
+        background: #ffffff;
+      }
+      .form-group input:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(255, 98, 0, 0.12);
+      }
+      .form-group input::placeholder {
+        color: #a0aec0;
+        opacity: 1;
+      }
+      .submit-btn {
+        width: 100%;
+        padding: 1rem;
+        margin-top: 1.25rem;
+        background: var(--primary);
+        color: white;
+        font-size: 1.05rem;
+        font-weight: 600;
+        border: none;
+        border-radius: var(--radius);
+        cursor: pointer;
+        transition: all 0.22s ease;
+      }
+      .submit-btn:hover {
+        background: var(--primary-dark);
+        transform: translateY(-1px);
+      }
+      .submit-btn:active {
+        transform: translateY(0);
+      }
+      .submit-btn:disabled {
+        background: #cbd5e1;
+        cursor: not-allowed;
+        transform: none;
+      }
+      .switch-mode {
+        text-align: center;
+        margin-top: 1.5rem;
+        font-size: 0.95rem;
+        color: var(--text-muted);
+      }
+      .switch-mode button {
+        background: none;
+        border: none;
+        color: var(--primary);
+        font-weight: 600;
+        cursor: pointer;
+        padding: 0;
+        margin-left: 0.35rem;
+        transition: color 0.2s ease;
+      }
 
+      .switch-mode button:hover {
+        color: var(--primary-dark);
+        text-decoration: underline;
+      }
+
+      @media (max-width: 480px) {
         .auth-card {
-            background-color: var(--color-white-0);
-            padding: 2.5rem 2rem;
-            border-radius: 20px; 
-            box-shadow: 0 15px 35px var(--shadow-color);
-            width: 100%;
-            max-width: 420px; 
-            font-family: var(--font-family-nunito);
-            transition: transform 0.3s ease;
+          padding: 2rem 1.5rem;
+          box-shadow: var(--shadow-sm);
+          border-radius: 0;
+          min-height: 100vh;
         }
 
-        @media (max-width: 480px) {
-            .auth-card {
-                padding: 1.5rem;
-                box-shadow: none; 
-                border: 1px solid var(--color-white-1_5);
-            }
-            
-            .auth-header h2 {
-                font-size: 24px;
-            }
-        }
-        .auth-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
         .auth-header h2 {
-            color: var(--text-color-accent);
-            font-size: var(--font-size-title);
-            font-weight: 800;
-            margin: 0;
-            letter-spacing: -0.5px;
+          font-size: 1.55rem;
         }
-        .form-group {
-            margin-bottom: 1.25rem;
-            position: relative;
-        }
-        .form-group label {
-            display: block;
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--text-color-muted);
-            margin-bottom: 0.6rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 14px 16px;
-            border: 2px solid var(--color-white-1_5); /* Хүрээг тод болгов */
-            border-radius: 12px;
-            font-size: var(--font-size-default);
-            box-sizing: border-box;
-            transition: all 0.2s ease-in-out;
-            background-color: var(--color-white-1);
-        }
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--color-orange);
-            background-color: var(--color-white-0);
-            box-shadow: 0 0 0 4px rgba(255, 102, 0, 0.1);
-        }
-        .submit-btn {
-            width: 100%;
-            padding: 16px;
-            background-color: var(--bg-color-accent);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            margin-top: 1rem;
-            box-shadow: 0 4px 12px rgba(255, 102, 0, 0.2);
-        }
-        .submit-btn:hover {
-            background-color: var(--color-orange-darker);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(255, 102, 0, 0.3);
-        }
-        .submit-btn:active {
-            transform: translateY(0);
-        }
-        .switch-mode {
-            text-align: center;
-            margin-top: 1.5rem;
-            font-size: 14px;
-            color: var(--text-color-muted);
-            padding-top: 1rem;
-            border-top: 1px solid var(--color-white-1_5);
-        }
-        .switch-mode span {
-            color: var(--color-orange);
-            cursor: pointer;
-            font-weight: 700;
-            margin-left: 5px;
-            transition: color 0.2s;
-        }
-        .switch-mode span:hover {
-            color: var(--color-orange-darkest);
-            text-decoration: underline;
-        }
+      }
     </style>
 
-        <div class="auth-card">
-            <div class="auth-header">
-                <h2>${this.isLoginMode ? "Нэвтрэх" : "Бүртгүүлэх"}</h2>
-            </div>
-            
-            <form id="authForm">
-                ${
-                  !this.isLoginMode
-                    ? `
-                <div class="form-group">
-                    <label>Нэр</label>
-                    <input type="text" name="username" placeholder="Таны нэр" required>
-                </div>
-                `
-                    : ""
-                }
-                
-                <div class="form-group">
-                    <label>И-мэйл хаяг</label>
-                    <input type="email" name="email" placeholder="email@example.com" required>
-                </div>
-                
-                <div class="form-group">
-                    <label>Нууц үг</label>
-                    <input type="password" name="password" placeholder="********" required>
-                </div>
-
-                <button type="submit" class="submit-btn">
-                    ${this.isLoginMode ? "Нэвтрэх" : "Бүртгүүлэх"}
-                </button>
-            </form>
-
-            <div class="switch-mode">
-                ${this.isLoginMode ? "Бүртгэлгүй юу?" : "Бүртгэлтэй юу?"} 
-                <span id="toggleBtn">${
-                  this.isLoginMode ? "Бүртгүүлэх" : "Нэвтрэх"
-                }</span>
-            </div>
+    <section class="auth-container">
+      <div class="auth-card">
+        <div class="auth-header">
+          <h2>${this.isLoginMode ? langStore.t("loginTitle") : langStore.t("registerTitle")}</h2>
         </div>
-        `;
 
-    this.querySelector("#authForm").addEventListener("submit", (e) =>
-      this.handleSubmit(e)
-    );
-    this.querySelector("#toggleBtn").addEventListener("click", () =>
-      this.toggleMode()
-    );
-  }
+        <form id="authForm">
+          ${
+            !this.isLoginMode
+              ? `
+          <div class="form-group">
+            <label>${langStore.t("loginFullName")}</label>
+            <input type="text" name="name" placeholder="${langStore.t("loginNamePlaceholder")}" required autocomplete="name">
+          </div>
 
-  disconnectedCallback() {
-    console.log("LpNevtreh removed");
+          <div class="form-group">
+            <label>${langStore.t("loginAddress")}</label>
+            <input type="text" name="address" placeholder="${langStore.t("loginAddressPlaceholder")}" required autocomplete="street-address">
+          </div>
+          `
+              : ""
+          }
+
+          <div class="form-group">
+            <label>${langStore.t("loginEmail")}</label>
+            <input type="email" name="email" placeholder="email@example.com" required autocomplete="email">
+          </div>
+
+          <div class="form-group">
+            <label>${langStore.t("loginPassword")}</label>
+            <input type="password" name="password" minlength="6" placeholder="••••••••" required autocomplete="current-password">
+          </div>
+
+          <button type="submit" class="submit-btn">
+            ${this.isLoginMode ? langStore.t("loginTitle") : langStore.t("registerTitle")}
+          </button>
+        </form>
+
+        <div class="switch-mode">
+          ${this.isLoginMode ? langStore.t("loginNoAccount") : langStore.t("loginHaveAccount")}
+          <button type="button" id="toggleBtn">
+            ${this.isLoginMode ? langStore.t("loginRegisterLink") : langStore.t("loginLoginLink")}
+          </button>
+        </div>
+      </div>
+  </section>
+
+    `;
+
+    this.querySelector("#authForm").onsubmit = (e) => this.handleSubmit(e);
+    this.querySelector("#toggleBtn").onclick = () => this.toggleMode();
   }
 }
 

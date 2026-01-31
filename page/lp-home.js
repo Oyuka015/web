@@ -1,15 +1,18 @@
+import langStore from "../components/lang-store.js";
+
 class LpHome extends HTMLElement {
   constructor() {
     super();
+    this.unsubscribe = null;
   }
 
   connectedCallback() {
     this.render();
     this.loadCategories();
-    this.loadFoods();
   }
 
   render() {
+    const t = (key) => langStore.t(key);
     this.innerHTML = /*html*/ `
       <style>
         main{ 
@@ -31,7 +34,7 @@ class LpHome extends HTMLElement {
 
       <!-- category-component -->
       <section class="cat-container">
-        <h2>Ангилал</h2>
+        <h3>Ангилал</h3>
         <div class="cat"></div>
       </section>
 
@@ -97,8 +100,8 @@ class LpHome extends HTMLElement {
       const res = await fetch("http://localhost:3000/api/categories");
       const categories = await res.json();
 
-      const container = this.querySelector(".cat");
-      container.innerHTML = "";
+        const container = this.querySelector(".cat");
+        container.innerHTML = "";
 
       categories.forEach((cat, index) => {
         const el = document.createElement("lp-category");

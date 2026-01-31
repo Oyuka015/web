@@ -1,12 +1,16 @@
 import cartStore from "../components/cart-store.js";
+import langStore from "../components/lang-store.js";
 
 class LpPayment extends HTMLElement {
   constructor() {
     super();
+    this.langUnsubscribe = null;
   }
 
   connectedCallback() {
-    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+    const isLoggedIn =
+      localStorage.getItem("isLoggedIn") === "true" ||
+      !!localStorage.getItem("token");
 
     if (!isLoggedIn) {
       window.location.hash = "#/login";
@@ -14,9 +18,15 @@ class LpPayment extends HTMLElement {
     }
 
     this.render();
+    this.langUnsubscribe = langStore.subscribe(() => this.render());
+  }
+
+  disconnectedCallback() {
+    if (this.langUnsubscribe) this.langUnsubscribe();
   }
 
   render() {
+    const t = (key) => langStore.t(key);
     const items = cartStore.getItems();
     const foodTotal = cartStore.getTotal();
     const deliveryFee = 10000;
@@ -36,7 +46,7 @@ class LpPayment extends HTMLElement {
                             <i class="ci-House_01"></i>
                         </div>
                         <div class="add-info">
-                            <p>Хаяг</p>
+                            <p>${t("paymentAddress")}</p>
                             <p>123 Tokyo Lane</p>
                         </div>
                         <span><i class="ci-Chevron_Right_MD"></i></span>
@@ -46,7 +56,7 @@ class LpPayment extends HTMLElement {
                             <i class="ci-Phone"></i>
                         </div>
                         <div class="add-info">
-                            <p>Утас</p>
+                            <p>${t("paymentPhone")}</p>
                             <p>10202200</p>
                         </div>
                         <span><i class="ci-Chevron_Right_MD"></i></span>
@@ -55,8 +65,8 @@ class LpPayment extends HTMLElement {
                 
 
                 <select name="voucher" id="voucher-info">
-                    <option value="" selected disabled hidden>Voucher</option>
-                    <option value="none" disabled>Купон байхгүй</option>
+                    <option value="" selected disabled hidden>${t("paymentVoucher")}</option>
+                    <option value="none" disabled>${t("paymentNoVoucher")}</option>
                 </select>
 
 
@@ -71,33 +81,48 @@ class LpPayment extends HTMLElement {
                     </a></li>
                     <li><a href="#/payment">
                         <img src="/assets/img/credit.png" alt="">
-                        <p>Карт</p>
+                        <p>${t("paymentCard")}</p>
                     </a></li>
                 </ul>
 
                 <ul class="price-info">
                     <li>
-                        <p>Хоолны үнэ</p>
+                        <p>${t("paymentFoodPrice")}</p>
                         <p>${foodTotal.toLocaleString()} ₮</p>
                     </li>
                     <li>
-                        <p>Хүргэлтийн төлбөр</p>
+                        <p>${t("paymentDeliveryFee")}</p>
                         <p>${deliveryFee.toLocaleString()} ₮</p>
                     </li>
                     <li>
-                        <p>Хөнгөлөлт</p>
+                        <p>${t("paymentDiscount")}</p>
                         <p>${discount.toLocaleString()} ₮</p>
                     </li>
                     <li>
-                        <p>Нийт дүн</p>
+                        <p>${t("paymentTotal")}</p>
                         <p>${grandTotal.toLocaleString()} ₮</p>
                     </li>
                 </ul>
 
-                <button class="checkout-btn">Төлөх</button>
+                <button class="checkout-btn">${t("paymentPay")}</button>
             </section>
             
         `;
+
+    const checkoutBtn = this.querySelector(".checkout-btn");
+    if (checkoutBtn) {
+      checkoutBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const isLoggedIn =
+          localStorage.getItem("isLoggedIn") === "true" ||
+          !!localStorage.getItem("token");
+        if (isLoggedIn) {
+          cartStore.clear();
+          alert(langStore.t("paymentOrderSuccess"));
+          window.location.hash = "#/";
+        }
+      });
+    }
 
     document.querySelectorAll(".paying-info a").forEach((link) => {
       link.addEventListener("click", (e) => {

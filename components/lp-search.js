@@ -1,12 +1,22 @@
+import langStore from "./lang-store.js";
+
 class LpSearch extends HTMLElement {
     constructor() {
         super();
+        this.unsubscribe = null;
     }
 
     connectedCallback() {
         this.render();
+        this.unsubscribe = langStore.subscribe(() => this.render());
     }
+
+    disconnectedCallback() {
+        if (this.unsubscribe) this.unsubscribe();
+    }
+
     render(){
+        const t = (key) => langStore.t(key);
         this.innerHTML = `
             <style>
                 form{
@@ -31,7 +41,7 @@ class LpSearch extends HTMLElement {
                 }
             </style>
             <form action="search">
-                <input placeholder="Search..." type="search">
+                <input placeholder="${langStore.t("searchPlaceholder")}" type="search">
                 <button><i class="ci-Slider_02"></i></button>
             </form>
         `;
