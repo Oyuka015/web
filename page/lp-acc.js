@@ -11,7 +11,6 @@ class LpAcc extends HTMLElement {
     render(){
         this.innerHTML = `
             <lp-header></lp-header> 
-
             <section class="acc-main">
                 <div class="user-info">
                     <div class="profile">
@@ -26,7 +25,6 @@ class LpAcc extends HTMLElement {
                     </ul> 
                 </div>
 
-                
                 <ul class="acc-info">
                     <li><a href="#">
                         <div class="info-icon">
