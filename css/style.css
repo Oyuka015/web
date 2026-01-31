@@ -14,6 +14,7 @@
   --color-white-transparent: hsla(0, 0%, 100%, 0.873); /*tungalag*/
 
   --color-white-0: hsl(0, 0%, 100%);
+  --color-white-0_5: hsl(0, 0%, 95%);
   --color-white-1: hsl(0, 0%, 90%);
   --color-white-1_5: hsl(0, 0%, 85%);
   --color-white-2: hsl(0, 0%, 80%);
@@ -23,6 +24,7 @@
   --bg-color-accent: var(--color-orange);
   --text-color-default: var(--color-dark-1);
   --text-color-accent: var(--color-orange-darker);
+  --text-color-white: var(--color-white-0_5);
   --text-color-muted: var(--color-dark-4);
 
   --shadow-color: var(--color-white-1_5);
@@ -37,6 +39,9 @@
   --font-size-small: 15px;
 
   --font-family-nunito: 'Nunito', sans-serif;
+  --font-family-orbitron: "Orbitron", monospace;
+  --font-family-inter: "Inter", sans-serif;
+  --font-family-mono: "JetBrains Mono", monospace;
 }
 *{
   font-family: var(--font-family-nunito);
@@ -44,6 +49,7 @@
 body {
   margin: 0;
   padding: 0.5rem 1rem;
+  /* font-family: var(--font-family-inter); */
 }
 .food {
   border: 1px solid black;
@@ -402,4 +408,19 @@ lp-bg-btn {
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s ease;
+}
+
+
+/* MEDIA */
+/* food heseg */
+@media (max-width: 480px) {
+    main {
+      grid-template-columns: 1fr;
+    }
+}
+@media (max-width: 768px) {
+    main {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 12px;
+    }
 }

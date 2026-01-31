@@ -6,10 +6,19 @@ class LpHome extends HTMLElement {
   connectedCallback() {
     this.render();
     this.loadCategories();
+    this.loadFoods();
   }
 
   render() {
     this.innerHTML = /*html*/ `
+      <style>
+        main{ 
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+          gap: 16px; 
+          padding: 20px 16px 80px;
+        }
+      </style>
       <!-- home-header-component -->
       <lp-home-header></lp-home-header>
 
@@ -22,20 +31,14 @@ class LpHome extends HTMLElement {
 
       <!-- category-component -->
       <section class="cat-container">
-        <h3>Ангилал</h3>
+        <h2>Ангилал</h2>
         <div class="cat"></div>
       </section>
 
       <!-- Food items -->
       <main>
-        <lp-food
-          image="https://media.istockphoto.com/id/1409424028/photo/isolated-portion-of-grilled-beef-t-bone-steak.jpg?s=1024x1024&w=is&k=20&c=TWALJWSbFuDxxIBnNHnd__szEAujF8HhfaSWM6NRA94="
-          title="T-Bone steak"
-          price="35000"
-          rating="4.6"
-          ingredients="Үхрийн t-bone мах, Мөөг, Ногоон сонгино, сонгино, Грилл соус, лууван, чинжүү, +нууц амтлагч"
-        >
-        </lp-food>
+        <!--
+        
         <lp-food
           image="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400"
           title="Margherita Pizza"
@@ -69,6 +72,15 @@ class LpHome extends HTMLElement {
           rating="4.7"
         >
         </lp-food>
+        <lp-food
+          image="https://media.istockphoto.com/id/1409424028/photo/isolated-portion-of-grilled-beef-t-bone-steak.jpg?s=1024x1024&w=is&k=20&c=TWALJWSbFuDxxIBnNHnd__szEAujF8HhfaSWM6NRA94="
+          title="T-Bone steak"
+          price="35000"
+          rating="4.6"
+          ingredients="Үхрийн t-bone мах, Мөөг, Ногоон сонгино, сонгино, Грилл соус, лууван, чинжүү, +нууц амтлагч"
+        >
+        </lp-food>
+        -->
       </main>
       
     `;
@@ -77,24 +89,70 @@ class LpHome extends HTMLElement {
     
   }
 
-    async loadCategories() {
-      try {
-        const res = await fetch("http://localhost:3000/api/categories");
-        const categories = await res.json();
 
-        const container = this.querySelector(".cat");
-        container.innerHTML = "";
+  // -------- Food section --------
+  // Category medeelel 
+  async loadCategories() {
+    try {
+      const res = await fetch("http://localhost:3000/api/categories");
+      const categories = await res.json();
 
-        categories.forEach((cat, index) => {
-          const el = document.createElement("lp-category");
-          el.setAttribute("name", cat.name);
-          el.classList.add(index === 0 ? "selectedCat" : "defCat");
-          container.appendChild(el);
+      const container = this.querySelector(".cat");
+      container.innerHTML = "";
+
+      categories.forEach((cat, index) => {
+        const el = document.createElement("lp-category");
+        el.setAttribute("name", cat.name);
+        el.className = index === 0 ? "defCat selectedCat" : "defCat";
+
+        // 
+        el.addEventListener("click", () => {
+          // Бүх category-уудаас selected class-ийг арилгана
+          container.querySelectorAll("lp-category").forEach((c) => {
+            c.classList.remove("selectedCat");
+            console.log(cat.name, cat.id);
+          });
+
+          // Дарсан element-д selected class нэмнэ
+          el.classList.add("selectedCat");
         });
-      } catch (err) {
-        console.error("Failed to load categories:", err);
-      }
+
+        
+        container.appendChild(el);
+      });
+    } catch (err) {
+      console.error("Failed to load categories:", err);
     }
+  }
+
+  // Hoolni medeelel
+  async loadFoods() {
+    try {
+      const res = await fetch("http://localhost:3000/api/foods");
+      const foods = await res.json();
+
+      const main = this.querySelector("main");
+      main.innerHTML = "";
+
+      foods.forEach(food => {
+        const el = document.createElement("lp-food");
+
+        el.setAttribute("image", food.image_url);
+        el.setAttribute("title", food.name);
+        el.setAttribute("price", food.price);
+        el.setAttribute("ingredients", food.description); 
+
+        if (food.ingredients) {
+          el.setAttribute("rating", food.rating);
+        }
+
+        main.appendChild(el);
+      });
+
+    } catch (err) {
+      console.error("Failed to load foods", err);
+    }
+  }
 
 }
 
