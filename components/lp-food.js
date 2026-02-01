@@ -329,17 +329,18 @@ class LpFood extends HTMLElement {
     const title = this.getAttribute("title");
     const price = this.getAttribute("price");
     const rating = this.getAttribute("rating");
-    const ingredients = this.getAttribute("ingredients") || "";
+    const description = this.getAttribute("description") || "";
 
     this.innerHTML = /*html*/`
       <style>
         lp-food{
-          background: var(--color-white-0);
-          border: 1px solid var(--color-dark-4);
+          background: var(--color-white-0); 
+          box-shadow:1px 4px 15px var(--color-dark-4);
           border-radius: 12px;
           overflow: hidden;
           transition: all 0.3s ease;
           cursor: pointer;
+          position:relative;
 
           img{
             width: 100%;
@@ -349,14 +350,22 @@ class LpFood extends HTMLElement {
             transition: all 0.3s ease;
           }
 
-          .food-info{
+          article{
             padding: 16px;
 
-            h3{ /*header*/
-              display: flex;
-              justify-content: space-between;
-              align-items: flex-start;
-              margin-b  ottom: 8px;
+            header{
+              display: flex;  
+              margin-bottom: 8px;
+
+              span{
+                position:absolute;
+                border-radius:10px;
+                padding:5px 8px;
+                background: var(--color-white-0);
+                top:10px;
+                right:5px; 
+                box-shadow:1px 2px 5px var(--color-dark-3);
+              }
             }
 
             small{
@@ -365,8 +374,8 @@ class LpFood extends HTMLElement {
               margin-bottom: 12px;
               line-height: 1.4;
             }
-            /*footer hesegt botton orj irne */
-            .food-footer{
+
+            footer{
               display: flex;
               justify-content: space-between;
               align-items: center;
@@ -378,22 +387,41 @@ class LpFood extends HTMLElement {
                 color: var(--bg-color-accent);
               }
 
-              button{
-                width: 36px;
-                height: 36px;
-                border: none;
-                border-radius: 8px;
+              .food-action{
                 display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                font-size: 16px; 
+                gap: 8px;
 
-                background: rgba(255, 0, 107, 0.1);
-                color: var(--accent-secondary);
-                border: 1px solid rgba(255, 0, 107, 0.3);
-              }
+                .action-btn{
+                  width: 36px;
+                  height: 36px;
+                  border: none;
+                  border-radius: 8px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  cursor: pointer;
+                  transition: all 0.3s ease;
+                  font-size: 16px; 
+                }
+
+                .save-btn{
+                  background: var(--color-warning-red); 
+                  border: 1px solid var(--color-warning-red-dark); 
+                  color:var(--color-warning-red-dark); 
+                }
+                .save-btn:hover{
+                  box-shadow: 1px 2px 10px var(--color-warning-red-dark);
+                }
+
+                .cart-btn{
+                  background: var(--color-orange-lightest);
+                  border: 1px solid var(--color-orange-lighter); 
+                  color: var(--color-dark-0); 
+                }
+                .cart-btn:hover{ 
+                  box-shadow: 1px 2px 10px var(--color-orange-lighter);
+                }
+              } 
             }
           }
         }
@@ -401,15 +429,20 @@ class LpFood extends HTMLElement {
 
 
       <img src="${this.getAttribute('image')}" />
-      <div class="food-info">
-        <h3>${title}</h3>
-        <!--<span>⭐ ${rating}</span> -->
-        <small>${ingredients}</small>
-        <div class=food-footer>
+      <article>
+        <header>
+          <h3>${title}</h3>
+          <span>⭐ ${rating}</span>
+        </header>
+        <small>${description}</small>
+        <footer>
           <p>${price}₮</p>  
-          <button>💖</button>
-        </div>
-      </div> 
+          <div class="food-action">
+            <button class="action-btn save-btn" title="Хадгалах"><i class="ci-Heart_01"></i></button>
+            <button class="action-btn cart-btn" title="Сагслах"><i class="ci-Shopping_Cart_02"></i></button>
+          </div>
+        </footer>
+      </article> 
     `;
   }
 }

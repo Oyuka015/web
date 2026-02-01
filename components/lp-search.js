@@ -63,7 +63,7 @@ class LpSearch extends HTMLElement {
             </style>
             <form >
                 <input class="search-input" placeholder="${langStore.t("searchPlaceholder")}" type="search">
-                <button><i class="ci-Slider_02"></i></button>
+                <!--<button><i class="ci-Slider_02"></i></button>-->
             </form>
         `;
     }

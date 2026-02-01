@@ -124,9 +124,9 @@ class LpHome extends HTMLElement {
         const el = document.createElement("lp-food");
         el.setAttribute("image", food.image_url || food.image);
         el.setAttribute("title", food.name || food.title);
-        el.setAttribute("price", food.price);
+        el.setAttribute("price", food.price.toLocaleString('mn-MN'));
         el.setAttribute("rating", food.rating);
-        if (food.ingredients) el.setAttribute("ingredients", food.ingredients);
+        el.setAttribute("description", food.description); 
 
         main.appendChild(el);
       });

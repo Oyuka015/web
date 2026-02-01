@@ -30,6 +30,10 @@
 
   --shadow-color: var(--color-white-1_5);
 
+  --color-warning-red: rgba(255, 0, 107, 0.1); /*ymr negen anhaaruulah dr haruulah*/
+  --color-warning-red-dark: rgba(255, 0, 107, 0.3); 
+  /* --color-success-green:; amjilttai dr haruulah*/
+
   --font-size-default: 15px;
   --font-size-title: 30px;
   --font-size-subtitle: 20px;
