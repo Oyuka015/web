@@ -37,7 +37,13 @@ class LpNevtreh extends HTMLElement {
 
       const body = this.isLoginMode
         ? { email: data.email, password: data.password }
-        : { name: data.name, email: data.email, password: data.password };
+        : {
+            name: data.name,
+            email: data.email,
+            password: data.password,
+            phone: data.phone || null,
+            address: data.address || null,
+          };
 
       const res = await fetch(`${this.apiUrl}${endpoint}`, {
         method: "POST",
@@ -220,6 +226,11 @@ class LpNevtreh extends HTMLElement {
           <div class="form-group">
             <label>${langStore.t("loginFullName")}</label>
             <input type="text" name="name" placeholder="${langStore.t("loginNamePlaceholder")}" required autocomplete="name">
+          </div>
+
+          <div class="form-group">
+            <label>${langStore.t("loginPhone")}</label>
+            <input type="tel" name="phone" placeholder="+976 98765432"  title="дугаараа зөв, бүтэн оруулна уу">
           </div>
 
           <div class="form-group">

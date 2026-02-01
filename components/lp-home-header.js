@@ -1,34 +1,72 @@
-import langStore from "./lang-store.js";
-
 class LpHomeHeader extends HTMLElement {
   constructor() {
     super();
-    this.unsubscribe = null;
+    this.address = "Хаяг ачаалж байна...";
   }
 
-  connectedCallback() {
+  async connectedCallback() {
     this.render();
-    this.unsubscribe = langStore.subscribe(() => this.render());
+    await this.fetchAddress();
   }
 
-  disconnectedCallback() {
-    if (this.unsubscribe) this.unsubscribe();
+  async fetchAddress() {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      this.address = "Эхлээд нэвтэрнэ үү!";
+      this.render();
+      return;
+    }
+    try {
+      const response = await fetch("http://localhost:3000/api/user/address", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}));
+        console.error("aldaa", data);
+        this.address = data.error || "Хаяг татахад алдаа гарлаа";
+        this.render();
+        return;
+      }
+      const data = await response.json();
+
+      if (
+        data.address === null ||
+        data.address === undefined ||
+        String(data.address).trim() === ""
+      ) {
+        this.address = "Хаяг оруулаагүй байна";
+      } else {
+        this.address = String(data.address).trim();
+      }
+
+      this.render();
+    } catch (error) {
+      console.error("network or other aлдаа:", error);
+      this.address = "hayg bhgu bna";
+      this.render();
+    }
   }
 
   render() {
-    const t = (key) => langStore.t(key);
     this.innerHTML = `
-            <section>
-                <a href="#">
-                    <i class="ci-Map_Pin"></i>
-                    <p><span>${t("homeChangeAddress")}</span> <br> ${t("homeAddressSample")}</p>
-                </a>
-                <button><i class="ci-Bell"></i></button>
-            </section>
-        `;
+      <section>
+        <a href="#" id="address-link">
+          <i class="ci-Map_Pin"></i>
+          <p><span>${this.escapeHtml(this.address)}</span></p>
+        </a>
+        <button><i class="ci-Bell"></i></button>
+      </section>
+    `;
   }
-  disconnectedCallback() {
-    if (this.unsubscribe) this.unsubscribe();
+  escapeHtml(text) {
+    const div = document.createElement("div");
+    div.textContent = text;
+    return div.innerHTML;
   }
 }
 
