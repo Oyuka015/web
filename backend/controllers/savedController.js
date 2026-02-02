@@ -1,10 +1,9 @@
-// backend/controllers/saved.controller.js
 import pool from "../config/db.js";
 
-// 1️⃣ Хадгалсан бүх хоолыг авах
+// saved hoolnuud awah
 export async function getSavedFoods(req, res) {
   try {
-    const userId = req.user.id; // authenticateToken middleware-аар request-д нэмэгдсэн
+    const userId = req.user.id; // userID awna
 
     const queryText = `
       SELECT f.id, f.name, f.description, f.price, f.image_url AS image, f.rating
@@ -23,7 +22,7 @@ export async function getSavedFoods(req, res) {
   }
 }
 
-// 2️⃣ Хоол хадгалах
+// hool hadgalah
 export async function addToSaved(req, res) {
   try {
     const userId = req.user.id;
@@ -44,7 +43,7 @@ export async function addToSaved(req, res) {
   }
 }
 
-// 3️⃣ Хоол хадгалахаас устгах
+// hadgalsan hooloo ustgah
 export async function removeFromSaved(req, res) {
   try {
     const userId = req.user?.id;
