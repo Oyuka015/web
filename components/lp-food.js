@@ -280,7 +280,7 @@
 //         </div>
 //     </div>
 // `;
-//     this.shadowRoot.querySelector(".add-btn").addEventListener("click", () => {
+//     this.shadowRoot.querySelector(".cart-btn").addEventListener("click", () => {
 //       cartStore.addItem({
 //         id: itemId,
 //         title,
@@ -297,14 +297,14 @@
 //         })
 //       );
 
-//       this.shadowRoot.querySelector(".add-btn").classList.add("added");
+//       this.shadowRoot.querySelector(".cart-btn").classList.add("added");
 //     });
 
 //     const favBtn = this.shadowRoot.querySelector(".favorite");
 //     if (favBtn) {
 //       favBtn.addEventListener("click", () => {
 //         favBtn.classList.toggle("active");
-//         favBtn.textContent = favBtn.classList.contains("active") ? "♥" : "♡";
+        // favBtn.textContent = favBtn.classList.contains("active") ? "♥" : "♡";
 //       });
 //     }
 
@@ -322,16 +322,78 @@
 
 
 
-// SHINE FOOD COMPONENT
-class LpFood extends HTMLElement {
-  connectedCallback() {
-    const image = this.getAttribute("image");
-    const title = this.getAttribute("title");
-    const price = this.getAttribute("price");
-    const rating = this.getAttribute("rating");
-    const description = this.getAttribute("description") || "";
+// SHINE FOOD COMPONENT   
 
-    this.innerHTML = /*html*/`
+class LpFood extends HTMLElement {
+  constructor() {
+    super(); 
+  }
+
+  async connectedCallback() {
+    this.mode = this.getAttribute("mode") ?? "card"; // card or row
+    this.image = this.getAttribute("image") ?? "";
+    this.title = this.getAttribute("title") ?? "No title";
+    this.price = this.getAttribute("price") ?? "0";
+    this.rating = this.getAttribute("rating") ?? "0";
+    this.description = this.getAttribute("description") ?? "";
+    this.foodId = this.getAttribute("food-id");
+
+    this.render(); 
+    this.setupEventListeners();
+  } 
+
+  // eventlistener
+  setupEventListeners() {
+    const saveBtn = this.querySelector('.save-btn');
+    if (saveBtn) {
+      saveBtn.addEventListener('click', async () => {
+        const savedFood = {
+          id: this.foodId,
+          title: this.title,
+          price: this.price,
+          rating: this.rating,
+          image: this.image,
+        };
+
+        // api post
+        try {
+          await fetch('/api/saved', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(savedFood),
+          });
+
+          // custom element damjuulna
+          this.dispatchEvent(new CustomEvent('food-saved', { 
+            detail: savedFood, 
+            bubbles: true // Home page ruu damjuulna
+          }));
+
+          alert(`${this.title} хадгалагдлаа!`);
+        } catch (err) {
+          console.error(err);
+          alert('Алдаа гарлаа, дахин оролдно уу.');
+        }
+      });
+    }
+  }
+
+  //mode-s hamaarch haragdah helber songoh 
+  render() {
+    switch (this.mode) {
+      case "row":
+        this.renderRow();
+        break;
+      case "card":
+      default:
+        this.renderCard();
+        break;
+    } 
+  } 
+
+  // home page hesegt haragdah helber
+  renderCard() {
+    this.innerHTML = /*html*/ `
       <style>
         lp-food{
           background: var(--color-white-0); 
@@ -340,7 +402,7 @@ class LpFood extends HTMLElement {
           overflow: hidden;
           transition: all 0.3s ease;
           cursor: pointer;
-          position:relative;
+          position:relative; 
 
           img{
             width: 100%;
@@ -349,15 +411,17 @@ class LpFood extends HTMLElement {
             object-fit: cover;
             transition: all 0.3s ease;
           }
-
-          article{
+          
+          /*article start */
+          article{ 
             padding: 16px;
 
-            header{
+            /* articli-header */
+            header{ 
               display: flex;  
               margin-bottom: 8px;
 
-              span{
+              span{ 
                 position:absolute;
                 border-radius:10px;
                 padding:5px 8px;
@@ -367,18 +431,18 @@ class LpFood extends HTMLElement {
                 box-shadow:1px 2px 5px var(--color-dark-3);
               }
             }
-
-            small{
+            /*ARTICLE - MID */
+            small{ 
               font-size: 14px;
               color: var(--text-color-muted);
               margin-bottom: 12px;
               line-height: 1.4;
             }
-
-            footer{
+            /* ARTICLE - FOOTER */
+            footer{ 
               display: flex;
               justify-content: space-between;
-              align-items: center;
+              align-items: center; 
 
               p{
                 font-family: var(--font-family-mono);
@@ -387,7 +451,7 @@ class LpFood extends HTMLElement {
                 color: var(--bg-color-accent);
               }
 
-              .food-action{
+              .food-action { 
                 display: flex;
                 gap: 8px;
 
@@ -403,12 +467,11 @@ class LpFood extends HTMLElement {
                   transition: all 0.3s ease;
                   font-size: 16px; 
                 }
-
                 .save-btn{
                   background: var(--color-warning-red); 
                   border: 1px solid var(--color-warning-red-dark); 
                   color:var(--color-warning-red-dark); 
-                }
+                } 
                 .save-btn:hover{
                   box-shadow: 1px 2px 10px var(--color-warning-red-dark);
                 }
@@ -420,31 +483,84 @@ class LpFood extends HTMLElement {
                 }
                 .cart-btn:hover{ 
                   box-shadow: 1px 2px 10px var(--color-orange-lighter);
-                }
-              } 
+                } 
+              }
             }
-          }
-        }
-      </style> 
+          } /** article end*/ 
+        }    
+      </style>
 
-
-      <img src="${this.getAttribute('image')}" />
+      <img src="${this.image}" />
       <article>
         <header>
-          <h3>${title}</h3>
-          <span>⭐ ${rating}</span>
+          <h3>${this.title}</h3>
+          <span>⭐ ${this.rating}</span>
         </header>
-        <small>${description}</small>
+        <small>${this.description}</small>
         <footer>
-          <p>${price}₮</p>  
+          <p>${this.price}₮</p>
           <div class="food-action">
-            <button class="action-btn save-btn" title="Хадгалах"><i class="ci-Heart_01"></i></button>
-            <button class="action-btn cart-btn" title="Сагслах"><i class="ci-Shopping_Cart_02"></i></button>
+            <button class="action-btn save-btn" title="Хадгалах">💖</button>
+            <button class="action-btn cart-btn" title="Сагслах">🛒</button>
           </div>
         </footer>
-      </article> 
-    `;
+      </article>
+    `; 
+
   }
+
+  // cart page hesegt haragdah helber
+  renderRow() {
+    this.innerHTML = /*html*/ `
+      <style>
+        :host {
+          display: flex;
+          gap: 12px;
+          padding: 12px;
+          border: 1px solid #ddd;
+          border-radius: 8px;
+        }
+        img {
+          width: 120px;
+          height: 80px;
+          object-fit: cover;
+          border-radius: 8px;
+        }
+        article {
+          flex: 1;
+        }
+        footer {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: 8px;
+        }
+        .food-action {
+          display: flex;
+          gap: 6px;
+        }
+      </style>
+
+      <img src="${this.image}" />
+      <article>
+        <header>
+          <h4>${this.title}</h4>
+          <span>⭐ ${this.rating}</span>
+        </header>
+        <footer>
+          <p>${this.price}₮</p>
+          <div class="food-action">
+            <button class="action-btn save-btn" title="Хадгалах">❤️</button>
+            <button class="action-btn cart-btn" title="Сагслах">🛒</button>
+          </div>
+        </footer>
+      </article>
+    `;
+
+    
+  } 
+
 }
 
 customElements.define("lp-food", LpFood);
+

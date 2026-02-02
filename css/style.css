@@ -228,8 +228,14 @@ lp-bg-btn {
 
 /* save */
 .save-main,
-.payment-main,
-.acc-main {
+.payment-main{
+  margin-top: 80px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  padding: 20px 16px 80px;
+}
+.acc-main{
   margin-top: 80px;
 }
 

@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        
+    </style>
 </head>
 <body>
     <section> 
@@ -13,3 +16,37 @@
     </section>
 </body>
 </html>
+
+<!--  -->
+<!-- class SaveStore {
+  constructor() {
+    this.items = new Map();
+    this.listeners = new Set();
+  }
+
+  save(food) {
+    if (this.items.has(food.title)) return;
+    this.items.set(food.title, food);
+    this.notify();
+  }
+
+  remove(title) {
+    this.items.delete(title);
+    this.notify();
+  }
+
+  getAll() {
+    return Array.from(this.items.values());
+  }
+
+  subscribe(fn) {
+    this.listeners.add(fn);
+    return () => this.listeners.delete(fn);
+  }
+
+  notify() {
+    this.listeners.forEach(fn => fn(this.getAll()));
+  }
+}
+
+export default new SaveStore(); -->

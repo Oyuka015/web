@@ -8,6 +8,7 @@ import categoryRoutes from "./routes/category.js";
 import foodRoutes from "./routes/food.js";
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/user.js";
+import savedRoutes from "./routes/saved.js";
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ app.use("/api/categories", categoryRoutes);
 app.use("/api/foods", foodRoutes);  
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/saved", savedRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
