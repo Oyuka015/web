@@ -8,12 +8,13 @@ class LpCategory extends HTMLElement {
           margin-bottom: 20px;
           position: sticky;
           top: 0;
-          background: white;
+          background: var(--color-white-0_9);
+          backdrop-filter: blur(10px);
           z-index: 10;
           padding-top: 10px;
           padding-bottom: 10px;
           border-bottom: 1px solid var(--color-white-1);
-
+  }
           h2{
             font-family: var(--font-orbitron);
             font-size: 18px;
@@ -52,12 +53,12 @@ class LpCategory extends HTMLElement {
               transition: all 0.3s ease;
             }
           }
-        } 
+        
+        
         
     </style>
       ${name}
     `;
-    
   }
 }
 

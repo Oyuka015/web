@@ -30,8 +30,9 @@
 
   --shadow-color: var(--color-white-1_5);
 
-  --color-warning-red: rgba(255, 0, 107, 0.1); /*ymr negen anhaaruulah dr haruulah*/
-  --color-warning-red-dark: rgba(255, 0, 107, 0.3); 
+  --color-warning-red: rgba(255, 0, 107, 0.1);
+  /*ymr negen anhaaruulah dr haruulah*/
+  --color-warning-red-dark: rgba(255, 0, 107, 0.3);
   /* --color-success-green:; amjilttai dr haruulah*/
 
   --font-size-default: 15px;
@@ -61,27 +62,30 @@ body {
 }
 
 body.dark {
-  --color-white-0: hsl(0, 0%, 10%);
-  --color-white-0_5: hsl(0, 0%, 13%);
-  --color-white-1: hsl(0, 0%, 16%);
-  --color-white-1_5: hsl(0, 0%, 20%);
-  --color-white-2: hsl(0, 0%, 25%);
-  --color-white-3: hsl(0, 0%, 30%);
-  --color-white-4: hsl(0, 0%, 40%);
+  --color-white-0: hsl(24, 20%, 8%);
+  --color-white-0_5: hsl(24, 20%, 11%);
+  --color-white-1: hsl(24, 18%, 15%);
+  --color-white-1_5: hsl(24, 18%, 18%);
+  --color-white-2: hsl(24, 16%, 22%);
+  --color-white-3: hsl(24, 14%, 28%);
+  --color-white-4: hsl(24, 12%, 35%);
 
   --color-dark-0: hsl(0, 0%, 100%);
-  --color-dark-1: hsl(0, 0%, 95%);
-  --color-dark-2: hsl(0, 0%, 85%);
-  --color-dark-3: hsl(0, 0%, 70%);
-  --color-dark-4: hsl(0, 0%, 60%);
-  --color-dark-5: hsl(0, 0%, 50%);
+  --color-dark-1: hsl(36, 40%, 96%);
+  --color-dark-2: hsl(36, 30%, 85%);
+  --color-dark-3: hsl(36, 20%, 70%);
+  --color-dark-4: hsl(36, 15%, 55%);
+  --color-dark-5: hsl(36, 10%, 45%);
 
-  --shadow-color: hsla(0, 0%, 0%, 0.6);
-
-  --bg-color-accent: var(--color-orange-lighter);
   --text-color-default: var(--color-dark-1);
   --text-color-muted: var(--color-dark-4);
+
+  --bg-color-accent: hsl(25, 100%, 55%);
+
+  --shadow-color: hsla(25, 40%, 5%, 0.85);
 }
+
+
 
 .food {
   border: 1px solid black;
@@ -228,14 +232,15 @@ lp-bg-btn {
 
 /* save */
 .save-main,
-.payment-main{
+.payment-main {
   margin-top: 80px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 16px;
   padding: 20px 16px 80px;
 }
-.acc-main{
+
+.acc-main {
   margin-top: 80px;
 }
 

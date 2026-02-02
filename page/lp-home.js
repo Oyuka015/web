@@ -31,7 +31,7 @@ class LpHome extends HTMLElement {
           display: grid;
           grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
           gap: 16px; 
-          padding: 20px 16px 80px;
+          
         }
       </style>
       <!-- home-header-component -->
@@ -61,7 +61,7 @@ class LpHome extends HTMLElement {
     
   }
 
-  // -----------
+ 
   async loadFoods() {
     try {
       const params = new URLSearchParams();

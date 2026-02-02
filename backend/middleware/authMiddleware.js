@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 
 const authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
+    const token = authHeader && authHeader.split(' ')[1]; //hereglegchees token awah
 
     if (!token) {
         return res.status(401).json({ error: "Нэвтрэх эрхгүй байна. Токен олдсонгүй." });

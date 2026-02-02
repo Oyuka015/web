@@ -111,7 +111,7 @@ class LpNav extends HTMLElement {
     render(){
         this.innerHTML = `
           <nav>
-            <a href="#/">
+            <a href="#/home">
                 <i class="ci-House_01"></i>
             </a>
             <a href="#/save">
