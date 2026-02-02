@@ -10,11 +10,14 @@ class LpHome extends HTMLElement {
     this.foodItems = []; // servers awsan hoolnud hadgalah
     this.selectedCategory = "all";
     this.searchQuery = "";
+    this.savedIds = new Set();
   }
 
-  connectedCallback() {
+  async connectedCallback() {
     this.render();
     this.loadCategories();
+
+    await this.loadSavedFoods(); //hoolnoos omno saved medeh
     this.loadFoods();
     
     // delayed listener - unshjij duusaha
@@ -61,7 +64,22 @@ class LpHome extends HTMLElement {
     
   }
 
-  // -----------
+  // saved load
+  async loadSavedFoods() {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    const res = await fetch("http://localhost:3000/api/saved", {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    const json = await res.json();
+    this.savedIds = new Set(json.data.map(f => f.id));
+  }
+
+  // -hoolnuud load hh
   async loadFoods() {
     try {
       const params = new URLSearchParams();
@@ -80,8 +98,9 @@ class LpHome extends HTMLElement {
 
       foods.forEach(food => {
         const el = document.createElement("lp-food");
+
         el.setAttribute("image", food.image_url || food.image);
-        el.setAttribute("title", food.name || food.title);
+        el.setAttribute("name", food.name);
         el.setAttribute("price", food.price.toLocaleString('mn-MN'));
         el.setAttribute("rating", food.rating);
         el.setAttribute("description", food.description); 
@@ -89,10 +108,9 @@ class LpHome extends HTMLElement {
 
         el.setAttribute("mode", "card");
 
-        // saved tolowteig haruulna
-        // if (savedIds.includes(food.id)) {
-        //   el.setAttribute("saved", "true");
-        // }
+        if (this.savedIds.has(food.id)) {
+          el.setAttribute("saved", "");
+        }
 
         main.appendChild(el);
       });
@@ -101,6 +119,7 @@ class LpHome extends HTMLElement {
     }
   }
 
+  // category load hiih
   async loadCategories() {
     try {
       const res = await fetch("http://localhost:3000/api/categories");

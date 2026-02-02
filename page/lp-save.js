@@ -1,15 +1,33 @@
 class LpSave extends HTMLElement {
     constructor() {
         super();
-        this.savedFoods = []; // frontend-д хадгалах array
+        this.savedFoods = []; // awchrsan datag frontd hadgalah array
     }
 
     async connectedCallback() {
-        await this.loadSavedFoods();
-        this.setupEventListener();
+        await this.loadSavedFoods(); 
+
+        this._onFoodSaved = (e) => {
+            this.savedFoods.push(e.detail);
+            this.render();
+        };
+        document.addEventListener('food-saved', this._onFoodSaved);
+
+        this._onFoodUnsaved = (e) => {
+            const id = e.detail.id;
+            this.savedFoods = this.savedFoods.filter(f => f.id !== id);
+            this.render();
+        };
+
+        document.addEventListener("food-unsaved", this._onFoodUnsaved);
     }
 
-    // 1️⃣ API-аас анх load хийх
+    disconnectedCallback() {
+        document.removeEventListener('food-saved', this._onFoodSaved);
+        document.removeEventListener('food-unsaved', this._onFoodUnsaved);
+    }
+
+    // saved hoolnuudaa haruulah
     async loadSavedFoods() {    
         const token = localStorage.getItem("token");
         const res = await fetch("http://localhost:3000/api/saved", {
@@ -19,21 +37,9 @@ class LpSave extends HTMLElement {
         this.savedFoods = json.data ?? [];
         this.render();
     }
+ 
 
-    // 2️⃣ Home page-аас хадгалах event-г сонсох
-    setupEventListener() {
-        document.addEventListener('food-saved', (e) => {
-            const savedFood = e.detail;
-
-            // Шинэ хоол array-д нэмэх
-            this.savedFoods.push(savedFood);
-
-            // Render
-            this.render();
-        });
-    }
-
-    // 3️⃣ Render function
+    // render
     render() {
         this.innerHTML = `
             <lp-header></lp-header>
@@ -45,9 +51,10 @@ class LpSave extends HTMLElement {
                     .map(f => `
                         <lp-food
                             mode="card"
+                            saved
                             food-id="${f.id}"
                             image="${f.image}"
-                            title="${f.title ?? f.name}"
+                            name="${f.name}"
                             price="${f.price}"
                             rating="${f.rating}"
                             description="${f.description ?? ''}"

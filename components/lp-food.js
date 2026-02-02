@@ -332,13 +332,15 @@ class LpFood extends HTMLElement {
   async connectedCallback() {
     this.mode = this.getAttribute("mode") ?? "card"; // card or row
     this.image = this.getAttribute("image") ?? "";
-    this.title = this.getAttribute("title") ?? "No title";
+    this.name = this.getAttribute("name") ?? "No title";
     this.price = this.getAttribute("price") ?? "0";
     this.rating = this.getAttribute("rating") ?? "0";
     this.description = this.getAttribute("description") ?? "";
     this.foodId = this.getAttribute("food-id");
+    this.isSaved = this.hasAttribute("saved");
 
-    this.render(); 
+    this.render();
+    this.updateSaveIcon(); 
     this.setupEventListeners();
   } 
 
@@ -346,35 +348,39 @@ class LpFood extends HTMLElement {
   setupEventListeners() {
     const saveBtn = this.querySelector('.save-btn');
     if (saveBtn) {
-      saveBtn.addEventListener('click', async () => {
-        const savedFood = {
-          id: this.foodId,
-          title: this.title,
-          price: this.price,
-          rating: this.rating,
-          image: this.image,
-        };
+      saveBtn.addEventListener('click', async (e) => {
+        e.stopPropagation();
 
-        // api post
-        try {
-          await fetch('/api/saved', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(savedFood),
+        const token = localStorage.getItem("token");
+        if (!token) return alert("Login хийнэ үү");
+
+        if (this.isSaved) {
+          await fetch(`http://localhost:3000/api/saved/${this.foodId}`, {
+            method: "DELETE",
+            headers: { Authorization: `Bearer ${token}` }
           });
 
-          // custom element damjuulna
-          this.dispatchEvent(new CustomEvent('food-saved', { 
-            detail: savedFood, 
-            bubbles: true // Home page ruu damjuulna
-          }));
+          this.isSaved = false;
 
-          alert(`${this.title} хадгалагдлаа!`);
-        } catch (err) {
-          console.error(err);
-          alert('Алдаа гарлаа, дахин оролдно уу.');
+          this.dispatchEvent(new CustomEvent("food-unsaved", {
+            detail: { id: this.foodId },
+            bubbles: true
+          }));
+          
+          this.removeAttribute("saved");
+        } else {
+          await fetch(`http://localhost:3000/api/saved/${this.foodId}`, {
+            method: "POST",
+            headers: { Authorization: `Bearer ${token}` }
+          });
+
+          this.isSaved = true;
+          this.setAttribute("saved", "");
         }
+
+        this.updateSaveIcon(); // icon change
       });
+
     }
   }
 
@@ -470,7 +476,7 @@ class LpFood extends HTMLElement {
                 .save-btn{
                   background: var(--color-warning-red); 
                   border: 1px solid var(--color-warning-red-dark); 
-                  color:var(--color-warning-red-dark); 
+                  /*color:var(--color-warning-red-dark); */ 
                 } 
                 .save-btn:hover{
                   box-shadow: 1px 2px 10px var(--color-warning-red-dark);
@@ -493,14 +499,14 @@ class LpFood extends HTMLElement {
       <img src="${this.image}" />
       <article>
         <header>
-          <h3>${this.title}</h3>
+          <h3>${this.name}</h3>
           <span>⭐ ${this.rating}</span>
         </header>
         <small>${this.description}</small>
         <footer>
           <p>${this.price}₮</p>
           <div class="food-action">
-            <button class="action-btn save-btn" title="Хадгалах">💖</button>
+            <button class="action-btn save-btn" title="Хадгалах"></button>
             <button class="action-btn cart-btn" title="Сагслах">🛒</button>
           </div>
         </footer>
@@ -544,7 +550,7 @@ class LpFood extends HTMLElement {
       <img src="${this.image}" />
       <article>
         <header>
-          <h4>${this.title}</h4>
+          <h4>${this.name}</h4>
           <span>⭐ ${this.rating}</span>
         </header>
         <footer>
@@ -559,6 +565,13 @@ class LpFood extends HTMLElement {
 
     
   } 
+
+  // save darahad towch oorchloh
+  updateSaveIcon() {
+    const btn = this.querySelector('.save-btn');
+    if (!btn) return;
+    btn.textContent = this.isSaved ? '❤️' : '🤍';
+  }
 
 }
 
