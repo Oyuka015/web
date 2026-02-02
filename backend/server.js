@@ -9,6 +9,7 @@ import foodRoutes from "./routes/food.js";
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/user.js";
 import savedRoutes from "./routes/saved.js";
+import cartRoutes from "./routes/cart.js";
 
 dotenv.config();
 
@@ -29,6 +30,7 @@ app.use("/api/foods", foodRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/saved", savedRoutes);
+app.use("/api/cart", cartRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);

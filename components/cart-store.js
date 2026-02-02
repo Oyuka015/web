@@ -1,86 +1,116 @@
 class CartStore {
   constructor() {
-    this.items = this.loadFromStorage();
+    this.items = [];
     this.listeners = [];
+    this.init();
   }
 
-  loadFromStorage() {
-    try {
-      const stored = localStorage.getItem("lp-cart");
-      return stored ? JSON.parse(stored) : [];
-    } catch (e) {
-      return [];
-    }
-  }
-
-  saveToStorage() {
-    try {
-      localStorage.setItem("lp-cart", JSON.stringify(this.items));
-    } catch (e) {
-      console.error("Failed to save cart to storage", e);
-    }
+  async init() {
+    await this.loadFromServer();
   }
 
   subscribe(callback) {
     this.listeners.push(callback);
     return () => {
-      this.listeners = this.listeners.filter((l) => l !== callback);
+      this.listeners = this.listeners.filter(l => l !== callback);
     };
   }
 
   notify() {
-    this.listeners.forEach((callback) => callback(this.items));
+    this.listeners.forEach(cb => cb(this.items));
   }
 
-  addItem(item) {
-    const existingIndex = this.items.findIndex((i) => i.id === item.id);
-    if (existingIndex >= 0) {
-      this.items[existingIndex].quantity += 1;
-    } else {
-      this.items.push({ ...item, quantity: 1 });
-    }
-    this.saveToStorage();
-    this.notify();
-  }
+  async loadFromServer() {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
 
-  removeItem(id) {
-    this.items = this.items.filter((item) => item.id !== id);
-    this.saveToStorage();
-    this.notify();
-  }
+      const res = await fetch("http://localhost:3000/api/cart", {
+        headers: { Authorization: `Bearer ${token}` }
+      });
 
-  updateQuantity(id, quantity) {
-    const item = this.items.find((i) => i.id === id);
-    if (item) {
-      if (quantity <= 0) {
-        this.removeItem(id);
-      } else {
-        item.quantity = quantity;
-        this.saveToStorage();
-        this.notify();
-      }
+      if (!res.ok) throw new Error("Failed to load cart from server");
+
+      const json = await res.json();
+      this.items = json.data.map(item => ({
+        id: item.food_id,
+        title: item.name,
+        price: item.price,
+        image: item.image_url,
+        quantity: item.quantity
+      }));
+
+      this.notify();
+    } catch (e) {
+      console.error(e);
     }
   }
 
-  getTotal() {
-    return this.items.reduce(
-      (sum, item) => sum + item.price * item.quantity,
-      0
-    );
+  async addItem(item) {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) throw new Error("Login required");
+
+      const res = await fetch(`http://localhost:3000/api/cart/${item.id}`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (!res.ok) throw new Error("Failed to add item");
+
+      await this.loadFromServer();
+    } catch (e) {
+      console.error(e);
+    }
   }
 
-  getItemCount() {
-    return this.items.reduce((sum, item) => sum + item.quantity, 0);
+  async removeItem(id) {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) throw new Error("Login required");
+
+      const res = await fetch(`http://localhost:3000/api/cart/${id}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (!res.ok) throw new Error("Failed to remove item");
+
+      await this.loadFromServer();
+    } catch (e) {
+      console.error(e);
+    }
   }
 
-  clear() {
-    this.items = [];
-    this.saveToStorage();
-    this.notify();
+  async updateQuantity(id, quantity) {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) throw new Error("Login required");
+
+      const res = await fetch(`http://localhost:3000/api/cart/${id}`, {
+        method: "PUT",
+        headers: { 
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ quantity })
+      });
+      if (!res.ok) throw new Error("Failed to update quantity");
+
+      await this.loadFromServer();
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   getItems() {
     return [...this.items];
+  }
+
+  getTotal() {
+    return this.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  }
+
+  getItemCount() {
+    return this.items.reduce((sum, item) => sum + item.quantity, 0);
   }
 }
 
