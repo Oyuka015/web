@@ -12,10 +12,18 @@ class LpAcc extends HTMLElement {
     this.loadUserInfo();
     this.addLogoutListener();
     this.addFaqListener();
+    this.addEditListener();
+    
+    // Listen for profile updates from lp-edit component
+    this.addEventListener("profile-updated", () => {
+      this.loadUserInfo();
+    });
+    
     this.langUnsubscribe = langStore.subscribe(() => {
       this.render();
       this.addLogoutListener();
       this.addFaqListener();
+      this.addEditListener();
       this.loadUserInfo();
     });
   }
@@ -35,7 +43,10 @@ class LpAcc extends HTMLElement {
           <div class="profile">
             <img src="assets/img/image.png" alt="user-profile-picture" id="userAvatar">
             <p id="userName">User</p>
-            <button>${t("accEdit")}</button>
+            <button class="edit-profile-btn" id="editProfileBtn">
+              <i class="ci-Edit_02"></i>
+              ${t("accEdit")}
+            </button>
           </div> 
           <ul class="dash">
             <li id="orderCount">0 <span>${t("accOrders")}</span></li>
@@ -157,8 +168,46 @@ class LpAcc extends HTMLElement {
           </ul>
         </section>
 
+        <!-- Edit Profile Component -->
+        <lp-edit></lp-edit>
 
         <style>
+         .user-info {
+          margin-bottom: 24px;
+        }
+
+        .profile {
+          text-align: center;
+          padding: 24px;
+        }
+
+        .edit-profile-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 10px 20px;
+          margin-top: 12px;
+          border: 2px solid var(--color-orange);
+          background: transparent;
+          color: var(--color-orange);
+          border-radius: 10px;
+          font-size: 14px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .edit-profile-btn:hover {
+          background: var(--color-orange);
+          color: var(--color-white-0);
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(255, 128, 0, 0.3);
+        }
+
+        .edit-profile-btn i {
+          font-size: 16px;
+        }
+
          .account-menu {
           padding: 20px 0;
           max-width: 600px;
@@ -472,6 +521,18 @@ class LpAcc extends HTMLElement {
         nameEl.textContent =
           localStorage.getItem("userName") || langStore.t("accUser");
       alert(langStore.t("accServerError"));
+    }
+  }
+
+  addEditListener() {
+    const editBtn = this.querySelector("#editProfileBtn");
+    const editComponent = this.querySelector("lp-edit");
+
+    if (editBtn && editComponent) {
+      editBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        editComponent.open();
+      });
     }
   }
 

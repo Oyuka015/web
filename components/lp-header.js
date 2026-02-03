@@ -36,6 +36,7 @@ class LpHeader extends HTMLElement {
               right: 0;
               height: 70px;
               background: var(--color-white-0_9);
+              backdrop-filter: blur(10px);
               box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
               display: flex;
               align-items: center;
