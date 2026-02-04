@@ -1,3 +1,4 @@
+// pages/lp-payment.js
 import cartStore from "../components/cart-store.js";
 import langStore from "../components/lang-store.js";
 
@@ -5,6 +6,8 @@ class LpPayment extends HTMLElement {
   constructor() {
     super();
     this.langUnsubscribe = null;
+    this.deliveryType = "pickup"; // pickup / delivery
+    this.note = "";
   }
 
   connectedCallback() {
@@ -17,6 +20,9 @@ class LpPayment extends HTMLElement {
       return;
     }
 
+    this.items = cartStore.getItems();
+    this.total = cartStore.getTotal();
+
     this.render();
     this.langUnsubscribe = langStore.subscribe(() => this.render());
   }
@@ -27,117 +33,200 @@ class LpPayment extends HTMLElement {
 
   render() {
     const t = (key) => langStore.t(key);
-    const items = cartStore.getItems();
     const foodTotal = cartStore.getTotal();
-    const deliveryFee = 10000;
     const discount = 0;
+    const deliveryFee = this.deliveryType === "delivery" ? 10000 : 0;
     const grandTotal = foodTotal + deliveryFee - discount;
 
-    this.innerHTML = /*html */ `
-            <lp-header></lp-header> 
-            
-            <section class="payment-main">
-                <div class="map-img">
-                    <img src="/assets/img/map.png" alt="">
-                </div>
-                <ul class="delivery-info">
-                    <li><a href="#/acc">
-                        <div class="info-icon">
-                            <i class="ci-House_01"></i>
-                        </div>
-                        <div class="add-info">
-                            <p>${t("paymentAddress")}</p>
-                            <p>123 Tokyo Lane</p>
-                        </div>
-                        <span><i class="ci-Chevron_Right_MD"></i></span>
-                    </a></li>
-                    <li><a href="#/acc">
-                        <div class="info-icon">
-                            <i class="ci-Phone"></i>
-                        </div>
-                        <div class="add-info">
-                            <p>${t("paymentPhone")}</p>
-                            <p>10202200</p>
-                        </div>
-                        <span><i class="ci-Chevron_Right_MD"></i></span>
-                    </a></li>
-                </ul>
-                
+    this.innerHTML = /*html*/ `
+      <style> 
+          .payment-main {
+            padding: 0 20px;
+            overflow: hidden;  
 
-                <select name="voucher" id="voucher-info">
-                    <option value="" selected disabled hidden>${t("paymentVoucher")}</option>
-                    <option value="none" disabled>${t("paymentNoVoucher")}</option>
-                </select>
+            .paying-info {
+              display: flex;
+              justify-content: space-around;
+              padding: 0 5px;
 
+              li {
+                list-style: none;
+                width: 100px;
+                height: 100px;
+                border-radius: 20px;
+                box-shadow: 0 0 11px var(--color-white-3);
+                display:flex;
+                flex-direction: column;
+                justify-content:center;
 
-                <ul class="paying-info">
-                    <li><a href="#/payment">
-                        <img src="/assets/img/qpay.png" alt="">
-                        <p>Qpay</p>
-                    </a></li>
-                    <li><a href="#/payment">
-                        <img src="/assets/img/spay.png" alt="">
-                        <p>Social Pay</p>
-                    </a></li>
-                    <li><a href="#/payment">
-                        <img src="/assets/img/credit.png" alt="">
-                        <p>${t("paymentCard")}</p>
-                    </a></li>
-                </ul>
+                img { 
+                  width:50px;
+                  margin-bottom: 8px; 
+                  align-self:center;
+                }
 
-                <ul class="price-info">
-                    <li>
-                        <p>${t("paymentFoodPrice")}</p>
-                        <p>${foodTotal.toLocaleString()} ₮</p>
-                    </li>
-                    <li>
-                        <p>${t("paymentDeliveryFee")}</p>
-                        <p>${deliveryFee.toLocaleString()} ₮</p>
-                    </li>
-                    <li>
-                        <p>${t("paymentDiscount")}</p>
-                        <p>${discount.toLocaleString()} ₮</p>
-                    </li>
-                    <li>
-                        <p>${t("paymentTotal")}</p>
-                        <p>${grandTotal.toLocaleString()} ₮</p>
-                    </li>
-                </ul>
+                p {
+                  margin: 0;
+                  font-size: 14px;
+                  color: #333;
+                  text-align: center;
+                } 
+              }
+            } 
 
-                <button class="checkout-btn">${t("paymentPay")}</button>
-            </section>
-            
-        `;
+            .price-info {
+              padding: 0 5px;
 
-    const checkoutBtn = this.querySelector(".checkout-btn");
-    if (checkoutBtn) {
-      checkoutBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        const isLoggedIn =
-          localStorage.getItem("isLoggedIn") === "true" ||
-          !!localStorage.getItem("token");
-        if (isLoggedIn) {
-          cartStore.clear();
-          alert(langStore.t("paymentOrderSuccess"));
+              li {
+                list-style: none;
+                display: flex;
+                justify-content: space-between;
+                line-height: 0;
+              }
+
+              li:last-child {
+                border-top: 1px dashed black;
+                padding-top: 10px;
+              }
+            }
+          }
+
+          h3{
+            color:var(--color-orange);
+            font-family: var(--font-family-mono);
+            display:flex;
+            justify-content:center;
+          }
+          .paying-info li {
+            cursor: pointer;
+            border: 2px solid transparent;
+            border-radius: 14px;
+            padding: 12px;
+            transition: all 0.3s ease;
+          }
+
+          .paying-info li.selected {
+            border-color: var(--color-orange);
+            background: var(--color-orange-soft);
+          }
+
+           /* Note section */
+          .order-note {
+            display: flex;
+            flex-direction: column;
+          }
+          .order-note label {
+            font-weight: 600;
+            margin-bottom: 6px;
+          }
+          .order-note textarea {
+            resize: none;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid var(--color-white-2);
+            font-family: var(--font-family-default);
+            font-size: 14px;
+            min-height: 60px;
+            transition: border-color 0.2s;
+          }
+          .order-note textarea:focus {
+            outline: none;
+            border-color: var(--color-orange);
+          }
+
+        </style>
+
+      <lp-header></lp-header>
+
+      <section class="payment-main">
+        <h3>Захиалга баталгаажуулах</h3>
+
+        <ul class="paying-info">
+          <li class="${this.deliveryType === "pickup" ? "selected" : ""}" data-type="pickup">
+            <img src="/assets/img/qpay.png" alt="Очиж авах">
+            <p>Очиж авах</p>
+          </li>
+          <li class="${this.deliveryType === "delivery" ? "selected" : ""}" data-type="delivery">
+            <img src="/assets/img/spay.png" alt="Хүргэлтээр авах">
+            <p>Хүргэлтээр авах</p>
+          </li>
+        </ul>
+
+        <div class="order-note">
+          <label for="order-note">Нэмэлт мэдээлэл:</label>
+          <textarea id="order-note" placeholder="Хүсэлтээ бичнэ үү..." rows="3">${this.note}</textarea>
+        </div>
+
+        <ul class="price-info">
+          <li>
+            <p>${t("paymentFoodPrice")}</p>
+            <p>${foodTotal.toLocaleString()} ₮</p>
+          </li>
+          <li>
+            <p>${t("paymentDeliveryFee")}</p>
+            <p>${deliveryFee.toLocaleString()} ₮</p>
+          </li>
+          <li>
+            <p>${t("paymentDiscount")}</p>
+            <p>${discount.toLocaleString()} ₮</p>
+          </li>
+          <li>
+            <p>${t("paymentTotal")}</p>
+            <p>${grandTotal.toLocaleString()} ₮</p>
+          </li>
+        </ul>
+
+        <lp-bg-btn name="Захиалах" class="payment-btn"></lp-bg-btn>
+      </section>
+    `;
+
+    this.addEventListeners(deliveryFee, grandTotal); 
+
+  }
+
+  addEventListeners(deliveryFee, grandTotal) {
+  // Төрөл сонгох
+  this.querySelectorAll(".paying-info li").forEach((li) => {
+    li.addEventListener("click", () => {
+      // Рендер хийхээс өмнө бичсэн текстийг нь хадгалж авна
+      this.note = this.querySelector("#order-note").value;
+      this.deliveryType = li.dataset.type;
+      this.render(); 
+    });
+  });
+
+  // Захиалга илгээх
+    this.querySelector(".payment-btn").addEventListener("click", async () => {
+      const finalNote = this.querySelector("#order-note").value;
+      
+      const orderData = {
+        items: cartStore.getItems(),
+        deliveryType: this.deliveryType,
+        deliveryFee: deliveryFee,
+        total: grandTotal,
+        notes: finalNote
+      };
+
+      try {
+        const res = await fetch("http://localhost:3000/api/orders", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+          },
+          body: JSON.stringify(orderData)
+        });
+
+        if (res.ok) {
+          cartStore.clear(); // Сагсыг цэвэрлэх
+          alert("Захиалга амжилттай!");
           window.location.hash = "#/";
         }
-      });
-    }
-
-    document.querySelectorAll(".paying-info a").forEach((link) => {
-      link.addEventListener("click", (e) => {
-        e.preventDefault(); // route-г өөрөө удирдана
-
-        document
-          .querySelectorAll(".paying-info a")
-          .forEach((a) => a.classList.remove("selected"));
-
-        link.classList.add("selected");
-
-        window.location.hash = link.getAttribute("href");
-      });
+      } catch (err) {
+        console.error("Order error:", err);
+      }
     });
   }
 }
 
-window.customElements.define('lp-payment', LpPayment);
+window.customElements.define("lp-payment", LpPayment);

@@ -112,6 +112,10 @@ class CartStore {
   getItemCount() {
     return this.items.reduce((sum, item) => sum + item.quantity, 0);
   }
+  clear() {
+    this.items = [];
+    this.notify(); 
+  }
 }
 
 const cartStore = new CartStore();

@@ -146,10 +146,15 @@ class LpCart extends HTMLElement {
           <span class="summary-label">Нийт үнэ:</span>
           <span class="summary-total">${cartStore.getTotal()}₮</span>
         </div> 
-        <button class="checkout-btn">checkoutbtn</button>
+        <button class="checkout-btn">Баталгаажуулах</button>
       </div>
     `;
-  }
+
+    const checkoutBtn = this.querySelector(".checkout-btn"); 
+    checkoutBtn.addEventListener("click", () => {
+      window.location.hash = "#/payment";
+    });
+  } 
 }
 
 customElements.define("lp-cart", LpCart);
