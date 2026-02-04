@@ -55,7 +55,7 @@ class LpHomeHeader extends HTMLElement {
   render() {
     this.innerHTML = `
       <section>
-        <a href="#" id="address-link">
+        <a href="#/acc" id="address-link">
           <i class="ci-Map_Pin"></i>
           <p><span>${this.escapeHtml(this.address)}</span></p>
         </a>

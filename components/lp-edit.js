@@ -253,7 +253,7 @@ class LpEdit extends HTMLElement {
           <div class="form-group">
             <label for="editEmail">
               <i class="ci-Mail"></i>
-              ${t("editEmail") || "Email"}
+              ${t("editEmail")||"Email"}
             </label>
             <input 
               type="email" 

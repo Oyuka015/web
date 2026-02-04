@@ -38,18 +38,23 @@ const translations = {
     accFaq: "FAQ",
     accLogout: "Гарах",
     accFaq1Q: "Тэжээвэр амьтантай орж болох уу?",
-    accFaq1A: "Тийм, бид нохой муур гэх мэт тэжээвэр амьтдыг зөвхөн terrace дээр зөвшөөрдөг.",
+    accFaq1A:
+      "Тийм, бид нохой муур гэх мэт тэжээвэр амьтдыг зөвхөн terrace дээр зөвшөөрдөг.",
     accFaq2Q: "Хэрхэн захиалга өгөх вэ?",
-    accFaq2A: "Та хүссэн бүтээгдэхүүнээ сонгоод сагсанд нэмэх товч дээр дарна. Хэрэв аль хэдийн нэвтэрсэн бол дараа нь сагс руу орж захиалга баталгаажуулна.",
+    accFaq2A:
+      "Та хүссэн бүтээгдэхүүнээ сонгоод сагсанд нэмэх товч дээр дарна. Хэрэв аль хэдийн нэвтэрсэн бол дараа нь сагс руу орж захиалга баталгаажуулна.",
     accFaq3Q: "Хүргэлтийн хугацаа хэр вэ?",
-    accFaq3A: "Хүргэлт ихэвчлэн 20-60 минутын дотор хийгдэнэ. Байршлаас хамааран хугацаа өөр байж болно.",
+    accFaq3A:
+      "Хүргэлт ихэвчлэн 20-60 минутын дотор хийгдэнэ. Байршлаас хамааран хугацаа өөр байж болно.",
     accFaq4Q: "Төлбөрийн аргууд юу байна?",
     accFaq4A: "Бид бэлэн мөнгө болон картаар төлбөр хүлээн авдаг.",
     accFaq5Q: "Хаяг байршил",
-    accFaq5A: "Building 21, 50 Myangat, CHD - 2 khoroo, Ulaanbaatar 15172, (Төв зам дагуу Peace mall-с баруун тийш 150метр.)",
+    accFaq5A:
+      "Building 21, 50 Myangat, CHD - 2 khoroo, Ulaanbaatar 15172, (Төв зам дагуу Peace mall-с баруун тийш 150метр.)",
     accLoadError: "Мэдээлэл татахад: ",
     accRetry: " Дахин оролдоно уу.",
-    accServerError: "Серверт холбогдоход алдаа гарлаа. Холболтоо шалгаад дахин оролдоно уу.",
+    accServerError:
+      "Серверт холбогдоход алдаа гарлаа. Холболтоо шалгаад дахин оролдоно уу.",
     accLogoutSuccess: "Та амжилттай гарлаа",
     accUser: "Хэрэглэгч",
     accPhone: "Утасны дугаар",
@@ -95,7 +100,33 @@ const translations = {
     editSuccess: "Профайл амжилттай шинэчлэгдлээ!",
     editNameRequired: "Нэр шаардлагатай",
     editEmailRequired: "Имэйл шаардлагатай",
+    aboutTitle: "LondonPOP",
+    aboutSubtitle: "Таны дуртай, тухтай паб&ресторан газар",
 
+    aboutUs: "Бидний тухай",
+    aboutDescription:
+      "Манай ресторан нь 2010 оноос үйл ажиллагаагаа явуулж байгаа бөгөөд 2025 онд LondonPop нэртэй болж үйл ажиллагаагаа шинэчлэсэн. Бид эрүүл, амттай хоол болон тохитой сууж болдгоороо танигдсан.",
+
+    ourMission: "Манай эрхэм зорилго",
+    missionText:
+      "Эрүүл, амттай, чанарын шаардлага хангасан хоолоор үйлчилж, өдөр бүр шинэ сайхан дурсамж бүтээх",
+
+    contactUs: "Холбоо барих",
+    address: "Хаяг",
+    phone: "Утас",
+    email: "Имэйл",
+    workingHours: "Ажлын цаг",
+    ourLocation: "Манай байршил",
+    ourTeam: "Манай баг",
+    ceo: "Захирал",
+    headChef: "Ахлах тогооч",
+    manager: "Бармен",
+    marketing: "Зөөгч",
+    ourPartners: "Хамтрагч байгууллагууд",
+    happyCustomers: "Сэтгэл хангалуун үйлчлүүлэгч",
+    locations: "Салбар",
+    awards: "Шагнал",
+    yearsExperience: "Жилийн туршлага",
   },
   en: {
     langName: "English",
@@ -136,16 +167,20 @@ const translations = {
     accFaq1Q: "Can I bring my pet?",
     accFaq1A: "Yes, we allow pets like dogs and cats on the terrace only.",
     accFaq2Q: "How do I place an order?",
-    accFaq2A: "Select your items and tap Add to cart. If you are already logged in, go to cart and confirm your order.",
+    accFaq2A:
+      "Select your items and tap Add to cart. If you are already logged in, go to cart and confirm your order.",
     accFaq3Q: "What is the delivery time?",
-    accFaq3A: "Delivery usually takes 20-60 minutes. Time may vary by location.",
+    accFaq3A:
+      "Delivery usually takes 20-60 minutes. Time may vary by location.",
     accFaq4Q: "What payment methods do you accept?",
     accFaq4A: "We accept cash and card payments.",
     accFaq5Q: "Address & location",
-    accFaq5A: "Building 21, 50 Myangat, CHD - 2 khoroo, Ulaanbaatar 15172, (150m west from Peace mall on the main road.)",
+    accFaq5A:
+      "Building 21, 50 Myangat, CHD - 2 khoroo, Ulaanbaatar 15172, (150m west from Peace mall on the main road.)",
     accLoadError: "Error loading: ",
     accRetry: " Please try again.",
-    accServerError: "Could not connect to server. Check your connection and try again.",
+    accServerError:
+      "Could not connect to server. Check your connection and try again.",
     accLogoutSuccess: "You have logged out successfully",
     accUser: "User",
     accPhone: "Phone number",
@@ -191,6 +226,35 @@ const translations = {
     editSuccess: "Profile updated successfully!",
     editNameRequired: "Name is required",
     editEmailRequired: "Email is required",
+    aboutTitle: "LondonPOP",
+    aboutSubtitle: "Your favorite cozy pub & restaurant",
+
+    aboutUs: "About Us",
+    aboutDescription:
+      "Our restaurant has been operating since 2010 and was rebranded as LondonPOP in 2025. We are known for serving healthy, delicious food in a comfortable and welcoming atmosphere.",
+
+    ourMission: "Our Mission",
+    missionText:
+      "To serve healthy, delicious, and high-quality food while creating new and memorable experiences every day",
+
+    contactUs: "Contact Us",
+    address: "Address",
+    phone: "Phone",
+    email: "Email",
+    workingHours: "Working Hours",
+    ourLocation: "Our Location",
+
+    ourTeam: "Our Team",
+    ceo: "Founders",
+    headChef: "Head Chef",
+    manager: "Bartender",
+    marketing: "Waiter",
+
+    ourPartners: "Our Partners",
+    happyCustomers: "Happy Customers",
+    locations: "Locations",
+    awards: "Awards",
+    yearsExperience: "Years of Experience",
   },
 };
 

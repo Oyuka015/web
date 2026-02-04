@@ -9,10 +9,10 @@ class LpEhlel extends HTMLElement {
   }
 
   setupNavigation() {
-    const ctaButton = this.querySelector('.cta-button');
+    const ctaButton = this.querySelector(".cta-button");
     if (ctaButton) {
-      ctaButton.addEventListener('click', () => {
-        window.location.hash = '#/home';
+      ctaButton.addEventListener("click", () => {
+        window.location.hash = "#/home";
       });
     }
   }
@@ -27,18 +27,21 @@ class LpEhlel extends HTMLElement {
           position: relative;
           overflow: hidden;
         }
-
+        body{
+          margin: 0;
+          padding: 0;
+        }
         .hero-container {
           position: relative;
-          width: 100%;
+          width: 100vw;
           height: 100vh;
+
           display: flex;
           flex-direction: column;
           justify-content: center;
           align-items: center;
           overflow: hidden;
         }
-
         .hero-background {
           position: absolute;
           top: 0;
@@ -148,21 +151,6 @@ class LpEhlel extends HTMLElement {
           transform: translateY(-1px);
         }
 
-        .scroll-indicator {
-          position: absolute;
-          bottom: 5rem;
-          left: 50%;
-          transform: translateX(-50%);
-          z-index: 3;
-          animation: bounce 2s infinite;
-        }
-
-        .scroll-indicator i {
-          font-size: 2rem;
-          color: var(--color-white-0);
-          opacity: 0.7;
-        }
-
         @keyframes zoomIn {
           0% {
             transform: scale(1);
@@ -210,7 +198,6 @@ class LpEhlel extends HTMLElement {
           }
         }
 
-        /* Decorative elements */
         .decorative-circle {
           position: absolute;
           border-radius: 50%;
@@ -245,8 +232,6 @@ class LpEhlel extends HTMLElement {
             opacity: 0.5;
           }
         }
-
-        /* Responsive adjustments */
         @media (max-width: 768px) {
           .hero-content {
             padding: 1.5rem;
@@ -278,7 +263,7 @@ class LpEhlel extends HTMLElement {
         }
       </style>
 
-      <div class="hero-container">
+      <section class="hero-container">
         <div class="hero-background"></div>
         <div class="decorative-circle circle-1"></div>
         <div class="decorative-circle circle-2"></div>
@@ -288,11 +273,7 @@ class LpEhlel extends HTMLElement {
           <p class="tagline">Тавтай морилно уу • Welcome • Добро пожаловать</p>
           <button class="cta-button">Эхлэх</button>
         </div>
-
-        <div class="scroll-indicator">
-          <i class="ci-Arrow_Down_MD"></i>
-        </div>
-      </div>
+      </section>
     `;
   }
 }

@@ -20,13 +20,22 @@
     <script type="module" src="page/lp-nevtreh.js"></script>
     <script type="module" src="page/lp-ehlel.js"></script>
 
+    <script type="module" src="components/lp-user-profile.js"></script>
+    <script type="module" src="components/lp-account-menu.js"></script>
+    <script type="module" src="components/lp-language-switcher.js"></script>
+    <script type="module" src="components/lp-theme-toggle.js"></script>
+    <script type="module" src="components/lp-faq-section.js"></script>
+
     <script type="module" src="components/lp-nav.js"></script>
     <script type="module" src="components/lp-home-header.js"></script>
     <script type="module" src="components/lp-bg-btn.js"></script>
     <script type="module" src="components/lp-search.js"></script>
     <script type="module" src="components/lp-category.js"></script>
-    <script type="module" src="routers/lp-router.js"></script>
     <script type="module" src="components/lp-edit.js"></script>
+    <script type="module" src="components/lp-about.js"></script>
+
+    <script type="module" src="routers/lp-router.js"></script>
+    
     <script src="routers/lp-route.js"></script>
   </head>
   <body>
@@ -38,6 +47,7 @@
       <lp-route path="/acc" component="lp-acc"></lp-route>
       <lp-route path="/payment" component="lp-payment"></lp-route>
       <lp-route path="/login" component="lp-nevtreh"></lp-route> 
+      <lp-route path="/about" component="lp-about"></lp-route>
     </lp-router>
     <lp-nav></lp-nav>
   </body> 
