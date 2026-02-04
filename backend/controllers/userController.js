@@ -42,7 +42,6 @@ export async function updateUserProfile(req, res) {
 
     const { name, email, phone, address } = req.body;
 
-    // Validation
     if (!name || !name.trim()) {
       return res.status(400).json({ error: "Нэр шаардлагатай." });
     }
@@ -51,13 +50,11 @@ export async function updateUserProfile(req, res) {
       return res.status(400).json({ error: "Имэйл шаардлагатай." });
     }
 
-    // Email format validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return res.status(400).json({ error: "Имэйл буруу форматтай байна." });
     }
 
-    // Check if email is already taken by another user
     const emailCheck = await pool.query(
       "SELECT id FROM users WHERE email = $1 AND id != $2",
       [email.trim(), userID]
@@ -67,7 +64,6 @@ export async function updateUserProfile(req, res) {
       return res.status(400).json({ error: "Энэ имэйл хаяг аль хэдийн бүртгэгдсэн байна." });
     }
 
-    // Update user profile
     const updateQuery = `
       UPDATE users 
       SET 
