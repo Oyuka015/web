@@ -205,7 +205,7 @@ class LpFood extends HTMLElement {
         }  
       </style>
 
-      <img src="${this.image}" />
+      <img alt="${this.name}" src="${this.image}"  />
       <article>
         <header>
           <h3>${this.name}</h3>
@@ -302,7 +302,8 @@ class LpFood extends HTMLElement {
                       .qty-btn{
                         width: 32px;
                         height: 32px;
-                        border: 2px solid var(--color-orange);  
+                        border: 2px solid var(--color-orange); 
+                        background-color:var(--color-white-0); 
                         color: var(--color-orange);
                         border-radius: 50%;
                         display: flex;

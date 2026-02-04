@@ -57,8 +57,8 @@ class LpAd extends HTMLElement {
       </style>
       <div class="lp-ad-wrapper">
         <div class="lp-ad">
-          <img src="/assets/img/advert.png" class="active">
-          <img src="/assets/img/image.png">
+          <img src="/assets/img/advert.png" class="active" alt="banner-zurag">
+          <img src="/assets/img/image.png" alt="banner-zurag">
         </div>
       </div>
     `;

@@ -59,7 +59,7 @@ class LpHomeHeader extends HTMLElement {
           <i class="ci-Map_Pin"></i>
           <p><span>${this.escapeHtml(this.address)}</span></p>
         </a>
-        <button><i class="ci-Bell"></i></button>
+        <button title="Мэдэгдэл"><i class="ci-Bell"></i></button>
       </section>
     `;
   }

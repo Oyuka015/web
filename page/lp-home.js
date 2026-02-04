@@ -34,7 +34,7 @@ class LpHome extends HTMLElement {
           display: grid;
           grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
           gap: 16px; 
-          
+          padding-bottom:80px;
         }
       </style>
       <!-- home-header-component -->

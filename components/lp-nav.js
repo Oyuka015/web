@@ -111,17 +111,17 @@ class LpNav extends HTMLElement {
     render(){
         this.innerHTML = `
           <nav>
-            <a href="#/home">
+            <a href="#/home" aria-label="Нүүр хуудас руу очих">
                 <i class="ci-House_01"></i>
             </a>
-            <a href="#/save">
+            <a href="#/save" aria-label="Хадгалсан бүтээгдэхүүнүүд харах">
                 <i class="ci-Heart_01"></i> 
             </a>
-            <a href="#/cart">
+            <a href="#/cart" aria-label="Сагс руу очих">
                 <i class="ci-Shopping_Bag_02"></i>
                 <span class="cart-count">0</span>
             </a>
-            <a href="#/acc" style="position:relative;">
+            <a href="#/acc" style="position:relative;" aria-label="Хувийн мэдээлэл харах">
                 <i class="ci-User_02"></i>
             </a> 
         </nav>
