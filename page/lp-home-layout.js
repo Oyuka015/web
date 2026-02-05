@@ -2,7 +2,12 @@ class LpHomeLayout extends HTMLElement {
   connectedCallback() {
     this.innerHTML = /*html*/ `
       <style>  
-
+        /*mobile*/
+        @media(max-width: 1255px){
+            lp-cart{
+                display:none;
+            } 
+        }
         /* desktop */
         @media (min-width: 1256px) {
           .layout {
@@ -40,7 +45,7 @@ class LpHomeLayout extends HTMLElement {
                 padding: 20px;
                 box-shadow: 0 -4px 12px var(--color-white-3);
             }
-          }
+          } 
 
         }
       </style>

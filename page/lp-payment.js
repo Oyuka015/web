@@ -220,7 +220,7 @@ class LpPayment extends HTMLElement {
         if (res.ok) {
           cartStore.clear(); // Сагсыг цэвэрлэх
           alert("Захиалга амжилттай!");
-          window.location.hash = "#/";
+          window.location.hash = "#/home";
         }
       } catch (err) {
         console.error("Order error:", err);
