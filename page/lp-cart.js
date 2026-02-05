@@ -21,6 +21,8 @@ class LpCart extends HTMLElement {
   }
 
   render() {
+    const hasItems = this.items.length > 0; 
+    
     this.innerHTML =  /*html*/`
       <style>
         .cart-main{
@@ -93,6 +95,7 @@ class LpCart extends HTMLElement {
           font-size: 60px;
           margin-bottom: 20px;
           display: block;
+          color:var(--color-orange-lighter);
         }
 
         .empty-state h3 {
@@ -115,18 +118,27 @@ class LpCart extends HTMLElement {
           text-decoration: none;
           font-weight: 600;
         }
+
+        @media (min-width: 1024px) {
+          .cart-summary {
+            position: static;
+            box-shadow: none;
+            padding: 0;
+          }
+        } 
+
       </style>
       <lp-header></lp-header>
       <section class="cart-main">
         ${
-          this.items.length === 0
+          !hasItems
             ? `
               <lp-header></lp-header>
               <div class="empty-state">
                 <i class="ci-Shopping_Bag_02"></i>
-                <h3>hooson bn</h3>
-                <p>ymr neg textt tttt</p>
-                <a href="/">go to home page  </a>
+                <h3>Хоосон байна.</h3>
+                <p>Таны сагсанд одоогоор хоол байхгүй байна.</p>
+                <a href="/#home">Хоол сонгох</a>
               </div>
               `
             : this.items.map(item => `
@@ -141,19 +153,28 @@ class LpCart extends HTMLElement {
               `).join("")
         }
       </section>
-      <div class="cart-summary">
-        <div class="summary-row">
-          <span class="summary-label">Нийт үнэ:</span>
-          <span class="summary-total">${cartStore.getTotal()}₮</span>
-        </div> 
-        <button class="checkout-btn">Баталгаажуулах</button>
-      </div>
+      
+      ${
+        hasItems //itemtai uyd l haruulna odo
+          ? `
+            <div class="cart-summary">
+              <div class="summary-row">
+                <span class="summary-label">Нийт үнэ:</span>
+                <span class="summary-total">${cartStore.getTotal()}₮</span>
+              </div>
+              <button class="checkout-btn">Баталгаажуулах</button>
+            </div>
+          `
+          : ``
+      }
     `;
 
     const checkoutBtn = this.querySelector(".checkout-btn"); 
-    checkoutBtn.addEventListener("click", () => {
-      window.location.hash = "#/payment";
-    });
+    if (checkoutBtn) {
+      checkoutBtn.addEventListener("click", () => {
+        window.location.hash = "#/payment";
+      });
+    }
   } 
 }
 

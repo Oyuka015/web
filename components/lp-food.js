@@ -6,7 +6,8 @@ class LpFood extends HTMLElement {
   }
 
   async connectedCallback() {
-    this.mode = this.getAttribute("mode") ?? "card"; // card or row
+    this.mode = this.getAttribute("mode") ?? "card"; // card - row
+    this.classList.add(this.mode);  // desktop dr css dawharduulahguin tuld ogsn
     this.image = this.getAttribute("image") ?? "";
     this.name = this.getAttribute("name") ?? "No title";
     this.price = this.getAttribute("price") ?? "0";
@@ -104,7 +105,7 @@ class LpFood extends HTMLElement {
   renderCard() {
     this.innerHTML = /*html*/ `
       <style>
-        lp-food{
+        lp-food.card {
           background: var(--color-white-0);  
           border:1px solid var(--color-white-2);
           border-radius: 12px;
@@ -197,7 +198,7 @@ class LpFood extends HTMLElement {
             }
           } /** article end*/ 
         }  
-        lp-food:hover{
+        lp-food.card:hover{
           box-shadow: 1px 1px 10px var(--color-orange-lighter);
           border:1px solid var(--color-orange); 
           /* transform: scale(1.02);*/
@@ -228,15 +229,15 @@ class LpFood extends HTMLElement {
   renderRow() {
     this.innerHTML = /*html*/`
       <style>
-        .cart-main{
+        lp-food.row .cart-main{
           display:flex;
           flex-direction:column; 
         }
-        article:hover{
+        .cart-main article:hover{
           border:1px solid var(--color-orange);
           transition: all 0.3s ease; 
         }
-        article{
+        lp-food.row article{
           display: flex;
           background: var(--color-white-0);
           border: 1px solid var(--color-white-3);
@@ -256,94 +257,98 @@ class LpFood extends HTMLElement {
           }
 
           .content{
-              flex: 1;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+
+            header{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 8px;
+
+                h3{
+                    font-size: 16px;
+                    font-weight: 600;
+                    color: var(--text-color-default);
+                    /* margin-bottom: 4px; */
+                }
+                /*span - uniin medeelel */
+                span{ 
+                    font-family: var(--font-mono);
+                    font-size: 18px;
+                    font-weight: 700;
+                    color: var(--color-orange);
+                }
+                
+            }
+
+            p{
+              font-size: 14px;
+              color: var(--text-color-muted);
+              margin-bottom: 12px;
+              line-height: 1.4;
+            }
+
+            footer{
               display: flex;
-              flex-direction: column;
+              justify-content: space-between;
+              align-items: center; 
 
-              header{
+              .quantity-control{
                   display: flex;
-                  justify-content: space-between;
                   align-items: center;
-                  margin-bottom: 8px;
+                  gap: 12px;
 
-                  h3{
+                  .qty-btn{
+                    width: 32px;
+                    height: 32px;
+                    border: 2px solid var(--color-orange); 
+                    background-color:var(--color-white-0); 
+                    color: var(--color-orange);
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    font-weight: 600;
+                  }
+                  .qty-btn.plus:hover,
+                  .qty-btn.minus:hover{
+                    background-color: var(--color-orange-lighter);
+                    color: var(--color-white-0);
+                  }
+
+                  .quantity{
+                      font-family: var(--font-mono);
                       font-size: 16px;
                       font-weight: 600;
                       color: var(--text-color-default);
-                      /* margin-bottom: 4px; */
-                  }
-                  /*span - uniin medeelel */
-                  span{ 
-                      font-family: var(--font-mono);
-                      font-size: 18px;
-                      font-weight: 700;
-                      color: var(--color-orange);
-                  }
-                  
-              }
-
-              p{
-                font-size: 14px;
-                color: var(--text-color-muted);
-                margin-bottom: 12px;
-                line-height: 1.4;
-              }
-
-              footer{
-                  display: flex;
-                  justify-content: space-between;
-                  align-items: center; 
-
-                  .quantity-control{
-                      display: flex;
-                      align-items: center;
-                      gap: 12px;
-
-                      .qty-btn{
-                        width: 32px;
-                        height: 32px;
-                        border: 2px solid var(--color-orange); 
-                        background-color:var(--color-white-0); 
-                        color: var(--color-orange);
-                        border-radius: 50%;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        cursor: pointer;
-                        transition: all 0.3s ease;
-                        font-weight: 600;
-                      }
-                      .qty-btn.plus:hover,
-                      .qty-btn.minus:hover{
-                        background-color: var(--color-orange-lighter);
-                        color: var(--color-white-0);
-                      }
-
-                      .quantity{
-                          font-family: var(--font-mono);
-                          font-size: 16px;
-                          font-weight: 600;
-                          color: var(--text-color-default);
-                          min-width: 30px;
-                          text-align: center;
-                      }
-                  }
-
-                  button{
-                    background: var(--color-warning-red);
-                    border: 1px solid var(--color-warning-red-dark);
-                    color: var(--color-warning-red-darkest);
-                    padding: 8px 12px;
-                    border-radius: 6px;
-                    font-size: 12px;
-                    font-weight: 600;
-                    cursor: pointer;
-                    transition: all 0.3s ease;
-                  }
-                  button:hover{
-                    background:var(--color-warning-red-dark); 
+                      min-width: 30px;
+                      text-align: center;
                   }
               }
+
+              button{
+                background: var(--color-warning-red);
+                border: 1px solid var(--color-warning-red-dark);
+                color: var(--color-warning-red-darkest);
+                padding: 8px 12px;
+                border-radius: 6px;
+                font-size: 18px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+
+                display:flex;
+                justify-content:center;
+                align-items:center;
+              }
+              button:hover{
+                background:var(--color-warning-red-dark); 
+              }
+            }
           }
         }
       </style>
@@ -361,7 +366,7 @@ class LpFood extends HTMLElement {
                     <span class="quantity">${this.quantity}</span>
                     <button class="qty-btn plus">+</button>
                 </div>
-                <button class="remove-btn">Устгах</button>
+                <button class="remove-btn"><i class="ci-Trash_Full"></i></button>
             </footer>
         </div>
       </article>

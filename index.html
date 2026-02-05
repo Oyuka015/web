@@ -33,6 +33,7 @@
     <script type="module" src="components/lp-category.js"></script>
     <script type="module" src="components/lp-edit.js"></script>
     <script type="module" src="components/lp-about.js"></script>
+    <script type="module" src="page/lp-home-layout.js"></script>
 
     <script type="module" src="routers/lp-router.js"></script>
     
@@ -41,7 +42,8 @@
   <body>
     <lp-router>
       <lp-route path="/" component="lp-ehlel"></lp-route>
-      <lp-route path="/home" component="lp-home"></lp-route>
+      <!-- <lp-route path="/home" component="lp-home"></lp-route> -->
+      <lp-route path="/home" component="lp-home-layout"></lp-route>
       <lp-route path="/save" component="lp-save"></lp-route>
       <lp-route path="/cart" component="lp-cart"></lp-route>
       <lp-route path="/acc" component="lp-acc"></lp-route>
