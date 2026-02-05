@@ -28,7 +28,7 @@ class LpCart extends HTMLElement {
         .cart-main{
           margin-top:80px;
           padding: 20px 16px 80px; 
-        }
+        } 
         .cart-summary {
           position: fixed;
           bottom: 80px;
@@ -123,12 +123,13 @@ class LpCart extends HTMLElement {
           .cart-summary {
             position: static;
             box-shadow: none;
-            padding: 0;
+            padding: 0; 
           }
         } 
 
       </style>
-      <lp-header></lp-header>
+
+      <lp-header></lp-header> 
       <section class="cart-main">
         ${
           !hasItems
@@ -156,7 +157,7 @@ class LpCart extends HTMLElement {
       
       ${
         hasItems //itemtai uyd l haruulna odo
-          ? `
+          ? ` 
             <div class="cart-summary">
               <div class="summary-row">
                 <span class="summary-label">Нийт үнэ:</span>

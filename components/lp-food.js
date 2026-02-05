@@ -112,7 +112,11 @@ class LpFood extends HTMLElement {
           overflow: hidden;
           transition: all 0.3s ease;
           cursor: pointer;
-          position:relative; 
+          position:relative;  
+
+          display: flex;
+          flex-direction: column;
+          height: 400px;
 
           img{
             width: 100%;
@@ -120,11 +124,15 @@ class LpFood extends HTMLElement {
             aspect-ratio: 16 / 9;
             object-fit: cover;
             transition: all 0.3s ease;
+            flex-shrink: 0;
           }
           
           /*article start */
           article{ 
-            padding: 16px;
+            padding: 16px; 
+            display: flex; 
+            flex-direction: column;
+            flex: 1; 
 
             /* articli-header */
             header{ 
@@ -147,12 +155,20 @@ class LpFood extends HTMLElement {
               color: var(--text-color-muted);
               margin-bottom: 12px;
               line-height: 1.4;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              display: -webkit-box;
+              overflow: hidden;
+              -webkit-line-clamp: 2; /* engiin uyd 2 mor haragdene*/
+              -webkit-box-orient: vertical;
+              transition: all 0.3s ease;
             }
             /* ARTICLE - FOOTER */
             footer{ 
               display: flex;
               justify-content: space-between;
               align-items: center; 
+              margin-top: auto; 
 
               p{
                 font-family: var(--font-family-mono);
@@ -197,12 +213,18 @@ class LpFood extends HTMLElement {
               }
             }
           } /** article end*/ 
-        }  
+        } 
+        lp-food.card:hover small {
+          -webkit-line-clamp: unset; 
+          transition: all 0.3s ease;  
+        } 
         lp-food.card:hover{
           box-shadow: 1px 1px 10px var(--color-orange-lighter);
-          border:1px solid var(--color-orange); 
-          /* transform: scale(1.02);*/
-          transition: all 0.3s ease;
+          border:1px solid var(--color-orange);  
+          transition: all 0.3s ease;  
+        }  
+        lp-home lp-food.card:hover{ 
+          height:auto;
         }  
       </style>
 

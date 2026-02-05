@@ -40,14 +40,22 @@ class LpPayment extends HTMLElement {
 
     this.innerHTML = /*html*/ `
       <style> 
-          .payment-main {
-            padding: 0 20px;
+          lp-payment{
+            display:flex;
+            justify-content:center;
+          }
+          .payment-main { 
+            padding:40px 30px;
             overflow: hidden;  
+            margin-top:80px;
+            max-width:1000px;
+            border-radius:10px;
 
             .paying-info {
               display: flex;
-              justify-content: space-around;
+              justify-content: center;
               padding: 0 5px;
+              gap:20px;
 
               li {
                 list-style: none;
@@ -96,6 +104,7 @@ class LpPayment extends HTMLElement {
             font-family: var(--font-family-mono);
             display:flex;
             justify-content:center;
+            font-size:25px;
           }
           .paying-info li {
             cursor: pointer;

@@ -5,45 +5,52 @@ class LpHomeLayout extends HTMLElement {
         /*mobile*/
         @media(max-width: 1255px){
             lp-cart{
-                display:none;
-            } 
+                display:none; 
+            }  
+            
         }
         /* desktop */
         @media (min-width: 1256px) {
+          body{
+            overflow:hidden;
+            padding:0;
+          }
           .layout {
             display: grid;
             grid-template-columns: 70% 30%;
             gap: 16px;
             padding: 16px;
+            height:100vh; 
+
+            lp-home{
+              overflow-y:auto;
+              padding-bottom:50px;
+            }
 
             lp-cart{
-                lp-header{
-                    display:none;
-                }
-                .cart-main a{
-                    display:none;
-                }
-            }
-          }
-          nav a:nth-child(3){
-            /* display:none;*/
-            
-          }
+              position: sticky; 
+              height:  100%;
+              overflow-y: auto; 
+              background-color: var(--color-white-0_5);
+              border-radius:10px;
 
-          lp-cart {
-            position: sticky;
-            top: 80px;
-            height: calc(100vh - 100px);
-            overflow-y: auto; 
-            background-color: var(--color-white-0_5);
-            border-radius:10px;
+              lp-header{
+                  display:none;
+              }
+              .cart-main{
+                margin-top:20px;
+              }
+              .cart-main a{
+                  display:none;
+              }  
 
-            .cart-summary{
+              .cart-summary{
                 position:absolute;
-                bottom:50px;
+                bottom:80px;
                 background: var(--color-whote-0);
                 padding: 20px;
                 box-shadow: 0 -4px 12px var(--color-white-3);
+              }
             }
           } 
 
