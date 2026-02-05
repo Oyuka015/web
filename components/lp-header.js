@@ -13,7 +13,11 @@ class LpHeader extends HTMLElement {
     const backBtn = this.shadowRoot.querySelector(".left .back-btn");
     if (backBtn) {
       backBtn.addEventListener("click", () => {
-        window.location.hash = "#/";
+        if(window.history.length > 1) {
+          window.history.back();
+        } else {
+          window.location.hash = "#/home";
+        }
       });
     }
     window.addEventListener("hashchange", () => this.updateTitle());

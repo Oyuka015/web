@@ -37,13 +37,13 @@ class LpEventsSection extends HTMLElement {
           </article>
 
           <article class="faq-item">
-            <h4>NBA Game Night 🏀</h4>
+            <h4>NBA Game Night</h4>
             <p>Watch live matches with friends</p>
           </article>
 
           <article class="faq-item">
-            <h4>CSGO Mongolz 🔥</h4>
-            <p>Major tournament streaming</p>
+            <h4>Sengur beer 3+1</h4>
+            <p>Баасан гараг болгон</p>
           </article>
         </section>
       </li>

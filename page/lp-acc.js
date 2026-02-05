@@ -5,6 +5,7 @@ import "../components/lp-language-switcher.js";
 import "../components/lp-theme-toggle.js";
 import "../components/lp-faq-section.js";
 import "../components/lp-events-section.js";
+import "../components/lp-orders-list.js"
 
 class LpAcc extends HTMLElement {
   connectedCallback() {

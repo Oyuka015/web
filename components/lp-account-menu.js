@@ -28,17 +28,7 @@ class LpAccountMenu extends HTMLElement {
           <lp-language-switcher></lp-language-switcher>
           <lp-theme-toggle></lp-theme-toggle>
 
-          <li>
-            <a href="#/orders" class="menu-link">
-              <article class="item-content">
-                <span class="info-icon">
-                  <i class="ci-File_Blank"></i>
-                </span>
-                <span class="menu-text">${t("accMyOrders")}</span>
-                <i class="ci-Chevron_Right_MD arrow"></i>
-              </article>
-            </a>
-          </li>
+          <lp-orders-list></lp-orders-list>
 
           <li>
             <a href="#/save" class="menu-link">
@@ -52,9 +42,8 @@ class LpAccountMenu extends HTMLElement {
             </a>
           </li>
 
+          
           <lp-events-section></lp-events-section>
-          <lp-faq-section></lp-faq-section>
-
 
           <li>
             <a href="#/about" class="menu-link">
@@ -68,7 +57,7 @@ class LpAccountMenu extends HTMLElement {
             </a>
           </li>
 
-          
+          <lp-faq-section></lp-faq-section>
 
           <li class="logout-item">
             <a href="#/logout" class="menu-link" id="logoutBtn">
