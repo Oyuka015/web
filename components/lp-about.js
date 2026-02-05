@@ -22,7 +22,7 @@ class LpAbout extends HTMLElement {
 
   render() {
     const t = (key) => langStore.t(key);
-    this.innerHTML = /*html */ `
+    this.innerHTML = /*html */`
       <lp-header></lp-header>
       
       <main class="about-page">
@@ -56,14 +56,14 @@ class LpAbout extends HTMLElement {
           <article class="contact-grid">
             <article class="contact-item">
               <i class="ci-Location"></i>
-              <h4>${t("address") || "Хаяг"}</h4>
+              <h4>${t("address")}</h4>
               <p>Улаанбаатар хот, Чингэлтэй дүүрэг, 2-р хороо<br>WV8X+8MW, CHD - 2 khoroo, Ulaanbaatar 15172</p>
             </article>
 
             <article class="contact-item">
               <i class="ci-Phone"></i>
               <h4>${t("phone")}</h4>
-              <a href="tel:+97680820094">+976 80820094</a><br>
+              <a href="tel:+97680820094">+976 80820094</a>
               <a href="tel:+97660108758">+976 60108758</a>
             </article>
 
@@ -76,7 +76,7 @@ class LpAbout extends HTMLElement {
 
             <article class="contact-item">
               <i class="ci-Clock"></i>
-              <h4>${t("workingHours") || "Ажлын цаг"}</h4>
+              <h4>${t("workingHours")}</h4>
               <p>Даваа - Баасан: 12:00 - 00:00<br>Бямба - Ням: 15:00 - 00:00</p>
             </article>
           </article>
@@ -85,7 +85,7 @@ class LpAbout extends HTMLElement {
         <section class="location-section">
           <header class="section-header">
             <i class="ci-Map"></i>
-            <h2>${t("ourLocation") || "Манай байршил"}</h2>
+            <h2>${t("ourLocation")}</h2>
           </header>
           <article class="map-container" id="mapContainer">
             <iframe
@@ -109,7 +109,7 @@ class LpAbout extends HTMLElement {
           <article class="team-grid">
             <article class="team-member">
               <figure class="member-photo">
-                <img loading="lazy" src="assets/img/team/ceo.jpg" alt="${t("ceo")} Б. Баяржавхлан" onerror="this.src='assets/img/image.png'">
+                <img loading="lazy" src="/assets/img/fushiguro.jpg" alt="${t("ceo")} Б. Баяржавхлан" onerror="this.src='assets/img/image.png'">
               </figure>
               <h4>Б. Баяржавхлан</h4>
               <p class="position">${t("ceo")}</p>
@@ -123,7 +123,7 @@ class LpAbout extends HTMLElement {
             </article>
             <article class="team-member">
               <figure class="member-photo">
-                <img loading="lazy" src="assets/img/team/ceo.jpg" alt="${t("ceo")} Б. Анужин" onerror="this.src='assets/img/image.png'">
+                <img loading="lazy" src="/assets/img/anu.jpg" alt="${t("ceo")} Б. Анужин" onerror="this.src='assets/img/image.png'">
               </figure>
               <h4>Б. Анужин</h4>
               <p class="position">${t("ceo")}</p>
@@ -139,7 +139,7 @@ class LpAbout extends HTMLElement {
 
             <article class="team-member">
               <figure class="member-photo">
-                <img loading="lazy" src="assets/img/team/chef.jpg" alt="${t("headChef")} Б. Чимэг" onerror="this.src='assets/img/image.png'">
+                <img loading="lazy" src="/assets/img/chef.jpg" alt="${t("headChef")} Б. Чимэг" onerror="this.src='assets/img/image.png'">
               </figure>
               <h4>Б. Чимэг</h4>
               <p class="position">${t("headChef")}</p>
@@ -154,7 +154,7 @@ class LpAbout extends HTMLElement {
 
             <article class="team-member">
               <figure class="member-photo">
-                <img loading="lazy" src="assets/img/team/manager.jpg" alt="${t("manager")} Б.Анужин" onerror="this.src='assets/img/image.png'">
+                <img loading="lazy" src="/assets/img/anu.jpg" alt="${t("manager")} Б.Анужин" onerror="this.src='assets/img/image.png'">
               </figure>
               <h4>Б.Анужин</h4>
               <p class="position">${t("manager")}</p>
@@ -169,7 +169,7 @@ class LpAbout extends HTMLElement {
 
             <article class="team-member">
               <figure class="member-photo">
-                <img loading="lazy" src="assets/img/team/marketing.jpg" alt="${t("marketing")} Б.Баяржавхлан" onerror="this.src='assets/img/image.png'">
+                <img loading="lazy" src="/assets/img/Yuji Itadori.jpg" alt="${t("marketing")} Б.Баяржавхлан" onerror="this.src='assets/img/image.png'">
               </figure>
               <h4>Б.Баяржавхлан</h4>
               <p class="position">${t("marketing")}</p>
@@ -183,7 +183,7 @@ class LpAbout extends HTMLElement {
             </article>
             <article class="team-member">
               <figure class="member-photo">
-                <img loading="lazy" src="assets/img/team/marketing.jpg" alt="Software Engineer Б.Оюунбаяр" onerror="this.src='assets/img/image.png'">
+                <img loading="lazy" src="/assets/img/jjk.jpg" alt="Software Engineer Б.Оюунбаяр" onerror="this.src='assets/img/image.png'">
               </figure>
               <h4>Б.Оюунбаяр</h4>
               <p class="position">Software Engineer</p>
@@ -197,7 +197,7 @@ class LpAbout extends HTMLElement {
             </article>
             <article class="team-member">
               <figure class="member-photo">
-                <img loading="lazy" src="assets/img/team/ceo.jpg" alt="${t("ceo")} Б. Баяржавхлан" onerror="this.src='assets/img/image.png'">
+                <img loading="lazy" src="/assets/img/Yuji Itadori.jpg" alt="${t("ceo")} Б. Баяржавхлан" onerror="this.src='assets/img/image.png'">
               </figure>
               <h4>Б. Баяржавхлан</h4>
               <p class="position">Мужаан</p>
@@ -211,7 +211,7 @@ class LpAbout extends HTMLElement {
             </article>
             <article class="team-member">
               <figure class="member-photo">
-                <img loading="lazy" src="assets/img/team/ceo.jpg" alt="${t("ceo")} Б. Баяржавхлан" onerror="this.src='assets/img/image.png'">
+                <img loading="lazy" src="/assets/img/anu.jpg" alt="${t("ceo")} Б. Анужин" onerror="this.src='assets/img/image.png'">
               </figure>
               <h4>Б. Анужин</h4>
               <p class="position">Цэвэрлэгч</p>
@@ -225,7 +225,7 @@ class LpAbout extends HTMLElement {
             </article>
             <article class="team-member">
               <figure class="member-photo">
-                <img loading="lazy" src="assets/img/team/ceo.jpg" alt="${t("ceo")} Б. Баяржавхлан" onerror="this.src='assets/img/image.png'">
+                <img loading="lazy" src="/assets/img/Yuji Itadori.jpg" alt="${t("ceo")} Б. Баяржавхлан" onerror="this.src='assets/img/image.png'">
               </figure>
               <h4>Б. Баяржавхлан</h4>
               <p class="position">Хамгаалагч</p>
@@ -249,35 +249,35 @@ class LpAbout extends HTMLElement {
           <article class="partners-grid">
             <article class="partner-card">
               <figure class="partner-logo">
-                <img loading="lazy" src="assets/img/partners/partner1.png" alt="Khan Bank logo" onerror="this.src='assets/img/image.png'">
+                <img loading="lazy" src="/assets/img/apucompany_logo.jpg" alt="Khan Bank logo" onerror="this.src='assets/img/image.png'">
               </figure>
               <h4>APU</h4>
             </article>
 
             <article class="partner-card">
               <figure class="partner-logo">
-                <img loading="lazy" src="assets/img/partners/partner2.png" alt="Mobicom logo" onerror="this.src='assets/img/image.png'">
+                <img loading="lazy" src="/assets/img/gem.jpeg" alt="Mobicom logo" onerror="this.src='assets/img/image.png'">
               </figure>
               <h4>Gem international</h4>
             </article>
 
             <article class="partner-card">
               <figure class="partner-logo">
-                <img loading="lazy" src="assets/img/partners/partner3.png" alt="Unitel logo" onerror="this.src='assets/img/image.png'">
+                <img loading="lazy" src="/assets/img/mcs.png" alt="Unitel logo" onerror="this.src='assets/img/image.png'">
               </figure>
               <h4>MCS</h4>
             </article>
 
             <article class="partner-card">
               <figure class="partner-logo">
-                <img loading="lazy" src="assets/img/partners/partner4.png" alt="Social Pay logo" onerror="this.src='assets/img/image.png'">
+                <img loading="lazy" src="/assets/img/toki.png" alt="Social Pay logo" onerror="this.src='assets/img/image.png'">
               </figure>
               <h4>Toki</h4>
             </article>
 
             <article class="partner-card">
               <figure class="partner-logo">
-                <img loading="lazy" src="assets/img/partners/partner5.png" alt="Storepay logo" onerror="this.src='assets/img/image.png'">
+                <img loading="lazy" src="/assets/img/apuLogo.png" alt="Storepay logo" onerror="this.src='assets/img/image.png'">
               </figure>
               <h4>APU Holding</h4>
             </article>
@@ -291,7 +291,7 @@ class LpAbout extends HTMLElement {
             <article class="stat-item">
               <i class="ci-Users"></i>
               <h3>10,000+</h3>
-              <p>${t("happyCustomers") || "Сэтгэл хангалуун үйлчлүүлэгч"}</p>
+              <p>${t("happyCustomers")}</p>
             </article>
 
 

@@ -41,6 +41,10 @@ class LpFaqSection extends HTMLElement {
             <p>${t("accFaq1A")}</p>
           </article>
           <article class="faq-item">
+            <h4>Хувь хүн болон байгууллагатай хамтарч үйл ажиллагаа, баярын захиалга, золголт, төрсөн өдөр гэх мэт захиалга авдаг.</h4>
+            <p>Та утсаар холбогдож захиалга өгнө үү. Утас 60108758 </p>
+          </article>
+          <article class="faq-item">
             <h4>${t("accFaq2Q")}</h4>
             <p>${t("accFaq2A")}</p>
           </article>

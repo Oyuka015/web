@@ -405,7 +405,7 @@ class LpEdit extends HTMLElement {
 
         .form-group input,
         .form-group textarea {
-          width: 100%;
+          width: 90%;
           padding: 14px 16px;
           border: 2px solid var(--color-white-2);
           border-radius: 12px;
@@ -492,6 +492,7 @@ class LpEdit extends HTMLElement {
 
           .edit-form {
             padding: 20px;
+            margin: 0 30px;
           }
 
           .form-actions {

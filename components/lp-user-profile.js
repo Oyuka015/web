@@ -98,8 +98,8 @@ class LpUserProfile extends HTMLElement {
         }
 
         .profile p {
-          font-size: 22px;
-          font-weight: 700;
+          font-size: 15px;
+          font-weight: 100;
           color: var(--color-dark-1);
           margin: 0 0 4px 0;
           position: relative;
@@ -118,7 +118,7 @@ class LpUserProfile extends HTMLElement {
           color: var(--color-orange);
           border-radius: 12px;
           font-size: 14px;
-          font-weight: 700;
+          font-weight: 300;
           cursor: pointer;
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           position: relative;
@@ -238,7 +238,7 @@ class LpUserProfile extends HTMLElement {
 
         .dash li > *:first-child {
           font-size: 28px;
-          font-weight: 800;
+          font-weight: 600;
           background: linear-gradient(135deg, var(--color-orange), var(--color-orange-darker));
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
@@ -250,7 +250,7 @@ class LpUserProfile extends HTMLElement {
         .dash li span {
           display: block;
           font-size: 13px;
-          font-weight: 600;
+          font-weight: 500;
           color: var(--color-dark-4);
           text-transform: uppercase;
           letter-spacing: 0.5px;
