@@ -1,10 +1,7 @@
 class LpHomeLayout extends HTMLElement {
   connectedCallback() {
     this.innerHTML = /*html*/ `
-      <style> 
-        lp-cart {
-            display: none; /* mobile-д үзэгдэхгүй */
-        }
+      <style>  
 
         /* desktop */
         @media (min-width: 1256px) {
