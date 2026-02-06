@@ -1,5 +1,5 @@
 import langStore from "../components/lang-store.js";
-import "../components/lp-food.js";
+import "../components/lp-food.js"; 
 
 
 class LpHome extends HTMLElement {

@@ -1,4 +1,5 @@
 import cartStore from "./cart-store.js";
+import "./lp-toast.js";
 
 class LpFood extends HTMLElement {
   constructor() {
@@ -57,6 +58,11 @@ class LpFood extends HTMLElement {
           this.setAttribute("saved", "");
         }
 
+        document.body.insertAdjacentHTML(  //insertAdjacentHTML(position, html);
+          "beforeend",
+          `<lp-toast message="${this.name} хадгалагдлаа." type="success"></lp-toast>`
+        );
+
         this.updateSaveIcon(); // icon change
       });
 
@@ -83,7 +89,12 @@ class LpFood extends HTMLElement {
         cartStore.addItem(cartItem);
 
         // Болвол short notification
-        alert(`${this.name} сагсанд нэмэгдлээ!`);
+        // alert(`${this.name} сагсанд нэмэгдлээ!`); 
+        document.body.insertAdjacentHTML(  //insertAdjacentHTML(position, html);
+          "beforeend",
+          `<lp-toast message="${this.name} сагсанд амжилттай нэмлээ" type="success"></lp-toast>`
+        );
+
       });
     }
   }

@@ -1,6 +1,7 @@
 // pages/lp-payment.js
 import cartStore from "../components/cart-store.js";
 import langStore from "../components/lang-store.js";
+import "../components/lp-toast.js";
 
 class LpPayment extends HTMLElement {
   constructor() {
@@ -228,7 +229,11 @@ class LpPayment extends HTMLElement {
 
         if (res.ok) {
           cartStore.clear(); // Сагсыг цэвэрлэх
-          alert("Захиалга амжилттай!");
+          // alert("Захиалга амжилттай!");
+          document.body.insertAdjacentHTML(  //insertAdjacentHTML(position, html);
+            "beforeend",
+            `<lp-toast message="Захиалга амжилттай." type="success"></lp-toast>`
+          );
           window.location.hash = "#/home";
         }
       } catch (err) {
