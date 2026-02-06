@@ -4,7 +4,7 @@ class LpOrdersList extends HTMLElement {
   constructor() {
     super();
     this.orders = [];
-    this.isOpen = false; // Поп-ап нээлттэй эсэхийг хянах
+    this.isOpen = false;
   }
 
   async connectedCallback() {
@@ -15,16 +15,17 @@ class LpOrdersList extends HTMLElement {
   async fetchOrders() {
     try {
       const response = await fetch("http://localhost:3000/api/orders/my", {
-        headers: { 
-          "Authorization": `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "application/json"
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
         },
       });
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      if (!response.ok)
+        throw new Error(`HTTP error! status: ${response.status}`);
       this.orders = await response.json();
     } catch (err) {
       console.error("Failed to fetch orders:", err);
-      this.orders = []; 
+      this.orders = [];
     }
   }
 
@@ -41,33 +42,33 @@ class LpOrdersList extends HTMLElement {
         <div class="menu-link">
           <article class="item-content">
             <span class="info-icon">
-              <i class="ci-Shopping_Cart"></i>
+              <i class="ci-Clock"></i>
             </span>
-            <span class="menu-text">${t("myOrders") || "Миний захиалгууд"}</span>
+            <span class="menu-text">${t("myOrders")}</span>
             <i class="ci-Chevron_Right_MD arrow"></i>
           </article>
         </div>
       </li>
 
-      <div class="modal-overlay ${this.isOpen ? 'active' : ''}">
+      <div class="modal-overlay ${this.isOpen ? "active" : ""}">
         <div class="modal-content">
           <div class="modal-header">
-            <h3>${t("myOrders") || "Миний захиалгууд"}</h3>
-            <button class="close-btn">&times;</button>
+            <h3>${t("myOrders")}</h3>
+            <button class="close-btn"></button>
           </div>
           <div class="modal-body">
-            ${this.orders.length === 0 
-              ? `<p class="empty-msg">Танд одоогоор захиалга байхгүй байна.</p>`
-              : this.renderOrders()}
+            ${
+              this.orders.length === 0
+                ? `<p class="empty-msg">${t("cartEmptyDesc")}</p>`
+                : this.renderOrders()
+            }
           </div>
         </div>
       </div>
 
       <style>
-        /* Account Menu-тэй ижил загвар */
         .menu-item { list-style: none; cursor: pointer; border-bottom: 1px solid var(--color-white-1); }
         
-        /* Modal Styles */
         .modal-overlay {
           position: fixed; top: 0; left: 0; width: 100%; height: 100%;
           background: rgba(0,0,0,0.5); display: none; justify-content: center;
@@ -85,7 +86,6 @@ class LpOrdersList extends HTMLElement {
         .close-btn { background: none; border: none; font-size: 28px; cursor: pointer; color: #888; }
         .modal-body { padding: 15px; overflow-y: auto; background: #f9f9f9; }
 
-        /* Order Cards */
         .order-card { background: white; border-radius: 12px; padding: 12px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
         .order-header { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px; }
         .order-num { font-weight: bold; color: var(--color-orange); }
@@ -99,25 +99,31 @@ class LpOrdersList extends HTMLElement {
     `;
 
     // Event Listeners
-    this.querySelector("#openOrdersBtn").addEventListener("click", () => this.toggleModal());
+    this.querySelector("#openOrdersBtn").addEventListener("click", () =>
+      this.toggleModal(),
+    );
     this.querySelector(".close-btn").addEventListener("click", (e) => {
       e.stopPropagation();
       this.toggleModal();
     });
     this.querySelector(".modal-overlay").addEventListener("click", (e) => {
-      if(e.target.classList.contains('modal-overlay')) this.toggleModal();
+      if (e.target.classList.contains("modal-overlay")) this.toggleModal();
     });
   }
 
   renderOrders() {
-    return this.orders.map(order => `
+    return this.orders
+      .map(
+        (order) => `
       <div class="order-card">
         <div class="order-header">
           <span class="order-num">#${order.order_number.slice(0, 8)}</span>
           <span class="status ${order.status}">${order.status}</span>
         </div>
         <div class="order-items">
-          ${order.items.map(item => `
+          ${order.items
+            .map(
+              (item) => `
             <div class="food-item">
               <img src="${item.image}" alt="${item.name}">
               <div class="food-details">
@@ -125,14 +131,18 @@ class LpOrdersList extends HTMLElement {
                 <p class="food-meta">${item.quantity} x ${item.price}₮</p>
               </div>
             </div>
-          `).join("")}
+          `,
+            )
+            .join("")}
         </div>
         <div style="display:flex; justify-content: space-between; margin-top:10px; font-size:12px;">
           <strong>${order.total_amount}₮</strong>
           <span style="color:#999">${new Date(order.created_at).toLocaleDateString()}</span>
         </div>
       </div>
-    `).join("");
+    `,
+      )
+      .join("");
   }
 }
 

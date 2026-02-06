@@ -32,7 +32,7 @@ const translations = {
     accOrders: "Захиалга",
     accSaved: "Хадгалсан",
     accVouchers: "Купон",
-    accMyOrders: "Захиалгын түүх",
+    myOrders: "Захиалгын түүх",
     accFavorites: "Таалагдсан",
     accMyVouchers: "Миний купон",
     accFaq: "FAQ",
@@ -126,6 +126,20 @@ const translations = {
     locations: "Салбар",
     awards: "Шагнал",
     yearsExperience: "Жилийн туршлага",
+    cartEmptyDesc: "Танд одоогоор захиалга байхгүй байна",
+    events: "Events",
+
+    eventPrivateTitle:
+      "Хувь хүн болон байгууллагатай хамтарч үйл ажиллагаа, баярын захиалга авч байна",
+    eventPrivateDesc: "Та утсаар холбогдож захиалга өгнө үү. Утас: 60108758",
+
+    eventCsgoTitle: "HLTV IEM Krakow 2026 шууд дамжуулалт",
+    eventCsgoDesc: "Mongolz vs Furia — 20:00",
+    eventNbaTitle: "NBA тоглолтын үдэш",
+    eventNbaDesc: "Найзуудтайгаа шууд тоглолт үзээрэй",
+
+    eventBeerTitle: "Сэнгүр шар айраг 3+1",
+    eventBeerDesc: "Баасан гараг бүр",
   },
   en: {
     langName: "English",
@@ -158,7 +172,7 @@ const translations = {
     accOrders: "Orders",
     accSaved: "Saved",
     accVouchers: "Voucher",
-    accMyOrders: "Order History",
+    myOrders: "Order History",
     accFavorites: "Favorites",
     accMyVouchers: "My Vouchers",
     accFaq: "FAQ",
@@ -253,6 +267,20 @@ const translations = {
     locations: "Locations",
     awards: "Awards",
     yearsExperience: "Years of Experience",
+    cartEmptyDesc: "You have no orders",
+    events: "Events",
+
+    eventPrivateTitle:
+      "We accept private and corporate event and celebration bookings",
+    eventPrivateDesc:
+      "Please contact us by phone to make a reservation. Phone: 60108758",
+    eventCsgoTitle: "HLTV IEM Krakow 2026 Live Broadcast",
+    eventCsgoDesc: "Mongolz vs Furia — 8:00 PM",
+    eventNbaTitle: "NBA Game Night",
+    eventNbaDesc: "Watch live NBA games with friends",
+
+    eventBeerTitle: "Sengur Beer 3+1 Offer",
+    eventBeerDesc: "Every Friday",
   },
 };
 

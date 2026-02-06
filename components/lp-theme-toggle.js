@@ -1,21 +1,40 @@
 class LpThemeToggle extends HTMLElement {
   connectedCallback() {
     this.render();
-    this.addToggleListener();
+    this.addListener();
   }
 
   render() {
     const isDark = localStorage.getItem("theme") === "dark";
-    this.innerHTML = `
+
+    this.innerHTML = /*html*/ `
       <li class="dark-mode-item">
         <article class="item-content">
           <span class="info-icon">
             <i class="ci-Moon"></i>
           </span>
+
           <span class="theme-label">Dark mode</span>
-          <button type="button" class="theme-toggle-btn" id="darkModeToggle" aria-label="Toggle dark mode">
-            <i class="${isDark ? "ci-Sun" : "ci-Moon"}"></i>
-          </button>
+
+          <nav class="theme-switcher">
+            <button
+              type="button"
+              class="theme-btn ${!isDark ? "active" : ""}"
+              data-theme="light"
+              aria-label="Light mode"
+            >
+              <i class="ci-Sun"></i>
+            </button>
+
+            <button
+              type="button"
+              class="theme-btn ${isDark ? "active" : ""}"
+              data-theme="dark"
+              aria-label="Dark mode"
+            >
+              <i class="ci-Moon"></i>
+            </button>
+          </nav>
         </article>
       </li>
 
@@ -41,9 +60,12 @@ class LpThemeToggle extends HTMLElement {
           justify-content: center;
           font-size: 22px;
           color: var(--color-orange);
-          background: linear-gradient(135deg, rgba(255, 128, 0, 0.1), rgba(255, 128, 0, 0.05));
+          background: linear-gradient(
+            135deg,
+            rgba(255, 128, 0, 0.1),
+            rgba(255, 128, 0, 0.05)
+          );
           border-radius: 12px;
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .theme-label {
@@ -51,114 +73,87 @@ class LpThemeToggle extends HTMLElement {
           font-size: 15px;
           font-weight: 600;
           color: var(--color-dark-1);
-          letter-spacing: 0.2px;
         }
 
-        .theme-toggle-btn {
-          margin-left: auto;
-          width: 50px;
-          height: 50px;
-          border: none;
-          border-radius: 50%;
-          background: linear-gradient(135deg, var(--color-white-1), var(--color-white-2));
-          color: var(--color-orange);
-          cursor: pointer;
+        .theme-switcher {
           display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 24px;
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-          position: relative;
-          overflow: hidden;
+          background: var(--color-white-1);
+          border-radius: 12px;
+          padding: 5px;
+          gap: 6px;
+          box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
         }
 
-        .theme-toggle-btn::before {
-          content: '';
+        .theme-btn {
+          padding: 10px 18px;
+          border: none;
+          background: transparent;
+          font-size: 15px;
+          border-radius: 9px;
+          cursor: pointer;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          color: var(--color-dark-4);
+          min-width: 54px;
+          position: relative;
+        }
+
+        .theme-btn::before {
+          content: "";
           position: absolute;
           inset: 0;
-          border-radius: 50%;
-          background: linear-gradient(135deg, var(--color-orange-lighter), var(--color-orange));
+          border-radius: 9px;
+          background: linear-gradient(
+            135deg,
+            var(--color-orange),
+            var(--color-orange-darker)
+          );
           opacity: 0;
           transition: opacity 0.3s ease;
         }
 
-        .theme-toggle-btn i {
+        .theme-btn i {
           position: relative;
           z-index: 1;
-          transition: transform 0.3s ease;
         }
 
-        .theme-toggle-btn:hover {
-          background: linear-gradient(135deg, var(--color-orange), var(--color-orange-darker));
+        .theme-btn:hover:not(.active) {
+          background: var(--color-white-0);
+          color: var(--color-dark-2);
+          transform: translateY(-1px);
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        }
+
+        .theme-btn.active {
+          background: linear-gradient(
+            135deg,
+            var(--color-orange),
+            var(--color-orange-darker)
+          );
+          box-shadow: 0 4px 12px rgba(255, 128, 0, 0.4);
           color: var(--color-white-0);
-          transform: scale(1.08) rotate(15deg);
-          box-shadow: 0 4px 16px rgba(255, 128, 0, 0.4);
+          transform: scale(1.05);
         }
 
-        .theme-toggle-btn:hover::before {
+        .theme-btn.active::before {
           opacity: 1;
-        }
-
-        .theme-toggle-btn:hover i {
-          transform: rotate(-15deg);
-        }
-
-        .theme-toggle-btn:active {
-          transform: scale(0.95) rotate(0deg);
-        }
-
-        .theme-toggle-btn:focus {
-          outline: 2px solid var(--color-orange);
-          outline-offset: 3px;
-        }
-
-        @media (max-width: 768px) {
-          .item-content {
-            padding: 16px 18px;
-            gap: 14px;
-            min-height: 60px;
-          }
-
-          .info-icon {
-            width: 40px;
-            height: 40px;
-            font-size: 20px;
-          }
-
-          .theme-label {
-            font-size: 14px;
-          }
-
-          .theme-toggle-btn {
-            width: 46px;
-            height: 46px;
-            font-size: 22px;
-          }
         }
       </style>
     `;
   }
 
-  addToggleListener() {
-    const darkModeBtn = this.querySelector("#darkModeToggle");
-    if (darkModeBtn) {
-      darkModeBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        this.toggleDarkMode();
-        this.render();
-        this.addToggleListener();
-      });
-    }
-  }
+  addListener() {
+    this.querySelectorAll("[data-theme]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const theme = btn.dataset.theme;
 
-  toggleDarkMode() {
-    document.body.classList.toggle("dark");
-    localStorage.setItem(
-      "theme",
-      document.body.classList.contains("dark") ? "dark" : "light",
-    );
+        document.body.classList.toggle("dark", theme === "dark");
+        localStorage.setItem("theme", theme);
+
+        this.render();
+        this.addListener();
+      });
+    });
   }
 }
 
-window.customElements.define("lp-theme-toggle", LpThemeToggle);
+customElements.define("lp-theme-toggle", LpThemeToggle);

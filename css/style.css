@@ -221,7 +221,6 @@ lp-bg-btn {
 }
 
 .container {
-  /* max-width: 1200px; */
   max-width: 800px;
   margin: 0 auto;
   display: grid;
@@ -234,7 +233,6 @@ lp-bg-btn {
   margin-top: 80px;
 }
 
-/* profile -- acc  */
 .user-info,
 .acc-info,
 .help-info,
@@ -242,9 +240,10 @@ lp-bg-btn {
 .logout-info {
   margin-bottom: 20px;
   border-radius: 15px;
-  /* box-shadow: -2px 3px 16px var(--color-white-3); */
   box-shadow: -2px 3px 16px hsl(0deg 0% 70% / 55%);
   padding: 10px 15px;
+  margin: 0 auto;
+  max-width: 1200px;
 }
 
 .user-info {
@@ -254,7 +253,6 @@ lp-bg-btn {
     position: relative;
     font-size: 20px;
     font-family: var(--font-family-nunito);
-    padding: 15px 0 25px 0;
     border-bottom: 1px solid var(--color-dark-5);
 
     img {

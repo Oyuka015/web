@@ -31,7 +31,7 @@ class LpUserProfile extends HTMLElement {
     this.innerHTML = `
       <section class="user-info">
         <article class="profile">
-          <img src="assets/img/image.png" alt="user-profile-picture" id="userAvatar">
+          <img src="./assets/img/londonPop_logo.jpg" alt="user-profile-picture" id="userAvatar">
           <p id="userName">User</p>
           <button class="edit-profile-btn" id="editProfileBtn">
             <i class="ci-Edit_02"></i>
@@ -53,13 +53,13 @@ class LpUserProfile extends HTMLElement {
         .profile {
           text-align: center;
           padding: 32px 24px;
+          margin: 0 auto;
           background: linear-gradient(135deg, var(--color-white-0) 0%, var(--color-white-0_5) 100%);
           border-radius: 20px;
           box-shadow: 0 4px 20px var(--shadow-color);
           margin-bottom: 20px;
           position: relative;
           overflow: hidden;
-          padding-left: 5rem;
         }
 
         .profile::before {
@@ -98,8 +98,8 @@ class LpUserProfile extends HTMLElement {
         }
 
         .profile p {
-          font-size: 15px;
-          font-weight: 100;
+          font-size: 18px;
+          font-weight: 500;
           color: var(--color-dark-1);
           margin: 0 0 4px 0;
           position: relative;

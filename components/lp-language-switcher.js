@@ -19,7 +19,7 @@ class LpLanguageSwitcher extends HTMLElement {
 
   render() {
     const lang = langStore.getLang();
-    this.innerHTML = `
+    this.innerHTML = /*html */`
       <li class="language-item">
         <article class="item-content">
           <span class="info-icon">
@@ -78,7 +78,7 @@ class LpLanguageSwitcher extends HTMLElement {
         }
 
         .lang-btn {
-          padding: 9px 18px;
+          padding: 12px 18px;
           border: none;
           background: transparent;
           font-size: 13px;
@@ -97,7 +97,6 @@ class LpLanguageSwitcher extends HTMLElement {
           position: absolute;
           inset: 0;
           border-radius: 9px;
-          background: linear-gradient(135deg, var(--color-orange), var(--color-orange-darker));
           opacity: 0;
           transition: opacity 0.3s ease;
         }
@@ -143,7 +142,7 @@ class LpLanguageSwitcher extends HTMLElement {
           }
 
           .lang-btn {
-            padding: 8px 16px;
+            padding: 12px 16px;
             font-size: 12px;
             min-width: 50px;
           }
