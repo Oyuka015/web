@@ -224,7 +224,7 @@ class LpFood extends HTMLElement {
           transition: all 0.3s ease;  
         }  
         lp-home lp-food.card:hover{ 
-          height:auto;
+          /*height:auto; */
         }  
       </style>
 
