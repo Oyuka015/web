@@ -1,4 +1,3 @@
-
 import "../components/lp-user-profile.js";
 import "../components/lp-account-menu.js";
 import "../components/lp-language-switcher.js";
